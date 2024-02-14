@@ -10,12 +10,12 @@
 		3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */; };
 		3FD643AB2B7D3BF200D2F586 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */; };
 		3FD643AD2B7D3BF200D2F586 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643AC2B7D3BF200D2F586 /* ViewController.swift */; };
-		3FD643B02B7D3BF300D2F586 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD643AE2B7D3BF300D2F586 /* Main.storyboard */; };
 		3FD643B22B7D3BF600D2F586 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FD643B12B7D3BF600D2F586 /* Assets.xcassets */; };
 		3FD643B52B7D3BF600D2F586 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD643B32B7D3BF600D2F586 /* LaunchScreen.storyboard */; };
 		3FD643C02B7D3BF700D2F586 /* GamesterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643BF2B7D3BF700D2F586 /* GamesterTests.swift */; };
 		3FD643CA2B7D3BF700D2F586 /* GamesterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643C92B7D3BF700D2F586 /* GamesterUITests.swift */; };
 		3FD643CC2B7D3BF700D2F586 /* GamesterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643CB2B7D3BF700D2F586 /* GamesterUITestsLaunchTests.swift */; };
+		3FD643DF2B7D60A400D2F586 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643DE2B7D60A400D2F586 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +40,6 @@
 		3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3FD643AC2B7D3BF200D2F586 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3FD643AF2B7D3BF300D2F586 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3FD643B12B7D3BF600D2F586 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3FD643B42B7D3BF600D2F586 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3FD643B62B7D3BF600D2F586 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		3FD643C52B7D3BF700D2F586 /* GamesterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamesterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD643C92B7D3BF700D2F586 /* GamesterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesterUITests.swift; sourceTree = "<group>"; };
 		3FD643CB2B7D3BF700D2F586 /* GamesterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesterUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3FD643DE2B7D60A400D2F586 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,12 +99,12 @@
 		3FD643A72B7D3BF200D2F586 /* Gamester */ = {
 			isa = PBXGroup;
 			children = (
-				3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */,
-				3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */,
-				3FD643AC2B7D3BF200D2F586 /* ViewController.swift */,
-				3FD643AE2B7D3BF300D2F586 /* Main.storyboard */,
-				3FD643B12B7D3BF600D2F586 /* Assets.xcassets */,
-				3FD643B32B7D3BF600D2F586 /* LaunchScreen.storyboard */,
+				3FD643DD2B7D579100D2F586 /* Supporting */,
+				3FD643DC2B7D575100D2F586 /* Controllers */,
+				3FD643DB2B7D574B00D2F586 /* ViewModels */,
+				3FD643DA2B7D574500D2F586 /* Views */,
+				3FD643D92B7D573E00D2F586 /* Models */,
+				3FD643D82B7D573700D2F586 /* API */,
 				3FD643B62B7D3BF600D2F586 /* Info.plist */,
 			);
 			path = Gamester;
@@ -125,6 +125,54 @@
 				3FD643CB2B7D3BF700D2F586 /* GamesterUITestsLaunchTests.swift */,
 			);
 			path = GamesterUITests;
+			sourceTree = "<group>";
+		};
+		3FD643D82B7D573700D2F586 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		3FD643D92B7D573E00D2F586 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3FD643DA2B7D574500D2F586 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3FD643DB2B7D574B00D2F586 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		3FD643DC2B7D575100D2F586 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3FD643AC2B7D3BF200D2F586 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		3FD643DD2B7D579100D2F586 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				3FD643B32B7D3BF600D2F586 /* LaunchScreen.storyboard */,
+				3FD643B12B7D3BF600D2F586 /* Assets.xcassets */,
+				3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */,
+				3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */,
+				3FD643DE2B7D60A400D2F586 /* Constants.swift */,
+			);
+			path = Supporting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,7 +281,6 @@
 			files = (
 				3FD643B52B7D3BF600D2F586 /* LaunchScreen.storyboard in Resources */,
 				3FD643B22B7D3BF600D2F586 /* Assets.xcassets in Resources */,
-				3FD643B02B7D3BF300D2F586 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +308,7 @@
 				3FD643AD2B7D3BF200D2F586 /* ViewController.swift in Sources */,
 				3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */,
 				3FD643AB2B7D3BF200D2F586 /* SceneDelegate.swift in Sources */,
+				3FD643DF2B7D60A400D2F586 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,14 +345,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		3FD643AE2B7D3BF300D2F586 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3FD643AF2B7D3BF300D2F586 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3FD643B32B7D3BF600D2F586 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -368,7 +408,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -425,7 +465,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -447,9 +487,9 @@
 				INFOPLIST_FILE = Gamester/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -475,9 +515,9 @@
 				INFOPLIST_FILE = Gamester/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
