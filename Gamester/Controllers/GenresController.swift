@@ -10,7 +10,9 @@ import UIKit
 class GenresController: UIViewController {
     
     // MARK: Variables
-    private let genres: [Genre] = Genre.getMockArray()
+    private let genres: [Genre] = [Genre(id: 1, name: "Test1", games_count: 244, image_background: "x", games: [Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154)]),
+                                   Genre(id: 2, name: "Test3", games_count: 244, image_background: "x", games: [Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154)]),
+                                   Genre(id: 3, name: "Test3", games_count: 244, image_background: "x", games: [Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154) ,Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154) ,Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154)])]
     
     // MARK: UI Components
     private var tableView: UITableView = {
