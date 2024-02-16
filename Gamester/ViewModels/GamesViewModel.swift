@@ -33,6 +33,16 @@ class GamesViewModel {
     public func fetchGames() {
         print(" OVAJ ID JE U GAMES VIEW MODEL ---", self.genreID)
         print(" fetch games---")
+        let apiService = APIService()
+        apiService.fetchGamesInGenre(apiKey: Constants.API_KEY, genreID: self.genreID) { result in
+            switch result {
+            case .success(let games):
+                print("Fetched games: \(games)")
+                self.allGames = games
+            case .failure(let error):
+                print("Error fetching genres: \(error)")
+            }
+        }
     }
 }
 

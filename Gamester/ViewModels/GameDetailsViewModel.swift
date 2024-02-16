@@ -36,15 +36,17 @@ class GameDetailsViewModel {
     }
     
     var releasedLabel: String {
-        return self.game.released
+        return self.game.released ?? "XXX"
     }
     
     var ratingLabel: String {
-        return String(self.game.rating)
+       // return String(self.game.rating)
+        return "RATING LABEL"
     }
     
     var playTimeLabel: String {
-        return String(self.game.playTime)
+        //return String(self.game.playTime)
+        return "PLAY TIME LABEL"
     }
     
 }

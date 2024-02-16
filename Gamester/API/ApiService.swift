@@ -7,6 +7,42 @@
 import Foundation
 
 class APIService {
+    
+    func fetchGamesInGenre(apiKey: String, genreID: Int, completion: @escaping (Result<[Game], Error>) -> Void) {
+        
+        var urlComponents = URLComponents(string: "https://api.rawg.io/api/games")!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "key", value: apiKey),
+            URLQueryItem(name: "genre", value: "\(genreID)")
+        ]
+        
+        guard let url = urlComponents.url else {
+            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let gamesResponse = try decoder.decode(GamesResponse.self, from: data)
+                completion(.success(gamesResponse.results))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+    }
+    
     func fetchGenres(apiKey: String, completion: @escaping (Result<[Genre], Error>) -> Void) {
         let urlString = "https://api.rawg.io/api/genres?key=\(Constants.API_KEY)"
         
@@ -25,12 +61,6 @@ class APIService {
                 completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
                 return
             }
-            
-            // Print raw JSON data
-                       if let jsonString = String(data: data, encoding: .utf8) {
-                           print("Raw JSON Response:", jsonString)
-                       }
-                       
             
             do {
                 let decoder = JSONDecoder()
