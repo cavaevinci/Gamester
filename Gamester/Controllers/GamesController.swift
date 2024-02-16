@@ -22,7 +22,6 @@ class GamesController: UIViewController {
         return collectionView
     }()
     
-    
     private let searchController = UISearchController(searchResultsController: nil)
     
     // MARK: Lifecycle
@@ -43,7 +42,7 @@ class GamesController: UIViewController {
         print("all games----", self.viewModel.allGames)
     }
     
-    init(_ viewModel: GamesViewModel = GamesViewModel()) {
+    init(_ viewModel: GamesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

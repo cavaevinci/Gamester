@@ -42,6 +42,8 @@ class GenreCell: UITableViewCell {
     public func configure(with genre: Genre) {
         self.genre = genre
         self.genreName.text = genre.name
+        //self.genreImage = UIImageView(image: UIIm
+        self.setupUI()
     }
     
     private func setupUI() {

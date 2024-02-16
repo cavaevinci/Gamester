@@ -89,6 +89,7 @@ class GameDetailsController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.setupUI()
         self.view.backgroundColor = .systemBackground
         self.navigationItem.title = self.viewModel.game.name
@@ -98,7 +99,6 @@ class GameDetailsController: UIViewController {
         self.releasedLabel.text = self.viewModel.releasedLabel
         self.ratingLabel.text = self.viewModel.ratingLabel
         self.playTimeLabel.text = self.viewModel.playTimeLabel
-
     }
     
     // MARK: UI Setup

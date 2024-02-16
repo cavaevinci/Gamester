@@ -44,7 +44,7 @@ class GameDetailsViewModel {
     }
     
     var playTimeLabel: String {
-        return String(self.game.playtime)
+        return String(self.game.playTime)
     }
     
 }

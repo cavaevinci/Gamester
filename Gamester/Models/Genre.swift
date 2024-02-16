@@ -7,20 +7,23 @@
 
 import Foundation
 
-struct GenreResponse: Codable {
+struct Genre: Codable {
+    let id: Int
+    let name: String
+    let slug: String
+    let gamesCount: Int?
+    let imageBackground: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, name, slug
+        case gamesCount = "games_count"
+        case imageBackground = "image_background"
+    }
+}
+
+struct GenresResponse: Codable {
+    let count: Int
+    let next: String?
+    let previous: String?
     let results: [Genre]
 }
-
-struct Genre: Codable {
-    //let id: Int
-    let name: String
-    //let games_count: Int
-    let image_background: String
-    //let games: [Game]
-    
-    var mockImg: URL? {
-        return URL(string: "https://s2.coinmarketcap.com/static/img/coins/200x200/1.png")
-    }
-
-}
-

@@ -7,16 +7,26 @@
 
 import Foundation
 
-struct Game {
+struct Game: Codable {
     let id: Int
     let name: String
     let released: String
-    let background_image: String
+    let imageBackground: String
     let rating: Int
-    let playtime: Int
-    
-    var mockImg: URL? {
-        return URL(string: "https://s2.coinmarketcap.com/static/img/coins/200x200/1.png")
-    }
+    let playTime: Int
 
+    private enum CodingKeys: String, CodingKey {
+        case id, name, released, rating
+        case imageBackground = "background_image"
+        case playTime = "playtime"
+    }
 }
+
+struct GamesResponse: Codable {
+    let count: Int
+    let next: String?
+    let previous: String?
+    let results: [Game]
+}
+
+

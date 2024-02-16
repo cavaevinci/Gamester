@@ -29,12 +29,16 @@ class GenresViewModel {
     }
     
     public func fetchCoins() {
-        print(" fetch coins---")
-        self.allGenres.append(Genre(name: "ww", image_background: "ff"))
-        self.allGenres.append(Genre(name: "wwfff", image_background: "ff"))
-        self.allGenres.append(Genre(name: "wwggrsgr", image_background: "ff"))
-        self.allGenres.append(Genre(name: "wwdrhdth", image_background: "ff"))
-        self.allGenres.append(Genre(name: "wwdthdth", image_background: "ff"))
+        let apiService = APIService()
+        apiService.fetchGenres(apiKey: Constants.API_KEY) { result in
+            switch result {
+            case .success(let genres):
+                print("Fetched genres: \(genres)")
+                self.allGenres = genres
+            case .failure(let error):
+                print("Error fetching genres: \(error)")
+            }
+        }
     }
 }
 
