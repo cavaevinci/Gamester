@@ -120,7 +120,7 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
         let inSearchMode = self.viewModel.inSearchMode(searchController)
         
         let game = inSearchMode ? self.viewModel.filteredGames[indexPath.row] : self.viewModel.allGames[indexPath.row]
-        let vm = GameDetailsViewModel(game)
+        let vm = GameDetailsViewModel(game.id)
         let vc = GameDetailsController(vm)
         self.navigationController?.pushViewController(vc, animated: true)
     }

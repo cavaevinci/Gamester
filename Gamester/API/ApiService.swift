@@ -8,6 +8,36 @@ import Foundation
 
 class APIService {
     
+    func fetchGameDetails(apiKey: String, gameID: Int, completion: @escaping (Result<Game, Error>) -> Void) {
+        let urlString = "https://api.rawg.io/api/games/\(gameID)?key=\(Constants.API_KEY)"
+        
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let genresResponse = try decoder.decode(Game.self, from: data)
+                completion(.success(genresResponse))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+    }
+    
     func fetchGamesInGenre(apiKey: String, genreID: Int, completion: @escaping (Result<[Game], Error>) -> Void) {
         
         var urlComponents = URLComponents(string: "https://api.rawg.io/api/games")!

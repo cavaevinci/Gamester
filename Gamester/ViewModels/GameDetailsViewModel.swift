@@ -9,34 +9,43 @@ import UIKit
 
 class GameDetailsViewModel {
     
-    //var onImageLoaded: ((UIImage?) -> Void)?
+    // MARK: - Callbacks
+    var onDetailsUpdated: (()->Void)?
     
     // MARK: Variables
-    let game: Game
+    private(set) var game: Game? {
+        didSet {
+            self.onDetailsUpdated?()
+        }
+    }
+    let gameID: Int
     
     // MARK: Initializer
-    init(_ game: Game) {
-        self.game = game
-       // self.loadImage()
+    init(_ id: Int) {
+        self.gameID = id
+        self.fetchGameDetails()
     }
     
-    /*private func loadImage() {
-        DispatchQueue.global().async {
-            if let mockURL = self.game.mockImg,
-             let imageData = try? Data(contentsOf: mockURL),
-               let image = UIImage(data: imageData) {
-                self.onImageLoaded!(image)
+    public func fetchGameDetails() {
+        let apiService = APIService()
+        apiService.fetchGameDetails(apiKey: Constants.API_KEY, gameID: self.gameID) { result in
+            switch result {
+            case .success(let details):
+                print("Fetched details: \(details)")
+                self.game = details
+            case .failure(let error):
+                print("Error fetching details: \(error)")
             }
         }
-    }*/
+    }
     
     // MARK: Computed Properties
     var nameLabel: String {
-        return self.game.name
+        return self.game?.name ?? ""
     }
     
     var releasedLabel: String {
-        return self.game.released ?? "XXX"
+        return self.game?.released ?? "XXX"
     }
     
     var ratingLabel: String {

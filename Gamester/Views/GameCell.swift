@@ -16,17 +16,17 @@ class GameCell: UICollectionViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.image = UIImage(systemName: "")
-        iv.tintColor = .white
-        iv.backgroundColor = .systemBlue
+        //iv.tintColor = .white
+        iv.backgroundColor = .green
         return iv
     }()
     
     private var gameName: UILabel = {
         let label = UILabel()
-        label.textColor = .label
+        label.textColor = .black
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 22, weight: .semibold)
-        label.text = "Error"
+        //label.text = "Error"
         return label
     }()
     
@@ -34,6 +34,7 @@ class GameCell: UICollectionViewCell {
         self.game = game
         self.gameName.text = game.name
         self.setupUI()
+        print(" GAME CELL CONFIGURE ----", self.game)
     }
     
     private func setupUI() {

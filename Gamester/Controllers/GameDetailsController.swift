@@ -92,7 +92,7 @@ class GameDetailsController: UIViewController {
         
         self.setupUI()
         self.view.backgroundColor = .systemBackground
-        self.navigationItem.title = self.viewModel.game.name
+        self.navigationItem.title = self.viewModel.game?.name ?? ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: nil, action: nil)
         
         self.nameLabel.text = self.viewModel.nameLabel
