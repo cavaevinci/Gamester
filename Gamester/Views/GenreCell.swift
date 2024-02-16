@@ -38,7 +38,7 @@ class GenreCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+     
     public func configure(with genre: Genre) {
         self.genre = genre
         self.genreName.text = genre.name

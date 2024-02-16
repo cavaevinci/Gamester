@@ -63,7 +63,7 @@ class GenresController: UIViewController {
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
         self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.searchBar.placeholder = "Search Cryptos"
+        self.searchController.searchBar.placeholder = "Search.."
         
         self.navigationItem.searchController = searchController
         self.definesPresentationContext = false
@@ -88,7 +88,6 @@ extension GenresController: UISearchResultsUpdating, UISearchControllerDelegate,
     }
 }
 
-
 // MARK: TableView Functions
 extension GenresController: UITableViewDelegate, UITableViewDataSource {
     
@@ -104,8 +103,8 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           
           let inSearchMode = self.viewModel.inSearchMode(searchController)
           
-          let coin = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
-          cell.configure(with: coin)
+          let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
+          cell.configure(with: genre)
           return cell
       }
       
@@ -119,9 +118,8 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           let inSearchMode = self.viewModel.inSearchMode(searchController)
           
           let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
-          let q = Game(id: 1, name: "gg", released: "2222-44-22", background_image: "dee", rating: 1, playtime: 4)
-          let vm = GameDetailsViewModel(q)
-          let vc = GameDetailsController(vm)
+          let vm = GamesViewModel()
+          let vc = GamesController(vm)
           self.navigationController?.pushViewController(vc, animated: true)
       }
 
