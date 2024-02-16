@@ -99,11 +99,6 @@ class GameDetailsController: UIViewController {
         self.ratingLabel.text = self.viewModel.ratingLabel
         self.playTimeLabel.text = self.viewModel.playTimeLabel
 
-        self.viewModel.onImageLoaded = { [weak self] img in
-            DispatchQueue.main.async {
-                self?.gameImage.image = img
-            }
-        }
     }
     
     // MARK: UI Setup

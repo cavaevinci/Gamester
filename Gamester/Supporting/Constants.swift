@@ -11,7 +11,7 @@ struct Constants {
     
     //MARK: - API
     static let scheme = "https"
-    static let baseURL = "pi.rawg.io"
+    static let baseURL = "api.rawg.io"
     static let port: Int? = nil
     static let fullURL = "https://api.rawg.io/api/"
     

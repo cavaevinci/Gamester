@@ -9,7 +9,7 @@ import UIKit
 
 class GameDetailsViewModel {
     
-    var onImageLoaded: ((UIImage?) -> Void)?
+    //var onImageLoaded: ((UIImage?) -> Void)?
     
     // MARK: Variables
     let game: Game
@@ -17,10 +17,10 @@ class GameDetailsViewModel {
     // MARK: Initializer
     init(_ game: Game) {
         self.game = game
-        self.loadImage()
+       // self.loadImage()
     }
     
-    private func loadImage() {
+    /*private func loadImage() {
         DispatchQueue.global().async {
             if let mockURL = self.game.mockImg,
              let imageData = try? Data(contentsOf: mockURL),
@@ -28,7 +28,7 @@ class GameDetailsViewModel {
                 self.onImageLoaded!(image)
             }
         }
-    }
+    }*/
     
     // MARK: Computed Properties
     var nameLabel: String {

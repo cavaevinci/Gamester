@@ -10,9 +10,7 @@ import UIKit
 class GenresController: UIViewController {
     
     // MARK: Variables
-    private let genres: [Genre] = [Genre(id: 1, name: "Test1", games_count: 244, image_background: "x", games: [Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154)]),
-                                   Genre(id: 2, name: "Test3", games_count: 244, image_background: "x", games: [Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154)]),
-                                   Genre(id: 3, name: "Test3", games_count: 244, image_background: "x", games: [Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154) ,Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154) ,Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154), Game(id: 1, name: "game1", released: "2222-33-44", background_image: "xx", rating: 100, playtime: 5154)])]
+    private let viewModel: GenresViewModel
     
     // MARK: UI Components
     private var tableView: UITableView = {
@@ -21,15 +19,33 @@ class GenresController: UIViewController {
         tv.register(GenreCell.self, forCellReuseIdentifier: GenreCell.identifier)
         return tv
     }()
+    
+    private let searchController = UISearchController(searchResultsController: nil)
 
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupSearchController()
         self.setupUI()
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        self.viewModel.onGenreUpdated = { [weak self] in
+           DispatchQueue.main.async {
+               self?.tableView.reloadData()
+           }
+       }
     }
     
+    init(_ viewModel: GenresViewModel = GenresViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+        
     // MARK: UI Setup
     private func setupUI() {
         self.navigationItem.title = "Gamester"
@@ -41,38 +57,73 @@ class GenresController: UIViewController {
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         ])
+    }
+    
+    private func setupSearchController() {
+        self.searchController.searchResultsUpdater = self
+        self.searchController.obscuresBackgroundDuringPresentation = false
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        self.searchController.searchBar.placeholder = "Search Cryptos"
         
+        self.navigationItem.searchController = searchController
+        self.definesPresentationContext = false
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.showsBookmarkButton = true
+        searchController.searchBar.setImage(UIImage(systemName: "line.horizontal.3.decrease"), for: .bookmark, state: .normal)
     }
 }
+
+// MARK: - Search Controller Functions
+extension GenresController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate  {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        self.viewModel.updateSearchController(searchBarText: searchController.searchBar.text)
+    }
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        print("Search bar button called!")
+    }
+}
+
 
 // MARK: TableView Functions
 extension GenresController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.genres.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: GenreCell.identifier, for: indexPath) as? GenreCell else {
-            fatalError("Unable to dequeue GenreCell in GenresController")
-        }
-        let genre = self.genres[indexPath.row]
-        cell.configure(with: genre)
+      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+          let inSearchMode = self.viewModel.inSearchMode(searchController)
+          return inSearchMode ? self.viewModel.filteredGenres.count : self.viewModel.allGenres.count
+      }
+      
+      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+          guard let cell = tableView.dequeueReusableCell(withIdentifier: GenreCell.identifier, for: indexPath) as? GenreCell else {
+              fatalError("Unable to dequeue GenreCell in GenresController")
+          }
+          
+          let inSearchMode = self.viewModel.inSearchMode(searchController)
+          
+          let coin = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
+          cell.configure(with: coin)
+          return cell
+      }
+      
+      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+          return 88
+      }
+      
+      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+          self.tableView.deselectRow(at: indexPath, animated: true)
+          
+          let inSearchMode = self.viewModel.inSearchMode(searchController)
+          
+          let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
+          let q = Game(id: 1, name: "gg", released: "2222-44-22", background_image: "dee", rating: 1, playtime: 4)
+          let vm = GameDetailsViewModel(q)
+          let vc = GameDetailsController(vm)
+          self.navigationController?.pushViewController(vc, animated: true)
+      }
 
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 88
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tableView.deselectRow(at: indexPath, animated: true)
-        let genre = self.genres[indexPath.row]
-        let vm = GameDetailsViewModel(genre.games.first!)
-        let vc = GameDetailsController(vm)
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
 }
 
