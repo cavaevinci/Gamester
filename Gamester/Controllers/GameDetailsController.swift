@@ -36,7 +36,6 @@ class GameDetailsController: UIViewController {
         label.textColor = .label
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20, weight: .semibold)
-        label.text = "Error"
         return label
     }()
     
@@ -45,7 +44,6 @@ class GameDetailsController: UIViewController {
         label.textColor = .label
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20, weight: .semibold)
-        label.text = "Error"
         return label
     }()
     
@@ -54,7 +52,6 @@ class GameDetailsController: UIViewController {
         label.textColor = .label
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20, weight: .semibold)
-        label.text = "Error"
         return label
     }()
     
@@ -63,13 +60,20 @@ class GameDetailsController: UIViewController {
         label.textColor = .label
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20, weight: .semibold)
-        label.text = "Error"
+        return label
+    }()
+    
+    private let websiteLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
     //wont be constructed untill we call it
     private lazy var vStack: UIStackView = {
-        let vStack = UIStackView(arrangedSubviews: [nameLabel, releasedLabel, ratingLabel, playTimeLabel])
+        let vStack = UIStackView(arrangedSubviews: [nameLabel, releasedLabel, ratingLabel, playTimeLabel, websiteLabel])
         vStack.axis = .vertical
         vStack.spacing = 12
         vStack.distribution = .fill
@@ -91,14 +95,19 @@ class GameDetailsController: UIViewController {
         super.viewDidLoad()
         
         self.setupUI()
+        self.viewModel.onDetailsUpdated = { [weak self] in
+           DispatchQueue.main.async {
+               self?.nameLabel.text = self?.viewModel.nameLabel
+               self?.releasedLabel.text = self?.viewModel.releasedLabel
+               self?.ratingLabel.text = self?.viewModel.ratingLabel
+               self?.playTimeLabel.text = self?.viewModel.playTimeLabel
+               self?.websiteLabel.text = self?.viewModel.websiteLabel
+           }
+       }
+        
         self.view.backgroundColor = .systemBackground
         self.navigationItem.title = self.viewModel.game?.name ?? ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: nil, action: nil)
-        
-        self.nameLabel.text = self.viewModel.nameLabel
-        self.releasedLabel.text = self.viewModel.releasedLabel
-        self.ratingLabel.text = self.viewModel.ratingLabel
-        self.playTimeLabel.text = self.viewModel.playTimeLabel
     }
     
     // MARK: UI Setup

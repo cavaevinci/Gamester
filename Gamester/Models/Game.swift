@@ -14,9 +14,10 @@ struct Game: Codable {
     let imageBackground: String?
     let rating: Double?
     let playTime: Int?
+    let website: String?
 
     private enum CodingKeys: String, CodingKey {
-        case id, name, released, rating
+        case id, name, released, rating, website
         case imageBackground = "background_image"
         case playTime = "playtime"
     }

@@ -15,6 +15,7 @@ class GamesViewModel {
     
     // MARK: - Variables
     private(set) var genreID: Int
+    
     private(set) var allGames: [Game] = [] {
         didSet {
             self.onGamesUpdated?()
@@ -27,6 +28,7 @@ class GamesViewModel {
     init(_ genreID: Int) {
         self.genreID = genreID
         self.fetchGames()
+        print(" games view model init")
     }
     
     //refactor

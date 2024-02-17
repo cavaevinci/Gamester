@@ -49,13 +49,15 @@ class GameDetailsViewModel {
     }
     
     var ratingLabel: String {
-       // return String(self.game.rating)
-        return "RATING LABEL"
+        return "\(self.game?.rating ?? 1.0)"
     }
     
     var playTimeLabel: String {
-        //return String(self.game.playTime)
-        return "PLAY TIME LABEL"
+        return "\(self.game?.playTime ?? 1)"
+    }
+    
+    var websiteLabel: String {
+        return self.game?.website ?? ""
     }
     
 }
