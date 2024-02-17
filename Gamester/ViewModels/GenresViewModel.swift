@@ -12,7 +12,6 @@ class GenresViewModel {
     
     // MARK: - Callbacks
     var onGenreUpdated: (()->Void)?
-    //var onErrorMessage: ((CoinServiceError)->Void)?
     
     // MARK: - Variables
     private(set) var allGenres: [Genre] = [] {
@@ -28,6 +27,7 @@ class GenresViewModel {
         self.fetchCoins()
     }
     
+    //refactor
     public func fetchCoins() {
         let apiService = APIService()
         apiService.fetchGenres(apiKey: Constants.API_KEY) { result in
@@ -48,19 +48,16 @@ extension GenresViewModel {
     public func inSearchMode(_ searchController: UISearchController) -> Bool {
         let isActive = searchController.isActive
         let searchText = searchController.searchBar.text ?? ""
-        
         return isActive && !searchText.isEmpty
     }
     
     public func updateSearchController(searchBarText: String?) {
         self.filteredGenres = allGenres
-
         if let searchText = searchBarText?.lowercased() {
             guard !searchText.isEmpty else { self.onGenreUpdated?(); return }
             
             self.filteredGenres = self.filteredGenres.filter({ $0.name.lowercased().contains(searchText) })
         }
-        
         self.onGenreUpdated?()
     }
 }

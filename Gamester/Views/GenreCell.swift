@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class GenreCell: UITableViewCell {
     
@@ -15,9 +16,8 @@ class GenreCell: UITableViewCell {
     private var genreImage: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(systemName: "")
-        iv.tintColor = .white
-        iv.backgroundColor = .systemBlue
+        iv.image = UIImage(systemName: "questionmark")
+        iv.tintColor = .black
         return iv
     }()
     
@@ -26,7 +26,6 @@ class GenreCell: UITableViewCell {
         label.textColor = .label
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 22, weight: .semibold)
-        label.text = "Error"
         return label
     }()
     
@@ -42,8 +41,7 @@ class GenreCell: UITableViewCell {
     public func configure(with genre: Genre) {
         self.genre = genre
         self.genreName.text = genre.name
-        //self.genreImage = UIImageView(image: UIIm
-        self.setupUI()
+        self.genreImage.sd_setImage(with: URL(string: "https://media.rawg.io/media/games/713/713269608dc8f2f40f5a670a14b2de94.jpg"))
     }
     
     private func setupUI() {
@@ -63,5 +61,12 @@ class GenreCell: UITableViewCell {
             genreName.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
+    
+    // MARK: PrepareForReuse
+       override func prepareForReuse() {
+           super.prepareForReuse()
+           self.genreName.text = nil
+           self.genreImage.image = nil
+       }
     
 }

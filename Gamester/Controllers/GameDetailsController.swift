@@ -144,8 +144,4 @@ class GameDetailsController: UIViewController {
             vStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
         ])
     }
-    
-    // MARK: Selectors
-
-
 }

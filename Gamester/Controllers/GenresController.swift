@@ -63,7 +63,6 @@ class GenresController: UIViewController {
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
         self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.searchBar.placeholder = "Search.."
         
         self.navigationItem.searchController = searchController
         self.definesPresentationContext = false
@@ -71,8 +70,6 @@ class GenresController: UIViewController {
         
         searchController.delegate = self
         searchController.searchBar.delegate = self
-        searchController.searchBar.showsBookmarkButton = true
-        searchController.searchBar.setImage(UIImage(systemName: "line.horizontal.3.decrease"), for: .bookmark, state: .normal)
     }
 }
 
@@ -118,7 +115,6 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           let inSearchMode = self.viewModel.inSearchMode(searchController)
           
           let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
-          print(" selected genre id ---", genre.id)
           let vm = GamesViewModel(genre.id)
           let vc = GamesController(vm)
           self.navigationController?.pushViewController(vc, animated: true)

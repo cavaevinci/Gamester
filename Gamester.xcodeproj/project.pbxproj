@@ -26,6 +26,7 @@
 		3FD643F52B7FB64400D2F586 /* GamesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F42B7FB64400D2F586 /* GamesViewModel.swift */; };
 		3FD643F72B7FBA9800D2F586 /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F62B7FBA9800D2F586 /* GameCell.swift */; };
 		3FD643F92B7FC7D400D2F586 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F82B7FC7D400D2F586 /* ApiService.swift */; };
+		3FD643FC2B80CDFF00D2F586 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3FD643FB2B80CDFF00D2F586 /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FD643FC2B80CDFF00D2F586 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +223,9 @@
 			dependencies = (
 			);
 			name = Gamester;
+			packageProductDependencies = (
+				3FD643FB2B80CDFF00D2F586 /* SDWebImage */,
+			);
 			productName = Gamester;
 			productReference = 3FD643A52B7D3BF200D2F586 /* Gamester.app */;
 			productType = "com.apple.product-type.application";
@@ -293,6 +298,9 @@
 				Base,
 			);
 			mainGroup = 3FD6439C2B7D3BF200D2F586;
+			packageReferences = (
+				3FD643FA2B80CD3D00D2F586 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = 3FD643A62B7D3BF200D2F586 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -687,6 +695,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3FD643FA2B80CD3D00D2F586 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.18.11;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3FD643FB2B80CDFF00D2F586 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3FD643FA2B80CD3D00D2F586 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3FD6439D2B7D3BF200D2F586 /* Project object */;
 }

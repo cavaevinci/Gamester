@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class GameCell: UICollectionViewCell {
     
@@ -15,9 +16,8 @@ class GameCell: UICollectionViewCell {
     private var gameImage: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(systemName: "")
-        //iv.tintColor = .white
-        iv.backgroundColor = .green
+        iv.image = UIImage(systemName: "questionmark")
+        iv.tintColor = .black
         return iv
     }()
     
@@ -25,38 +25,51 @@ class GameCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 22, weight: .semibold)
-        //label.text = "Error"
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
         return label
     }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     public func configure(with game: Game) {
         self.game = game
         self.gameName.text = game.name
-        self.setupUI()
-        print(" GAME CELL CONFIGURE ----", self.game)
+        self.gameImage.sd_setImage(with: URL(string: "https://media.rawg.io/media/games/713/713269608dc8f2f40f5a670a14b2de94.jpg"))
     }
     
     private func setupUI() {
         self.addSubview(gameImage)
         self.addSubview(gameName)
         
-        gameImage.translatesAutoresizingMaskIntoConstraints = false
-        gameImage.translatesAutoresizingMaskIntoConstraints = false
+        gameName.numberOfLines = 0
+        gameName.lineBreakMode = .byWordWrapping
         
+        gameImage.translatesAutoresizingMaskIntoConstraints = false
+        gameName.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            gameImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            gameImage.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
-            gameImage.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75),
-            gameImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75),
+            gameImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            gameImage.topAnchor.constraint(equalTo: self.topAnchor),
+            gameImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.75),
+            gameImage.heightAnchor.constraint(equalTo: gameImage.widthAnchor),
             
-            gameName.leadingAnchor.constraint(equalTo: gameImage.trailingAnchor, constant: 16),
-            gameName.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            gameName.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            gameName.topAnchor.constraint(equalTo: gameImage.bottomAnchor, constant: 8),
+            gameName.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
+            gameName.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
         ])
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.gameName.text = nil
         self.gameImage.image = nil
     }
 }

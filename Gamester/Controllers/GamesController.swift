@@ -38,8 +38,6 @@ class GamesController: UIViewController {
         
        self.collectionView.delegate = self
        self.collectionView.dataSource = self
-
-        print("all games----", self.viewModel.allGames)
     }
     
     init(_ viewModel: GamesViewModel) {
@@ -69,7 +67,6 @@ class GamesController: UIViewController {
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
         self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.searchBar.placeholder = "Search.."
         
         self.navigationItem.searchController = searchController
         self.definesPresentationContext = false
@@ -77,8 +74,6 @@ class GamesController: UIViewController {
         
         searchController.delegate = self
         searchController.searchBar.delegate = self
-        searchController.searchBar.showsBookmarkButton = true
-        searchController.searchBar.setImage(UIImage(systemName: "line.horizontal.3.decrease"), for: .bookmark, state: .normal)
     }
     
 }
