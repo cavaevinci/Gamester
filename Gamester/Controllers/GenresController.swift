@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol GenresControllerDelegate {
+    func changedGenres()
+}
+
 class GenresController: UIViewController {
     
     // MARK: Variables
     private let viewModel: GenresViewModel
+    var delegate: GenresControllerDelegate?
     
     // MARK: UI Components
     private var tableView: UITableView = {
@@ -122,6 +127,8 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           
           if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
               print("poppam")
+              print(" changed genres")
+              delegate?.changedGenres()
               self.navigationController?.popViewController(animated: true)
           } else {
               print("navigiram")

@@ -41,13 +41,14 @@ class APIService {
         var urlComponents = URLComponents(string: "https://api.rawg.io/api/games")!
         urlComponents.queryItems = [
             URLQueryItem(name: "key", value: apiKey),
-            URLQueryItem(name: "genre", value: "\(genreID)")
+            URLQueryItem(name: "genres", value: "\(genreID)")
         ]
         
         guard let url = urlComponents.url else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
         }
+        print(" fetch games in genre ---url---", url)
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))

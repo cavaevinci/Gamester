@@ -7,7 +7,12 @@
 
 import UIKit
 
-class GamesController: UIViewController {
+class GamesController: UIViewController, GenresControllerDelegate {
+    
+    func changedGenres() {
+        print(" JAVIO GAMES CONTROLLERU DA RELOADAM GENRES---")
+        viewModel.fetchGames()
+    }
     
     // MARK: Variables
     private let viewModel: GamesViewModel
@@ -85,6 +90,7 @@ class GamesController: UIViewController {
         print("Settings button tapped!")
         let vm = GenresViewModel()
         let vc = GenresController(vm)
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
