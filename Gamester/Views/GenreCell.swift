@@ -41,7 +41,7 @@ class GenreCell: UITableViewCell {
     public func configure(with genre: Genre) {
         self.genre = genre
         self.genreName.text = genre.name
-        self.genreImage.sd_setImage(with: URL(string: "https://media.rawg.io/media/games/713/713269608dc8f2f40f5a670a14b2de94.jpg"))
+        self.genreImage.sd_setImage(with: URL(string: genre.imageBackground))
     }
     
     private func setupUI() {

@@ -11,8 +11,8 @@ struct Genre: Codable {
     let id: Int
     let name: String
     let slug: String
-    let gamesCount: Int?
-    let imageBackground: String?
+    let gamesCount: Int
+    let imageBackground: String
     
     private enum CodingKeys: String, CodingKey {
         case id, name, slug
@@ -23,7 +23,5 @@ struct Genre: Codable {
 
 struct GenresResponse: Codable {
     let count: Int
-    let next: String?
-    let previous: String?
     let results: [Genre]
 }

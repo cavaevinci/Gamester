@@ -41,7 +41,7 @@ class GamesViewModel {
                     print("Fetched games: \(games)")
                     self.allGames = games
                 case .failure(let error):
-                    print("Error fetching genres: \(error)")
+                    print("Error fetching games: \(error)")
                 }
             }
         }

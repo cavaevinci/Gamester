@@ -41,7 +41,7 @@ class GameCell: UICollectionViewCell {
     public func configure(with game: Game) {
         self.game = game
         self.gameName.text = game.name
-        self.gameImage.sd_setImage(with: URL(string: "https://media.rawg.io/media/games/713/713269608dc8f2f40f5a670a14b2de94.jpg"))
+        self.gameImage.sd_setImage(with: URL(string: game.imageBackground ))
     }
     
     private func setupUI() {

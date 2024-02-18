@@ -28,10 +28,8 @@ class APIService {
             }
             
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let genresResponse = try decoder.decode(Game.self, from: data)
-                completion(.success(genresResponse))
+                let gameResponse = try JSONDecoder().decode(Game.self, from: data)
+                completion(.success(gameResponse))
             } catch {
                 completion(.failure(error))
             }
@@ -50,7 +48,6 @@ class APIService {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
         }
-        print(" ovo je url koji zovem--", url)
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
@@ -63,9 +60,7 @@ class APIService {
             }
             
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let gamesResponse = try decoder.decode(GamesResponse.self, from: data)
+                let gamesResponse = try JSONDecoder().decode(GamesResponse.self, from: data)
                 completion(.success(gamesResponse.results))
             } catch {
                 completion(.failure(error))
@@ -93,9 +88,7 @@ class APIService {
             }
             
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let genresResponse = try decoder.decode(GenresResponse.self, from: data)
+                let genresResponse = try JSONDecoder().decode(GenresResponse.self, from: data)
                 completion(.success(genresResponse.results))
             } catch {
                 completion(.failure(error))

@@ -10,10 +10,10 @@ import Foundation
 struct Game: Codable {
     let id: Int
     let name: String
-    let released: String?
-    let imageBackground: String?
-    let rating: Double?
-    let playTime: Int?
+    let released: String
+    let imageBackground: String
+    let rating: Double
+    let playTime: Int
     let website: String?
 
     private enum CodingKeys: String, CodingKey {
@@ -25,8 +25,6 @@ struct Game: Codable {
 
 struct GamesResponse: Codable {
     let count: Int
-    let next: String?
-    let previous: String?
     let results: [Game]
 }
 
