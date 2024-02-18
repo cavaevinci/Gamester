@@ -53,7 +53,7 @@ class GenresController: UIViewController {
         
     // MARK: UI Setup
     private func setupUI() {
-        self.navigationItem.title = "Gamester"
+        self.navigationItem.title = "Genres"
         self.view.addSubview(tableView)
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -121,17 +121,12 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           
           let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
                     
-          print(" vc before nav---", self.navigationController?.viewControllerBeforeNavigation())
-          //ako ides iz onboardinga- onda je ovo nil,ako ides iz games onda je ima vca
           UserDefaultsService.shared.saveSelectedGenre(genre.id)
-          
+    
           if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
-              print("poppam")
-              print(" changed genres")
               delegate?.changedGenres()
               self.navigationController?.popViewController(animated: true)
           } else {
-              print("navigiram")
               let vm = GamesViewModel()
               let vc = GamesController(vm)
               self.navigationController?.pushViewController(vc, animated: true)

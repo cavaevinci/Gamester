@@ -114,6 +114,8 @@ class GameDetailsController: UIViewController {
     
     // MARK: UI Setup
     private func setupUI() {
+        self.navigationItem.title = "Details"
+
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(contentView)
         self.contentView.addSubview(gameImage)

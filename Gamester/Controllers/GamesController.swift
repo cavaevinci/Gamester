@@ -57,7 +57,7 @@ class GamesController: UIViewController, GenresControllerDelegate {
     
     // MARK: UI Setup
     private func setupUI() {
-        self.navigationItem.title = "Game"
+        self.navigationItem.title = "Games"
         self.view.backgroundColor = .systemBlue
         self.view.addSubview(collectionView)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
