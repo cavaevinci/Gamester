@@ -25,6 +25,7 @@ class GenresViewModel {
     // MARK: - Initializer
     init() {
         self.fetchCoins()
+        print("fetch genres model init")
     }
     
     //refactor

@@ -115,15 +115,21 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           let inSearchMode = self.viewModel.inSearchMode(searchController)
           
           let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
-          
+                    
+          print(" vc before nav---", self.navigationController?.viewControllerBeforeNavigation())
+          //ako ides iz onboardinga- onda je ovo nil,ako ides iz games onda je ima vca
           UserDefaultsService.shared.saveSelectedGenre(genre.id)
           
-          print(" selected genre id ---", genre.id)
-          let vm = GamesViewModel()
-          let vc = GamesController(vm)
-          self.navigationController?.pushViewController(vc, animated: true)
-          print(" RADIM NAVIGACIJU--")
+          if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
+              print("poppam")
+              self.navigationController?.popViewController(animated: true)
+          } else {
+              print("navigiram")
+              let vm = GamesViewModel()
+              let vc = GamesController(vm)
+              self.navigationController?.pushViewController(vc, animated: true)
+          }
+          
       }
 
 }
-

@@ -13,12 +13,13 @@ class GameDetailsViewModel {
     var onDetailsUpdated: (()->Void)?
     
     // MARK: Variables
+    let gameID: Int
+    
     private(set) var game: Game? {
         didSet {
             self.onDetailsUpdated?()
         }
     }
-    let gameID: Int
     
     // MARK: Initializer
     init(_ id: Int) {

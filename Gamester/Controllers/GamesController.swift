@@ -73,6 +73,10 @@ class GamesController: UIViewController {
         
         // Set the button as the right bar button item
         navigationItem.rightBarButtonItem = settingsButton
+        
+        // Create a custom back button with an empty action
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        navigationItem.leftBarButtonItem = backButton
     }
         
     @objc func settingsButtonTapped() {
