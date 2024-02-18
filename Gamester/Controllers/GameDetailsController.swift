@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class GameDetailsController: UIViewController {
 
@@ -102,6 +103,7 @@ class GameDetailsController: UIViewController {
                self?.ratingLabel.text = self?.viewModel.ratingLabel
                self?.playTimeLabel.text = self?.viewModel.playTimeLabel
                self?.websiteLabel.text = self?.viewModel.websiteLabel
+               self?.gameImage.sd_setImage(with: URL(string: self?.viewModel.image ?? "" ))
            }
        }
         

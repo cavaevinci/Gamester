@@ -44,6 +44,10 @@ class GameDetailsViewModel {
         return self.game?.name ?? ""
     }
     
+    var image: String {
+        return self.game?.imageBackground ?? ""
+    }
+    
     var releasedLabel: String {
         return self.game?.released ?? "XXX"
     }
