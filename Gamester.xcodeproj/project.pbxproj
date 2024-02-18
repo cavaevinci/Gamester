@@ -29,6 +29,8 @@
 		3FD643FC2B80CDFF00D2F586 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3FD643FB2B80CDFF00D2F586 /* SDWebImage */; };
 		3FD643FE2B8185D900D2F586 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */; };
 		3FD644012B8250EA00D2F586 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */; };
+		3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644022B826D5200D2F586 /* APIEndpoint.swift */; };
+		3FD644052B826D8500D2F586 /* APIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		3FD643F82B7FC7D400D2F586 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 		3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
+		3FD644022B826D5200D2F586 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,8 @@
 			isa = PBXGroup;
 			children = (
 				3FD643F82B7FC7D400D2F586 /* ApiService.swift */,
+				3FD644022B826D5200D2F586 /* APIEndpoint.swift */,
+				3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -357,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FD644052B826D8500D2F586 /* APIServiceProtocol.swift in Sources */,
 				3FD643AD2B7D3BF200D2F586 /* GenresController.swift in Sources */,
 				3FD643EB2B7F877200D2F586 /* GameDetailsViewModel.swift in Sources */,
 				3FD643F92B7FC7D400D2F586 /* ApiService.swift in Sources */,
@@ -371,6 +378,7 @@
 				3FD644012B8250EA00D2F586 /* UINavigationController+Extension.swift in Sources */,
 				3FD643E92B7F7E8400D2F586 /* GameDetailsController.swift in Sources */,
 				3FD643FE2B8185D900D2F586 /* UserDefaultsService.swift in Sources */,
+				3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */,
 				3FD643DF2B7D60A400D2F586 /* Constants.swift in Sources */,
 				3FD643E12B7D654D00D2F586 /* Genre.swift in Sources */,
 			);

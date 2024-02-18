@@ -17,7 +17,6 @@ extension UINavigationController {
         guard previousIndex >= 0 else {
             return nil
         }
-        print("VC----", viewControllers[previousIndex].nibName)
         return viewControllers[previousIndex]
     }
 }

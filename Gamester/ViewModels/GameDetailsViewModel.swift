@@ -29,11 +29,10 @@ class GameDetailsViewModel {
     
     public func fetchGameDetails() {
         let apiService = APIService()
-        apiService.fetchGameDetails(apiKey: Constants.API_KEY, gameID: self.gameID) { result in
+        apiService.fetchData(from: .gameDetails(gameID: self.gameID), responseType: Game.self) { result in
             switch result {
-            case .success(let details):
-                print("Fetched details: \(details)")
-                self.game = details
+            case .success(let game):
+                self.game = game
             case .failure(let error):
                 print("Error fetching details: \(error)")
             }

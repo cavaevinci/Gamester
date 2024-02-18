@@ -86,7 +86,7 @@ extension GenresController: UISearchResultsUpdating, UISearchControllerDelegate,
     }
     
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-        print("Search bar button called!")
+        
     }
 }
 

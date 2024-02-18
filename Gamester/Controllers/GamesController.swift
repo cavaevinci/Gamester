@@ -9,11 +9,6 @@ import UIKit
 
 class GamesController: UIViewController, GenresControllerDelegate {
     
-    func changedGenres() {
-        print(" JAVIO GAMES CONTROLLERU DA RELOADAM GENRES---")
-        viewModel.fetchGames()
-    }
-    
     // MARK: Variables
     private let viewModel: GamesViewModel
     
@@ -82,6 +77,10 @@ class GamesController: UIViewController, GenresControllerDelegate {
         // Create a custom back button with an empty action
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationItem.leftBarButtonItem = backButton
+    }
+    
+    func changedGenres() {
+        viewModel.fetchGames()
     }
         
     @objc func settingsButtonTapped() {

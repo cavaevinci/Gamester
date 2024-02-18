@@ -6,94 +6,68 @@
 //
 import Foundation
 
-class APIService {
-    
-    func fetchGameDetails(apiKey: String, gameID: Int, completion: @escaping (Result<Game, Error>) -> Void) {
-        let urlString = "https://api.rawg.io/api/games/\(gameID)?key=\(Constants.API_KEY)"
+struct APIService: APIServiceProtocol {
+    func fetchData<T: Decodable>(from endpoint: APIEndpoint, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         
-        guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-            return
+        if case .gamesInGenre(let genreID) = endpoint {
+            var urlComponents = URLComponents(string: endpoint.urlString)!
+            urlComponents.queryItems = [
+                URLQueryItem(name: "key", value: Constants.API_KEY),
+                URLQueryItem(name: "genres", value: "\(genreID)")
+            ]
+            
+            guard let url = urlComponents.url else {
+                completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+                return
+            }
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let data = data else {
+                    completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
+                    return
+                }
+                
+                do {
+                    let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                    completion(.success(decodedResponse))
+                } catch {
+                    completion(.failure(error))
+                }
+            }.resume()
+        } else {
+            
+            var urlComponents = URLComponents(string: endpoint.urlString)!
+            urlComponents.queryItems = [
+                URLQueryItem(name: "key", value: Constants.API_KEY),
+            ]
+            
+            guard let url = urlComponents.url else {
+                completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+                return
+            }
+            
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let data = data else {
+                    completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
+                    return
+                }
+                
+                do {
+                    let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                    completion(.success(decodedResponse))
+                } catch {
+                    completion(.failure(error))
+                }
+            }.resume()
         }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
-                return
-            }
-            
-            do {
-                let gameResponse = try JSONDecoder().decode(Game.self, from: data)
-                completion(.success(gameResponse))
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
-    }
-    
-    func fetchGamesInGenre(apiKey: String, genreID: Int, completion: @escaping (Result<[Game], Error>) -> Void) {
-        
-        var urlComponents = URLComponents(string: "https://api.rawg.io/api/games")!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "key", value: apiKey),
-            URLQueryItem(name: "genres", value: "\(genreID)")
-        ]
-        
-        guard let url = urlComponents.url else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
-                return
-            }
-            
-            do {
-                let gamesResponse = try JSONDecoder().decode(GamesResponse.self, from: data)
-                completion(.success(gamesResponse.results))
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
-    }
-    
-    func fetchGenres(apiKey: String, completion: @escaping (Result<[Genre], Error>) -> Void) {
-        let urlString = "https://api.rawg.io/api/genres?key=\(Constants.API_KEY)"
-        
-        guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
-                return
-            }
-            
-            do {
-                let genresResponse = try JSONDecoder().decode(GenresResponse.self, from: data)
-                completion(.success(genresResponse.results))
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
     }
 }

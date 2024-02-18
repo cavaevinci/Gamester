@@ -31,13 +31,12 @@ class GenresViewModel {
     //refactor
     public func fetchCoins() {
         let apiService = APIService()
-        apiService.fetchGenres(apiKey: Constants.API_KEY) { result in
+        apiService.fetchData(from: .genres, responseType: GenresResponse.self) { result in
             switch result {
             case .success(let genres):
-                print("Fetched genres: \(genres)")
-                self.allGenres = genres
+                self.allGenres = genres.results
             case .failure(let error):
-                print("Error fetching genres: \(error)")
+                print("Error fetching details: \(error)")
             }
         }
     }
