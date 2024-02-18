@@ -14,7 +14,7 @@ class GamesViewModel {
     var onGamesUpdated: (()->Void)?
     
     // MARK: - Variables
-    private(set) var genreID: Int
+    //private(set) var genreID: Int
     
     private(set) var allGames: [Game] = [] {
         didSet {
@@ -25,22 +25,24 @@ class GamesViewModel {
     private(set) var filteredGames: [Game] = []
     
     // MARK: - Initializer
-    init(_ genreID: Int) {
-        self.genreID = genreID
+    init() {
         self.fetchGames()
         print(" games view model init")
     }
     
     //refactor
     public func fetchGames() {
-        let apiService = APIService()
-        apiService.fetchGamesInGenre(apiKey: Constants.API_KEY, genreID: self.genreID) { result in
-            switch result {
-            case .success(let games):
-                print("Fetched games: \(games)")
-                self.allGames = games
-            case .failure(let error):
-                print("Error fetching genres: \(error)")
+        if let genre = UserDefaultsService.shared.getSelectedGenre() {
+            print("Selected genre: \(genre)")
+            let apiService = APIService()
+            apiService.fetchGamesInGenre(apiKey: Constants.API_KEY, genreID: genre) { result in
+                switch result {
+                case .success(let games):
+                    print("Fetched games: \(games)")
+                    self.allGames = games
+                case .failure(let error):
+                    print("Error fetching genres: \(error)")
+                }
             }
         }
     }

@@ -115,8 +115,11 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           let inSearchMode = self.viewModel.inSearchMode(searchController)
           
           let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
+          
+          UserDefaultsService.shared.saveSelectedGenre(genre.id)
+          
           print(" selected genre id ---", genre.id)
-          let vm = GamesViewModel.init(genre.id)
+          let vm = GamesViewModel()
           let vc = GamesController(vm)
           self.navigationController?.pushViewController(vc, animated: true)
           print(" RADIM NAVIGACIJU--")

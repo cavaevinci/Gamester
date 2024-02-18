@@ -27,6 +27,7 @@
 		3FD643F72B7FBA9800D2F586 /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F62B7FBA9800D2F586 /* GameCell.swift */; };
 		3FD643F92B7FC7D400D2F586 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F82B7FC7D400D2F586 /* ApiService.swift */; };
 		3FD643FC2B80CDFF00D2F586 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3FD643FB2B80CDFF00D2F586 /* SDWebImage */; };
+		3FD643FE2B8185D900D2F586 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		3FD643F42B7FB64400D2F586 /* GamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewModel.swift; sourceTree = "<group>"; };
 		3FD643F62B7FBA9800D2F586 /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
 		3FD643F82B7FC7D400D2F586 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +205,7 @@
 				3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */,
 				3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */,
 				3FD643DE2B7D60A400D2F586 /* Constants.swift */,
+				3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */,
 				3FD643AB2B7D3BF200D2F586 /* SceneDelegate.swift in Sources */,
 				3FD643E92B7F7E8400D2F586 /* GameDetailsController.swift in Sources */,
+				3FD643FE2B8185D900D2F586 /* UserDefaultsService.swift in Sources */,
 				3FD643DF2B7D60A400D2F586 /* Constants.swift in Sources */,
 				3FD643E12B7D654D00D2F586 /* Genre.swift in Sources */,
 			);

@@ -29,6 +29,7 @@ class GamesController: UIViewController {
         super.viewDidLoad()
         self.setupSearchController()
         self.setupUI()
+        self.setupNavigationBar()
         
         self.viewModel.onGamesUpdated = { [weak self] in
            DispatchQueue.main.async {
@@ -61,6 +62,26 @@ class GamesController: UIViewController {
             self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         ])
+    }
+    
+    func setupNavigationBar() {
+        // Create a gear icon system item
+        let gearIcon = UIImage(systemName: "gear")
+        
+        // Create a UIBarButtonItem with the gear icon
+        let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
+        
+        // Set the button as the right bar button item
+        navigationItem.rightBarButtonItem = settingsButton
+    }
+        
+    @objc func settingsButtonTapped() {
+        // Handle settings button tap
+        // Implement your settings functionality here
+        print("Settings button tapped!")
+        let vm = GenresViewModel()
+        let vc = GenresController(vm)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func setupSearchController() {

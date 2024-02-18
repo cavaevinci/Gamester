@@ -14,11 +14,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UINavigationController(rootViewController: GenresController())
-        self.window = window
-        self.window?.makeKeyAndVisible()
-        
+        if let genre = UserDefaultsService.shared.getSelectedGenre() {
+            print("Selected genre: \(genre)")
+            let window = UIWindow(windowScene: windowScene)
+            window.rootViewController = UINavigationController(rootViewController: GamesController(GamesViewModel()))
+            self.window = window
+            self.window?.makeKeyAndVisible()
+        } else {
+            print("No genre selected")
+            let window = UIWindow(windowScene: windowScene)
+            window.rootViewController = UINavigationController(rootViewController: GenresController())
+            self.window = window
+            self.window?.makeKeyAndVisible()
+        }
     }
 
 }
