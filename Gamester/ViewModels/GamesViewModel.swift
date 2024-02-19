@@ -10,11 +10,9 @@ import UIKit
 
 class GamesViewModel {
     
-    // MARK: - Callbacks
-    var onGamesUpdated: (()->Void)?
-    
     // MARK: - Variables
-    
+    internal let apiService: APIServiceProtocol
+
     private(set) var allGames: [Game] = [] {
         didSet {
             self.onGamesUpdated?()
@@ -23,15 +21,18 @@ class GamesViewModel {
     
     private(set) var filteredGames: [Game] = []
     
+    // MARK: - Callbacks
+    var onGamesUpdated: (()->Void)?
+    
     // MARK: - Initializer
-    init() {
+    init(apiService: APIServiceProtocol) {
+        self.apiService = apiService
         self.fetchGames()
     }
     
     //refactor
     public func fetchGames() {
-        if let genre = UserDefaultsService.shared.getSelectedGenre() {
-            let apiService = APIService()
+        if let genre = UserDefaultsService().getSelectedGenre() {
             apiService.fetchData(from: .gamesInGenre(genreID: genre), responseType: GamesResponse.self) { result in
                 switch result {
                 case .success(let games):

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -14,20 +13,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        if let genre = UserDefaultsService.shared.getSelectedGenre() {
-            print("Selected genre: \(genre)")
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UINavigationController(rootViewController: GamesController(GamesViewModel()))
-            self.window = window
-            self.window?.makeKeyAndVisible()
+        
+        let window = UIWindow(windowScene: windowScene)
+        let rootViewController = makeRootViewController()
+        window.rootViewController = UINavigationController(rootViewController: rootViewController)
+        self.window = window
+        self.window?.makeKeyAndVisible()
+    }
+    
+    private func makeRootViewController() -> UIViewController {
+        let userDefaultsService = UserDefaultsService()
+        let apiService = APIService()
+        if userDefaultsService.getSelectedGenre() != nil {
+            let vm = GamesViewModel(apiService: apiService)
+            return GamesController(vm)
         } else {
-            print("No genre selected")
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UINavigationController(rootViewController: GenresController())
-            self.window = window
-            self.window?.makeKeyAndVisible()
+            let vm = GenresViewModel(userDefaultsService: userDefaultsService, apiService: apiService)
+            return GenresController(vm)
         }
     }
-
 }
 

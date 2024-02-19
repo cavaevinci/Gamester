@@ -42,7 +42,7 @@ class GenresController: UIViewController {
        }
     }
     
-    init(_ viewModel: GenresViewModel = GenresViewModel()) {
+    init(_ viewModel: GenresViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -121,17 +121,17 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           
           let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
                     
-          UserDefaultsService.shared.saveSelectedGenre(genre.id)
+          self.viewModel.userDefaultsService.saveSelectedGenre(genre.id)
     
           if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
               delegate?.refreshGenres()
               self.navigationController?.popViewController(animated: true)
           } else {
-              let vm = GamesViewModel()
+              let apiService = APIService()
+              let vm = GamesViewModel(apiService: apiService)
               let vc = GamesController(vm)
               self.navigationController?.pushViewController(vc, animated: true)
           }
-          
       }
 
 }

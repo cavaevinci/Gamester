@@ -6,7 +6,14 @@
 //
 import Foundation
 
-struct APIService: APIServiceProtocol {
+class APIService: APIServiceProtocol {
+    
+    private let session: URLSession
+    
+    init(session: URLSession = URLSession.shared) {
+        self.session = session
+    }
+    
     func fetchData<T: Decodable>(from endpoint: APIEndpoint, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
         
         if case .gamesInGenre(let genreID) = endpoint {
@@ -39,7 +46,6 @@ struct APIService: APIServiceProtocol {
                 }
             }.resume()
         } else {
-            
             var urlComponents = URLComponents(string: endpoint.urlString)!
             urlComponents.queryItems = [
                 URLQueryItem(name: "key", value: Constants.API_KEY),

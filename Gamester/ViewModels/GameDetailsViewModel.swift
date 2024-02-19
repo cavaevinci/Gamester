@@ -9,10 +9,8 @@ import UIKit
 
 class GameDetailsViewModel {
     
-    // MARK: - Callbacks
-    var onDetailsUpdated: (()->Void)?
-    
     // MARK: Variables
+    internal let apiService: APIServiceProtocol
     let gameID: Int
     
     private(set) var game: Game? {
@@ -21,14 +19,17 @@ class GameDetailsViewModel {
         }
     }
     
+    // MARK: - Callbacks
+    var onDetailsUpdated: (()->Void)?
+    
     // MARK: Initializer
-    init(_ id: Int) {
+    init(_ id: Int, apiService: APIServiceProtocol) {
+        self.apiService = apiService
         self.gameID = id
         self.fetchGameDetails()
     }
     
     public func fetchGameDetails() {
-        let apiService = APIService()
         apiService.fetchData(from: .gameDetails(gameID: self.gameID), responseType: Game.self) { result in
             switch result {
             case .success(let game):

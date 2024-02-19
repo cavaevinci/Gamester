@@ -79,7 +79,9 @@ class GamesController: UIViewController, GenresControllerDelegate {
     }
         
     @objc func settingsButtonTapped() {
-        let vm = GenresViewModel()
+        let userDefaultsService = UserDefaultsService()
+        let apiService = APIService()
+        let vm = GenresViewModel(userDefaultsService: userDefaultsService, apiService: apiService)
         let vc = GenresController(vm)
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
@@ -137,7 +139,7 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
         let inSearchMode = self.viewModel.inSearchMode(searchController)
         
         let game = inSearchMode ? self.viewModel.filteredGames[indexPath.row] : self.viewModel.allGames[indexPath.row]
-        let vm = GameDetailsViewModel(game.id)
+        let vm = GameDetailsViewModel(game.id, apiService: self.viewModel.apiService)
         let vc = GameDetailsController(vm)
         self.navigationController?.pushViewController(vc, animated: true)
     }

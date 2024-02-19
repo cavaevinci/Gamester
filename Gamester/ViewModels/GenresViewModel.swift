@@ -10,10 +10,10 @@ import UIKit
 
 class GenresViewModel {
     
-    // MARK: - Callbacks
-    var onGenreUpdated: (()->Void)?
-    
     // MARK: - Variables
+    internal let apiService: APIServiceProtocol
+    internal let userDefaultsService: UserDefaultsServiceProtocol
+    
     private(set) var allGenres: [Genre] = [] {
         didSet {
             self.onGenreUpdated?()
@@ -22,13 +22,17 @@ class GenresViewModel {
     
     private(set) var filteredGenres: [Genre] = []
     
+    // MARK: - Callbacks
+    var onGenreUpdated: (()->Void)?
+    
     // MARK: - Initializer
-    init() {
+    init(userDefaultsService: UserDefaultsServiceProtocol, apiService: APIServiceProtocol) {
+        self.apiService = apiService
+        self.userDefaultsService = userDefaultsService
         self.fetchGenres()
     }
     
     public func fetchGenres() {
-        let apiService = APIService()
         apiService.fetchData(from: .genres, responseType: GenresResponse.self) { result in
             switch result {
             case .success(let genres):
