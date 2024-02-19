@@ -25,7 +25,7 @@
 		3FD643F32B7FA9D500D2F586 /* GenresViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F22B7FA9D500D2F586 /* GenresViewModel.swift */; };
 		3FD643F52B7FB64400D2F586 /* GamesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F42B7FB64400D2F586 /* GamesViewModel.swift */; };
 		3FD643F72B7FBA9800D2F586 /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F62B7FBA9800D2F586 /* GameCell.swift */; };
-		3FD643F92B7FC7D400D2F586 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F82B7FC7D400D2F586 /* ApiService.swift */; };
+		3FD643F92B7FC7D400D2F586 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F82B7FC7D400D2F586 /* APIService.swift */; };
 		3FD643FC2B80CDFF00D2F586 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3FD643FB2B80CDFF00D2F586 /* SDWebImage */; };
 		3FD643FE2B8185D900D2F586 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */; };
 		3FD644012B8250EA00D2F586 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */; };
@@ -73,7 +73,7 @@
 		3FD643F22B7FA9D500D2F586 /* GenresViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresViewModel.swift; sourceTree = "<group>"; };
 		3FD643F42B7FB64400D2F586 /* GamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewModel.swift; sourceTree = "<group>"; };
 		3FD643F62B7FBA9800D2F586 /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
-		3FD643F82B7FC7D400D2F586 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		3FD643F82B7FC7D400D2F586 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 		3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		3FD644022B826D5200D2F586 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
@@ -129,6 +129,7 @@
 		3FD643A72B7D3BF200D2F586 /* Gamester */ = {
 			isa = PBXGroup;
 			children = (
+				3FD644062B83960700D2F586 /* Services */,
 				3FD643FF2B8250CB00D2F586 /* Extensions */,
 				3FD643DD2B7D579100D2F586 /* Supporting */,
 				3FD643DC2B7D575100D2F586 /* Controllers */,
@@ -161,7 +162,6 @@
 		3FD643D82B7D573700D2F586 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				3FD643F82B7FC7D400D2F586 /* ApiService.swift */,
 				3FD644022B826D5200D2F586 /* APIEndpoint.swift */,
 				3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */,
 			);
@@ -214,7 +214,6 @@
 				3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */,
 				3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */,
 				3FD643DE2B7D60A400D2F586 /* Constants.swift */,
-				3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -225,6 +224,15 @@
 				3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3FD644062B83960700D2F586 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */,
+				3FD643F82B7FC7D400D2F586 /* APIService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,7 +374,7 @@
 				3FD644052B826D8500D2F586 /* APIServiceProtocol.swift in Sources */,
 				3FD643AD2B7D3BF200D2F586 /* GenresController.swift in Sources */,
 				3FD643EB2B7F877200D2F586 /* GameDetailsViewModel.swift in Sources */,
-				3FD643F92B7FC7D400D2F586 /* ApiService.swift in Sources */,
+				3FD643F92B7FC7D400D2F586 /* APIService.swift in Sources */,
 				3FD643E72B7F7D9100D2F586 /* GamesController.swift in Sources */,
 				3FD643F72B7FBA9800D2F586 /* GameCell.swift in Sources */,
 				3FD643E32B7D656C00D2F586 /* Game.swift in Sources */,
