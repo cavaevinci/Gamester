@@ -15,7 +15,11 @@ class APIService: APIServiceProtocol {
     }
     
     func fetchData<T: Decodable>(from endpoint: APIEndpoint, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
-            var urlComponents = URLComponents(string: endpoint.urlString)!
+        
+            guard var urlComponents = URLComponents(string: endpoint.urlString) else {
+                completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+                return
+            }
             
             if case .gamesInGenre(let genreID) = endpoint {
                 urlComponents.queryItems = [
