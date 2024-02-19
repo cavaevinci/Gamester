@@ -127,8 +127,7 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
               delegate?.refreshGenres()
               self.navigationController?.popViewController(animated: true)
           } else {
-              let apiService = APIService()
-              let vm = GamesViewModel(apiService: apiService)
+              let vm = GamesViewModel(apiService: self.viewModel.apiService)
               let vc = GamesController(vm)
               self.navigationController?.pushViewController(vc, animated: true)
           }
