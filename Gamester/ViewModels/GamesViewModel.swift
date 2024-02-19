@@ -26,13 +26,11 @@ class GamesViewModel {
     // MARK: - Initializer
     init() {
         self.fetchGames()
-        print("fetch games model init")
     }
     
     //refactor
     public func fetchGames() {
         if let genre = UserDefaultsService.shared.getSelectedGenre() {
-            print("Selected genre: \(genre)")
             let apiService = APIService()
             apiService.fetchData(from: .gamesInGenre(genreID: genre), responseType: GamesResponse.self) { result in
                 switch result {

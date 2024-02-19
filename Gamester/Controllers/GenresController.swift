@@ -8,7 +8,7 @@
 import UIKit
 
 protocol GenresControllerDelegate {
-    func changedGenres()
+    func refreshGenres()
 }
 
 class GenresController: UIViewController {
@@ -124,7 +124,7 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           UserDefaultsService.shared.saveSelectedGenre(genre.id)
     
           if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
-              delegate?.changedGenres()
+              delegate?.refreshGenres()
               self.navigationController?.popViewController(animated: true)
           } else {
               let vm = GamesViewModel()

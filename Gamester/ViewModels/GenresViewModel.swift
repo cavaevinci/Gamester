@@ -24,12 +24,10 @@ class GenresViewModel {
     
     // MARK: - Initializer
     init() {
-        self.fetchCoins()
-        print("fetch genres model init")
+        self.fetchGenres()
     }
     
-    //refactor
-    public func fetchCoins() {
+    public func fetchGenres() {
         let apiService = APIService()
         apiService.fetchData(from: .genres, responseType: GenresResponse.self) { result in
             switch result {

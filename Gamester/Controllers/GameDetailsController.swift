@@ -72,7 +72,6 @@ class GameDetailsController: UIViewController {
         return label
     }()
     
-    //wont be constructed untill we call it
     private lazy var vStack: UIStackView = {
         let vStack = UIStackView(arrangedSubviews: [nameLabel, releasedLabel, ratingLabel, playTimeLabel, websiteLabel])
         vStack.axis = .vertical

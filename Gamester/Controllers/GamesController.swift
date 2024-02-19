@@ -65,28 +65,20 @@ class GamesController: UIViewController, GenresControllerDelegate {
     }
     
     func setupNavigationBar() {
-        // Create a gear icon system item
         let gearIcon = UIImage(systemName: "gear")
-        
-        // Create a UIBarButtonItem with the gear icon
         let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
         
-        // Set the button as the right bar button item
         navigationItem.rightBarButtonItem = settingsButton
         
-        // Create a custom back button with an empty action
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationItem.leftBarButtonItem = backButton
     }
     
-    func changedGenres() {
+    func refreshGenres() {
         viewModel.fetchGames()
     }
         
     @objc func settingsButtonTapped() {
-        // Handle settings button tap
-        // Implement your settings functionality here
-        print("Settings button tapped!")
         let vm = GenresViewModel()
         let vc = GenresController(vm)
         vc.delegate = self
