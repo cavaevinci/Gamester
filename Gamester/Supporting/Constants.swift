@@ -8,5 +8,14 @@
 import Foundation
 
 struct Constants {
-    static let API_KEY = "13fe1f87745f4050a78bed37593efbdc"
+    static var API_KEY: String {
+        guard let keysURL = Bundle.main.url(forResource: "KeysTemplate", withExtension: "plist"),
+              let keysData = try? Data(contentsOf: keysURL),
+              let keys = try? PropertyListSerialization.propertyList(from: keysData, options: [], format: nil) as? [String: Any],
+              let apiKey = keys["API_KEY"] as? String
+        else {
+            fatalError("Failed to load API key from configuration file")
+        }
+        return apiKey
+    }
 }
