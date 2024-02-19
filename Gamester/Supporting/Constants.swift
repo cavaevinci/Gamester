@@ -9,7 +9,7 @@ import Foundation
 
 struct Constants {
     static var API_KEY: String {
-        guard let keysURL = Bundle.main.url(forResource: "KeysTemplate", withExtension: "plist"),
+        guard let keysURL = Bundle.main.url(forResource: "Keys", withExtension: "plist"),
               let keysData = try? Data(contentsOf: keysURL),
               let keys = try? PropertyListSerialization.propertyList(from: keysData, options: [], format: nil) as? [String: Any],
               let apiKey = keys["API_KEY"] as? String
