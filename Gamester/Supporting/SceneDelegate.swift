@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeRootViewController() -> UIViewController {
-        let userDefaultsService = UserDefaultsService()
+        let userDefaultsService = LocalStorageService()
         let apiService = APIService()
         if userDefaultsService.getSelectedGenre() != nil {
             let vm = GamesViewModel(apiService: apiService)

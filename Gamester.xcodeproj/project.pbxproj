@@ -27,7 +27,7 @@
 		3FD643F72B7FBA9800D2F586 /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F62B7FBA9800D2F586 /* GameCell.swift */; };
 		3FD643F92B7FC7D400D2F586 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643F82B7FC7D400D2F586 /* APIService.swift */; };
 		3FD643FC2B80CDFF00D2F586 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3FD643FB2B80CDFF00D2F586 /* SDWebImage */; };
-		3FD643FE2B8185D900D2F586 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */; };
+		3FD643FE2B8185D900D2F586 /* LocalStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643FD2B8185D900D2F586 /* LocalStorageService.swift */; };
 		3FD644012B8250EA00D2F586 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */; };
 		3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644022B826D5200D2F586 /* APIEndpoint.swift */; };
 		3FD644052B826D8500D2F586 /* APIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */; };
@@ -74,7 +74,7 @@
 		3FD643F42B7FB64400D2F586 /* GamesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewModel.swift; sourceTree = "<group>"; };
 		3FD643F62B7FBA9800D2F586 /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
 		3FD643F82B7FC7D400D2F586 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
-		3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
+		3FD643FD2B8185D900D2F586 /* LocalStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageService.swift; sourceTree = "<group>"; };
 		3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		3FD644022B826D5200D2F586 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceProtocol.swift; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 		3FD644062B83960700D2F586 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				3FD643FD2B8185D900D2F586 /* UserDefaultsService.swift */,
+				3FD643FD2B8185D900D2F586 /* LocalStorageService.swift */,
 				3FD643F82B7FC7D400D2F586 /* APIService.swift */,
 			);
 			path = Services;
@@ -385,7 +385,7 @@
 				3FD643AB2B7D3BF200D2F586 /* SceneDelegate.swift in Sources */,
 				3FD644012B8250EA00D2F586 /* UINavigationController+Extension.swift in Sources */,
 				3FD643E92B7F7E8400D2F586 /* GameDetailsController.swift in Sources */,
-				3FD643FE2B8185D900D2F586 /* UserDefaultsService.swift in Sources */,
+				3FD643FE2B8185D900D2F586 /* LocalStorageService.swift in Sources */,
 				3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */,
 				3FD643DF2B7D60A400D2F586 /* Constants.swift in Sources */,
 				3FD643E12B7D654D00D2F586 /* Genre.swift in Sources */,

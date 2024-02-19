@@ -1,5 +1,5 @@
 //
-//  UserDefaultsService.swift
+//  LocalStorageService.swift
 //  Gamester
 //
 //  Created by Nino on 18.02.2024..
@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol UserDefaultsServiceProtocol {
+protocol LocalStorageServiceProtocol {
     func saveSelectedGenre(_ genre: Int)
     func getSelectedGenre() -> Int?
 }
 
-class UserDefaultsService: UserDefaultsServiceProtocol {
+class LocalStorageService: LocalStorageServiceProtocol {
     
     private let selectedGenreKey = "selectedGenre"
     private let userDefaults: UserDefaults

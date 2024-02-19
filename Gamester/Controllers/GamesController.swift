@@ -79,7 +79,7 @@ class GamesController: UIViewController, GenresControllerDelegate {
     }
         
     @objc func settingsButtonTapped() {
-        let userDefaultsService = UserDefaultsService()
+        let userDefaultsService = LocalStorageService()
         let apiService = APIService()
         let vm = GenresViewModel(userDefaultsService: userDefaultsService, apiService: apiService)
         let vc = GenresController(vm)

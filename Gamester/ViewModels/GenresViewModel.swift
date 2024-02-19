@@ -12,7 +12,7 @@ class GenresViewModel {
     
     // MARK: - Variables
     internal let apiService: APIServiceProtocol
-    internal let userDefaultsService: UserDefaultsServiceProtocol
+    internal let userDefaultsService: LocalStorageServiceProtocol
     
     private(set) var allGenres: [Genre] = [] {
         didSet {
@@ -26,7 +26,7 @@ class GenresViewModel {
     var onGenreUpdated: (()->Void)?
     
     // MARK: - Initializer
-    init(userDefaultsService: UserDefaultsServiceProtocol, apiService: APIServiceProtocol) {
+    init(userDefaultsService: LocalStorageServiceProtocol, apiService: APIServiceProtocol) {
         self.apiService = apiService
         self.userDefaultsService = userDefaultsService
         self.fetchGenres()

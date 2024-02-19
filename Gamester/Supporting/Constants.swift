@@ -8,13 +8,5 @@
 import Foundation
 
 struct Constants {
-    
-    //MARK: - API
-    static let scheme = "https"
-    static let baseURL = "api.rawg.io"
-    static let port: Int? = nil
-    static let fullURL = "https://api.rawg.io/api/"
-    
     static let API_KEY = "13fe1f87745f4050a78bed37593efbdc"
-    
 }

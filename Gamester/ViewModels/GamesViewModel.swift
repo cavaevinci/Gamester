@@ -32,7 +32,7 @@ class GamesViewModel {
     
     //refactor
     public func fetchGames() {
-        if let genre = UserDefaultsService().getSelectedGenre() {
+        if let genre = LocalStorageService().getSelectedGenre() {
             apiService.fetchData(from: .gamesInGenre(genreID: genre), responseType: GamesResponse.self) { result in
                 switch result {
                 case .success(let games):
