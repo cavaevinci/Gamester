@@ -24,6 +24,7 @@ class GenresViewModel {
     
     // MARK: - Callbacks
     var onGenreUpdated: (()->Void)?
+    var onError: ((String) -> Void)? // Callback for error handling
     
     // MARK: - Initializer
     init(userDefaultsService: LocalStorageServiceProtocol, apiService: APIServiceProtocol) {
@@ -38,7 +39,8 @@ class GenresViewModel {
             case .success(let genres):
                 self.allGenres = genres.results
             case .failure(let error):
-                print("Error fetching details: \(error)")
+                // Pass the error message to the onError callback for handling in the view controller
+                self.onError?("Error fetching game details: \(error.localizedDescription)")
             }
         }
     }

@@ -32,6 +32,7 @@
 		3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644022B826D5200D2F586 /* APIEndpoint.swift */; };
 		3FD644052B826D8500D2F586 /* APIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */; };
 		3FD6440A2B83B1F200D2F586 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FD644092B83B1F200D2F586 /* Keys.plist */; };
+		3FD644212B852D0900D2F586 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644202B852D0900D2F586 /* ErrorResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		3FD644022B826D5200D2F586 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceProtocol.swift; sourceTree = "<group>"; };
 		3FD644092B83B1F200D2F586 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		3FD644202B852D0900D2F586 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			children = (
 				3FD644022B826D5200D2F586 /* APIEndpoint.swift */,
 				3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */,
+				3FD644202B852D0900D2F586 /* ErrorResponse.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				3FD643E92B7F7E8400D2F586 /* GameDetailsController.swift in Sources */,
 				3FD643FE2B8185D900D2F586 /* LocalStorageService.swift in Sources */,
 				3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */,
+				3FD644212B852D0900D2F586 /* ErrorResponse.swift in Sources */,
 				3FD643DF2B7D60A400D2F586 /* Constants.swift in Sources */,
 				3FD643E12B7D654D00D2F586 /* Genre.swift in Sources */,
 			);

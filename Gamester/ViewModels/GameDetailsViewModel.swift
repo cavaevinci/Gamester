@@ -21,6 +21,7 @@ class GameDetailsViewModel {
     
     // MARK: - Callbacks
     var onDetailsUpdated: (()->Void)?
+    var onError: ((String) -> Void)? // Callback for error handling
     
     // MARK: Initializer
     init(_ id: Int, apiService: APIServiceProtocol) {
@@ -35,7 +36,8 @@ class GameDetailsViewModel {
             case .success(let game):
                 self.game = game
             case .failure(let error):
-                print("Error fetching details: \(error)")
+                // Pass the error message to the onError callback for handling in the view controller
+                self.onError?("Error fetching game details: \(error.localizedDescription)")
             }
         }
     }
