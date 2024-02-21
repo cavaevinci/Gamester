@@ -95,6 +95,7 @@ extension GamesViewModel {
                             })
                         }
                         self.allGames += newGames
+                        self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText) })
                         self.onGamesUpdated?()
                     case .failure(let error):
                         // Pass the error message to the onError callback for handling in the view controller
