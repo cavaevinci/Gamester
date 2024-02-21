@@ -39,8 +39,10 @@ class APIService: APIServiceProtocol {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
         }
+        
+        print(" URL ---", url)
+        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-            // Check for network errors
             if let error = error {
                 completion(.failure(error))
                 return

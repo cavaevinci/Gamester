@@ -13,6 +13,8 @@ class GamesViewModel {
     // MARK: - Variables
     internal let apiService: APIServiceProtocol
     internal var currentPage: Int = 1
+    private let throttleInterval: TimeInterval = 0.5
+    private var isFetchingNextPage = false
 
     private(set) var allGames: [Game] = [] {
         didSet {
@@ -75,21 +77,26 @@ extension GamesViewModel {
     }
     
     internal func fetchGamesWithSearchText(_ searchText: String) {
+        guard !isFetchingNextPage else { return }
+        isFetchingNextPage = true
         if let genre = LocalStorageService().getSelectedGenre() {
-            apiService.fetchData(from: .gamesInGenre(genreID: genre), search: searchText, page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let games):
-                    let newGames = games.results.filter { newGame in
-                        !self.allGames.contains(where: { existingGame in
-                            return existingGame.id == newGame.id
-                        })
+            DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) {
+                self.apiService.fetchData(from: .gamesInGenre(genreID: genre), search: searchText, page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
+                    guard let self = self else { return }
+                    isFetchingNextPage = false
+                    switch result {
+                    case .success(let games):
+                        let newGames = games.results.filter { newGame in
+                            !self.allGames.contains(where: { existingGame in
+                                return existingGame.id == newGame.id
+                            })
+                        }
+                        self.allGames += newGames
+                        self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText) })
+                        self.onGamesUpdated?()
+                    case .failure(let error):
+                        self.onError?("Error fetching game details: \(error.localizedDescription)")
                     }
-                    self.allGames += newGames
-                    self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText) })
-                    self.onGamesUpdated?()
-                case .failure(let error):
-                    self.onError?("Error fetching game details: \(error.localizedDescription)")
                 }
             }
         }
