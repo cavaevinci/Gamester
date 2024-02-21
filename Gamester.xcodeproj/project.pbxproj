@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F580CB42B867F3200E4FE70 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F580CB32B867F3200E4FE70 /* PinterestLayout.swift */; };
 		3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */; };
 		3FD643AB2B7D3BF200D2F586 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */; };
 		3FD643AD2B7D3BF200D2F586 /* GenresController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643AC2B7D3BF200D2F586 /* GenresController.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F580CB32B867F3200E4FE70 /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
 		3FD643A52B7D3BF200D2F586 /* Gamester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gamester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F580CB22B867F1A00E4FE70 /* CollectionLayout */ = {
+			isa = PBXGroup;
+			children = (
+				3F580CB32B867F3200E4FE70 /* PinterestLayout.swift */,
+			);
+			path = CollectionLayout;
+			sourceTree = "<group>";
+		};
 		3FD6439C2B7D3BF200D2F586 = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +194,7 @@
 		3FD643DA2B7D574500D2F586 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3F580CB22B867F1A00E4FE70 /* CollectionLayout */,
 				3FD643E42B7F6E8500D2F586 /* GenreCell.swift */,
 				3FD643F62B7FBA9800D2F586 /* GameCell.swift */,
 			);
@@ -378,6 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F580CB42B867F3200E4FE70 /* PinterestLayout.swift in Sources */,
 				3FD644052B826D8500D2F586 /* APIServiceProtocol.swift in Sources */,
 				3FD643AD2B7D3BF200D2F586 /* GenresController.swift in Sources */,
 				3FD643EB2B7F877200D2F586 /* GameDetailsViewModel.swift in Sources */,

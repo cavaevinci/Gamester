@@ -7,15 +7,14 @@
 
 import UIKit
 
-class GamesController: UIViewController, GenresControllerDelegate {
+class GamesController: UIViewController, GenresControllerDelegate, PinterestLayoutDelegate {
     
     // MARK: Variables
     private let viewModel: GamesViewModel
     
     // MARK: UI Components
     private var collectionView: UICollectionView = {
-       let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+       let layout = PinterestLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout:  layout)
         collectionView.backgroundColor = .systemBackground
         collectionView.register(GameCell.self, forCellWithReuseIdentifier: GameCell.identifier)
@@ -39,6 +38,9 @@ class GamesController: UIViewController, GenresControllerDelegate {
         
        self.collectionView.delegate = self
        self.collectionView.dataSource = self
+       if let layout = collectionView.collectionViewLayout as? PinterestLayout {
+          layout.delegate = self
+       }
     }
     
     init(_ viewModel: GamesViewModel) {
@@ -120,6 +122,12 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
         return inSearchMode ? self.viewModel.filteredGames.count : self.viewModel.allGames.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+            // Return the height of the photo at the specified index path
+            // You can calculate this dynamically based on the aspect ratio of the image
+            return CGFloat.random(in: 150...300) // Example: Random height between 150 and 300
+        }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
  
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GameCell.identifier, for: indexPath) as? GameCell else {
@@ -153,6 +161,8 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
 }
+
+//, PinterestLayoutDelegate
 
 extension GamesController: UICollectionViewDelegateFlowLayout {
     

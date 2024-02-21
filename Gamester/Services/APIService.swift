@@ -40,8 +40,6 @@ class APIService: APIServiceProtocol {
             return
         }
         
-        print(" URL ---", url)
-        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))

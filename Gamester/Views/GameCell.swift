@@ -14,11 +14,10 @@ class GameCell: UICollectionViewCell {
     private(set) var game: Game!
     
     private var gameImage: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(systemName: "questionmark")
-        iv.tintColor = .black
-        return iv
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
     }()
     
     private var gameName: UILabel = {
@@ -45,7 +44,16 @@ class GameCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        self.addSubview(gameImage)
+        
+        contentView.addSubview(gameImage)
+        gameImage.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    gameImage.topAnchor.constraint(equalTo: contentView.topAnchor),
+                    gameImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                    gameImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                    gameImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+                ])
+        /*self.addSubview(gameImage)
         self.addSubview(gameName)
         
         gameName.numberOfLines = 0
@@ -64,7 +72,7 @@ class GameCell: UICollectionViewCell {
             gameName.topAnchor.constraint(equalTo: gameImage.bottomAnchor, constant: 8),
             gameName.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
             gameName.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
-        ])
+        ])*/
     }
     
     override func prepareForReuse() {
