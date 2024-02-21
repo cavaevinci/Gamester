@@ -14,7 +14,7 @@ class APIService: APIServiceProtocol {
         self.session = session
     }
     
-    func fetchData<T>(from endpoint: APIEndpoint, search: String, page: Int, pageSize: Int, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
+    func fetchData<T>(from endpoint: APIEndpoint, search: String, page: Int, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
         guard var urlComponents = URLComponents(string: endpoint.urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
@@ -26,7 +26,7 @@ class APIService: APIServiceProtocol {
                 URLQueryItem(name: "genres", value: "\(genreID)"),
                 URLQueryItem(name: "search", value: search),
                 URLQueryItem(name: "page", value: "\(page)"),
-                URLQueryItem(name: "pageSize", value: "\(pageSize)"),
+                URLQueryItem(name: "pageSize", value: "100"),
                 URLQueryItem(name: "search_exact", value: "1")
             ]
         } else {
@@ -39,7 +39,6 @@ class APIService: APIServiceProtocol {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
         }
-        print(" OVO JE URL ---", url)
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             // Check for network errors
             if let error = error {
@@ -47,48 +46,38 @@ class APIService: APIServiceProtocol {
                 return
             }
             
-            // Check for HTTP response
             guard let httpResponse = response as? HTTPURLResponse else {
                 completion(.failure(NSError(domain: "Invalid response", code: 0, userInfo: nil)))
                 return
             }
             
-            // Check for successful response
             guard (200..<300).contains(httpResponse.statusCode) else {
                 if httpResponse.statusCode == 401 {
-                    // Attempt to decode error response
                     if let data = data {
                         do {
                             let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
                             completion(.failure(NSError(domain: errorResponse.error, code: 401, userInfo: nil)))
                         } catch {
-                            // Failed to decode error response, return generic error
                             completion(.failure(error))
                         }
                     } else {
-                        // No error response data, return generic error
                         completion(.failure(NSError(domain: "Unauthorized", code: 401, userInfo: nil)))
                     }
                 } else {
-                    // Non-401 error, return with appropriate status code
                     completion(.failure(NSError(domain: "HTTP Error", code: httpResponse.statusCode, userInfo: nil)))
                 }
                 return
             }
             
-            // Check for data
             guard let data = data else {
                 completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
                 return
             }
             
-            // Decode successful response
             do {
                 let decodedResponse = try JSONDecoder().decode(T.self, from: data)
-                print(" DECODED RESPONSE ---", decodedResponse)
                 completion(.success(decodedResponse))
             } catch {
-                // Failed to decode response data, return decoding error
                 completion(.failure(error))
             }
         }.resume()
@@ -117,53 +106,43 @@ class APIService: APIServiceProtocol {
            }
            
            URLSession.shared.dataTask(with: url) { (data, response, error) in
-               // Check for network errors
                if let error = error {
                    completion(.failure(error))
                    return
                }
                
-               // Check for HTTP response
                guard let httpResponse = response as? HTTPURLResponse else {
                    completion(.failure(NSError(domain: "Invalid response", code: 0, userInfo: nil)))
                    return
                }
                
-               // Check for successful response
                guard (200..<300).contains(httpResponse.statusCode) else {
                    if httpResponse.statusCode == 401 {
-                       // Attempt to decode error response
                        if let data = data {
                            do {
                                let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
                                completion(.failure(NSError(domain: errorResponse.error, code: 401, userInfo: nil)))
                            } catch {
-                               // Failed to decode error response, return generic error
                                completion(.failure(error))
                            }
                        } else {
-                           // No error response data, return generic error
                            completion(.failure(NSError(domain: "Unauthorized", code: 401, userInfo: nil)))
                        }
                    } else {
-                       // Non-401 error, return with appropriate status code
                        completion(.failure(NSError(domain: "HTTP Error", code: httpResponse.statusCode, userInfo: nil)))
                    }
                    return
                }
                
-               // Check for data
                guard let data = data else {
                    completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
                    return
                }
                
-               // Decode successful response
                do {
                    let decodedResponse = try JSONDecoder().decode(T.self, from: data)
                    completion(.success(decodedResponse))
                } catch {
-                   // Failed to decode response data, return decoding error
                    completion(.failure(error))
                }
            }.resume()

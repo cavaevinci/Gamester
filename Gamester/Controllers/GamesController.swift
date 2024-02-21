@@ -143,6 +143,15 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.size.height {
+            viewModel.currentPage += 1
+            viewModel.fetchGamesWithSearchText("")
+        }
+    }
+    
 }
 
 extension GamesController: UICollectionViewDelegateFlowLayout {

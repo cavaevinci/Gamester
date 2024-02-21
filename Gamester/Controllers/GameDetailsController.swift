@@ -108,7 +108,6 @@ class GameDetailsController: UIViewController {
         
         self.viewModel.onError = { [weak self] errorMessage in
             DispatchQueue.main.async {
-                // Display UIAlertController with the error message
                 let alertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self?.present(alertController, animated: true, completion: nil)
