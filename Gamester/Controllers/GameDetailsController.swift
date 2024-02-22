@@ -80,6 +80,7 @@ class GameDetailsController: UIViewController {
         let label = UILabel()
         label.textColor = .secondaryLabel
         label.textAlignment = .center
+        label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
