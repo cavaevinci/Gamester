@@ -15,9 +15,9 @@ class GenreCell: UITableViewCell {
     
     private var genreImage: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(systemName: "questionmark")
-        iv.tintColor = .black
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 8 // Rounded corners for a modern look
         return iv
     }()
     
@@ -25,7 +25,8 @@ class GenreCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .label
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 22, weight: .semibold)
+        label.font = .systemFont(ofSize: 18, weight: .semibold) // Slightly smaller font size for the name
+        label.numberOfLines = 2 // Allow name to wrap onto multiple lines if needed
         return label
     }()
     
@@ -45,28 +46,28 @@ class GenreCell: UITableViewCell {
     }
     
     private func setupUI() {
-        self.addSubview(genreImage)
-        self.addSubview(genreName)
+        contentView.addSubview(genreImage)
+        contentView.addSubview(genreName)
         
         genreImage.translatesAutoresizingMaskIntoConstraints = false
         genreName.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            genreImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            genreImage.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
-            genreImage.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75),
-            genreImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75),
+            genreImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12), // Add some top padding
+            genreImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16), // Add some leading padding
+            genreImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12), // Add some bottom padding
+            genreImage.widthAnchor.constraint(equalTo: genreImage.heightAnchor), // Ensure image is square
             
-            genreName.leadingAnchor.constraint(equalTo: genreImage.trailingAnchor, constant: 16),
-            genreName.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            genreName.leadingAnchor.constraint(equalTo: genreImage.trailingAnchor, constant: 16), // Add some spacing between image and name
+            genreName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16), // Add trailing padding
+            genreName.centerYAnchor.constraint(equalTo: contentView.centerYAnchor) // Center name vertically
         ])
     }
     
     // MARK: PrepareForReuse
-       override func prepareForReuse() {
-           super.prepareForReuse()
-           self.genreName.text = nil
-           self.genreImage.image = nil
-       }
-    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.genreName.text = nil
+        self.genreImage.image = nil
+    }
 }
