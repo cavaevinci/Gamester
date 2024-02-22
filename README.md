@@ -36,6 +36,7 @@ If you have working API_KEY,your app should build and you should see the applica
 List of dependencies or libraries used in your project, if any
 
   SDWebImage
+  SwiftyBeaver
 
 ## Contributors
 

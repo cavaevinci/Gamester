@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F580CB42B867F3200E4FE70 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F580CB32B867F3200E4FE70 /* PinterestLayout.swift */; };
+		3FB4DC062B87BCFE00FD8E1B /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 3FB4DC052B87BCFE00FD8E1B /* SwiftyBeaver */; };
 		3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */; };
 		3FD643AB2B7D3BF200D2F586 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */; };
 		3FD643AD2B7D3BF200D2F586 /* GenresController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643AC2B7D3BF200D2F586 /* GenresController.swift */; };
@@ -92,6 +93,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FD643FC2B80CDFF00D2F586 /* SDWebImage in Frameworks */,
+				3FB4DC062B87BCFE00FD8E1B /* SwiftyBeaver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +272,7 @@
 			name = Gamester;
 			packageProductDependencies = (
 				3FD643FB2B80CDFF00D2F586 /* SDWebImage */,
+				3FB4DC052B87BCFE00FD8E1B /* SwiftyBeaver */,
 			);
 			productName = Gamester;
 			productReference = 3FD643A52B7D3BF200D2F586 /* Gamester.app */;
@@ -345,6 +348,7 @@
 			mainGroup = 3FD6439C2B7D3BF200D2F586;
 			packageReferences = (
 				3FD643FA2B80CD3D00D2F586 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				3FB4DC042B87BCFE00FD8E1B /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 			);
 			productRefGroup = 3FD643A62B7D3BF200D2F586 /* Products */;
 			projectDirPath = "";
@@ -751,6 +755,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3FB4DC042B87BCFE00FD8E1B /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		3FD643FA2B80CD3D00D2F586 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -762,6 +774,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3FB4DC052B87BCFE00FD8E1B /* SwiftyBeaver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3FB4DC042B87BCFE00FD8E1B /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
+			productName = SwiftyBeaver;
+		};
 		3FD643FB2B80CDFF00D2F586 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3FD643FA2B80CD3D00D2F586 /* XCRemoteSwiftPackageReference "SDWebImage" */;

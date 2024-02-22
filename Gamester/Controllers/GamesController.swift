@@ -7,11 +7,13 @@
 
 import UIKit
 import SDWebImage
+import SwiftyBeaver
 
 class GamesController: UIViewController, GenresControllerDelegate, PinterestLayoutDelegate {
     
     // MARK: Variables
     private let viewModel: GamesViewModel
+    let log = SwiftyBeaver.self
     
     // MARK: UI Components
     private var collectionView: UICollectionView = {
@@ -27,6 +29,7 @@ class GamesController: UIViewController, GenresControllerDelegate, PinterestLayo
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        log.debug("\(type(of: self)): viewDidLoad() called")
         self.setupSearchController()
         self.setupUI()
         self.setupNavigationBar()

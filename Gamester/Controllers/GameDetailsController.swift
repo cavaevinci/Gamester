@@ -7,12 +7,14 @@
 
 import UIKit
 import SDWebImage
+import SwiftyBeaver
 
 class GameDetailsController: UIViewController {
 
     // MARK: Variables
     let viewModel: GameDetailsViewModel
-    
+    let log = SwiftyBeaver.self
+
     // MARK: UI Components
     private let scrollView: UIScrollView = {
         let sv = UIScrollView()
@@ -93,7 +95,7 @@ class GameDetailsController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        log.debug("\(type(of: self)): viewDidLoad() called")
         self.setupUI()
         self.viewModel.onDetailsUpdated = { [weak self] in
            DispatchQueue.main.async {
