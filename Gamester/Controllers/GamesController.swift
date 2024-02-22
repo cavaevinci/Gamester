@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class GamesController: UIViewController, GenresControllerDelegate, PinterestLayoutDelegate {
     
@@ -123,9 +124,8 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-            // Return the height of the photo at the specified index path
-            // You can calculate this dynamically based on the aspect ratio of the image
-            return CGFloat.random(in: 150...300) // Example: Random height between 150 and 300
+            //not good,not bad solution
+            return CGFloat.random(in: 200...300)
         }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -162,7 +162,7 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
     
 }
 
-//, PinterestLayoutDelegate
+// PinterestLayoutDelegate
 
 extension GamesController: UICollectionViewDelegateFlowLayout {
     

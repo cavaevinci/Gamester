@@ -13,17 +13,18 @@ class GameCell: UICollectionViewCell {
     static let identifier = "GameCell"
     private(set) var game: Game!
     
-    private var gameImage: UIImageView = {
+    internal var gameImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    private var gameName: UILabel = {
+    internal var gameName: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.textAlignment = .left
+        label.textAlignment = .center
+        label.numberOfLines = 0
         label.font = .systemFont(ofSize: 15, weight: .semibold)
         return label
     }()
@@ -44,35 +45,23 @@ class GameCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        
         contentView.addSubview(gameImage)
-        gameImage.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    gameImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-                    gameImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                    gameImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                    gameImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-                ])
-        /*self.addSubview(gameImage)
-        self.addSubview(gameName)
-        
-        gameName.numberOfLines = 0
-        gameName.lineBreakMode = .byWordWrapping
-        
-        gameImage.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(gameName)
+        gameImage.layer.cornerRadius = 8
+        gameImage.layer.masksToBounds = true
         gameName.translatesAutoresizingMaskIntoConstraints = false
-
+        gameImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            gameImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            gameImage.topAnchor.constraint(equalTo: self.topAnchor),
-            gameImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.75),
+            gameImage.topAnchor.constraint(equalTo: contentView.topAnchor),
+            gameImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            gameImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             gameImage.heightAnchor.constraint(equalTo: gameImage.widthAnchor),
             
-            gameName.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            gameName.topAnchor.constraint(equalTo: gameImage.bottomAnchor, constant: 8),
-            gameName.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
-            gameName.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8)
-        ])*/
+            gameName.topAnchor.constraint(equalTo: gameImage.bottomAnchor, constant: 4),
+            gameName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            gameName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            gameName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
     
     override func prepareForReuse() {
