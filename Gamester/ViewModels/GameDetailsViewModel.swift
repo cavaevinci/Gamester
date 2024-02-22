@@ -58,12 +58,24 @@ class GameDetailsViewModel {
         return "\("Rating : ") \(self.game?.rating ?? 0) / 5"
     }
     
-    var playTimeLabel: String {
-        return "\("Play time : ") \(self.game?.playTime ?? 1)"
-    }
-    
     var websiteLabel: String {
         return "\("Website : ") \(self.game?.website ?? "N/A")"
+    }
+    
+    var topRatingLabel: String {
+        return "\("Top Rating : ") \(self.game?.topRating ?? 0)"
+    }
+    
+    var publisherLabel: String {
+        return "\("Publisher : ") \(self.game?.publishers?.first?.name ?? "N/A")"
+    }
+    
+    var descriptionLabel: String {
+        return "\(self.game?.description ?? "N/A")"
+    }
+    
+    var metacriticLabel: String {
+        return "\("Metacritic Score : ") \(self.game?.metacritic ?? 0)"
     }
     
 }

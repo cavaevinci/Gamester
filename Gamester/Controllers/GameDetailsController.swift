@@ -17,83 +17,93 @@ class GameDetailsController: UIViewController {
     
     // MARK: - UI Components
         
-        private let scrollView: UIScrollView = {
-            let scrollView = UIScrollView()
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-            return scrollView
-        }()
-        
-        private let contentView: UIView = {
-            let view = UIView()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-        
-        private let backgroundView: UIView = {
-            let view = UIView()
-            view.backgroundColor = .white
-            view.layer.cornerRadius = 20
-            view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-        
-        private let gameImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.contentMode = .scaleAspectFill
-            imageView.clipsToBounds = true
-            imageView.image = UIImage(systemName: "photo")
-            imageView.tintColor = .systemGray2
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            return imageView
-        }()
-        
-        private let nameLabel: UILabel = {
-            let label = UILabel()
-            label.textColor = .label
-            label.textAlignment = .center
-            label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-            label.numberOfLines = 0
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
-        
-        private let releasedLabel: UILabel = {
-            let label = UILabel()
-            label.textColor = .secondaryLabel
-            label.textAlignment = .center
-            label.font = UIFont.systemFont(ofSize: 18)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
-        
-        private let ratingLabel: UILabel = {
-            let label = UILabel()
-            label.textColor = .secondaryLabel
-            label.textAlignment = .center
-            label.font = UIFont.systemFont(ofSize: 18)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
-        
-        private let playTimeLabel: UILabel = {
-            let label = UILabel()
-            label.textColor = .secondaryLabel
-            label.textAlignment = .center
-            label.font = UIFont.systemFont(ofSize: 18)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
-        
-        private let websiteLabel: UILabel = {
-            let label = UILabel()
-            label.textColor = .link
-            label.textAlignment = .center
-            label.font = UIFont.systemFont(ofSize: 18)
-            label.numberOfLines = 0
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let gameImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(systemName: "photo")
+        imageView.tintColor = .systemGray2
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let releasedLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let ratingLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let topRatingLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let publisherLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.isEditable = false
+        textView.isScrollEnabled = true
+        textView.textColor = .secondaryLabel
+        textView.textAlignment = .center
+        textView.font = UIFont.systemFont(ofSize: 18)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
+    private let metacriticLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     // MARK: - Lifecycle
     
@@ -115,9 +125,11 @@ class GameDetailsController: UIViewController {
                self?.nameLabel.text = self?.viewModel.nameLabel
                self?.releasedLabel.text = self?.viewModel.releasedLabel
                self?.ratingLabel.text = self?.viewModel.ratingLabel
-               self?.playTimeLabel.text = self?.viewModel.playTimeLabel
-               self?.websiteLabel.text = self?.viewModel.websiteLabel
                self?.gameImageView.sd_setImage(with: URL(string: self?.viewModel.image ?? "" ))
+               self?.topRatingLabel.text = self?.viewModel.topRatingLabel
+               self?.publisherLabel.text = self?.viewModel.publisherLabel
+               self?.metacriticLabel.text = self?.viewModel.metacriticLabel
+               self?.descriptionTextView.text = self?.viewModel.descriptionLabel
            }
        }
         
@@ -138,58 +150,57 @@ class GameDetailsController: UIViewController {
     
     private func setupUI() {
         view.addSubview(scrollView)
-                scrollView.addSubview(contentView)
-                contentView.addSubview(backgroundView)
-                contentView.addSubview(gameImageView)
-                contentView.addSubview(nameLabel)
-                contentView.addSubview(releasedLabel)
-                contentView.addSubview(ratingLabel)
-                contentView.addSubview(playTimeLabel)
-                contentView.addSubview(websiteLabel)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(gameImageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(releasedLabel)
+        contentView.addSubview(ratingLabel)
+        contentView.addSubview(topRatingLabel)
+        contentView.addSubview(publisherLabel)
+        contentView.addSubview(metacriticLabel)
+
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+
+            gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            gameImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            gameImageView.heightAnchor.constraint(equalToConstant: 200),
+            
+            nameLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor, constant: 20),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            releasedLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            releasedLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            releasedLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            ratingLabel.topAnchor.constraint(equalTo: releasedLabel.bottomAnchor, constant: 10),
+            ratingLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            ratingLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
                 
-                NSLayoutConstraint.activate([
-                    scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-                    scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                    scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                    
-                    contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-                    contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-                    contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-                    contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-                    
-                    backgroundView.topAnchor.constraint(equalTo: gameImageView.topAnchor),
-                    backgroundView.leadingAnchor.constraint(equalTo: gameImageView.leadingAnchor),
-                    backgroundView.trailingAnchor.constraint(equalTo: gameImageView.trailingAnchor),
-                    backgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-                    
-                    gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                    gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                    gameImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                    gameImageView.heightAnchor.constraint(equalToConstant: 200),
-                    
-                    nameLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor, constant: 20),
-                    nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                    nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                    
-                    releasedLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-                    releasedLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                    releasedLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                    
-                    ratingLabel.topAnchor.constraint(equalTo: releasedLabel.bottomAnchor, constant: 10),
-                    ratingLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                    ratingLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                    
-                    playTimeLabel.topAnchor.constraint(equalTo: ratingLabel.bottomAnchor, constant: 10),
-                    playTimeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                    playTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                    
-                    websiteLabel.topAnchor.constraint(equalTo: playTimeLabel.bottomAnchor, constant: 10),
-                    websiteLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-                    websiteLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                    websiteLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
-                ])
+            topRatingLabel.topAnchor.constraint(equalTo: ratingLabel.bottomAnchor, constant: 10),
+            topRatingLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            topRatingLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            publisherLabel.topAnchor.constraint(equalTo: topRatingLabel.bottomAnchor, constant: 10),
+            publisherLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            publisherLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            metacriticLabel.topAnchor.constraint(equalTo: publisherLabel.bottomAnchor, constant: 10),
+            metacriticLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            metacriticLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+        ])
     }
 
 }
