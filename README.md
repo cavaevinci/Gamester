@@ -1,12 +1,12 @@
-# My Swift Mobile App Project
+# Gamester Mobile App Project
 
 ## Overview
 
-This document provides an overview of my Swift mobile app project.
+This document provides an overview of my Gamester mobile app project.
 
 ## Description
 
-[Your app name] is a [brief description of your app].
+[Gamester] is a [iOS application where users can fetch games from whatever game genres they prefer,and see details about that game].
 
 ## Features
 
@@ -23,25 +23,20 @@ This document provides an overview of my Swift mobile app project.
 
 ## Installation
 
-[Instructions on how to install or run your app]
+Clone this repository
+
+In Supporting/Keys info plist,change API_KEY to your own(or not)
 
 ## Usage
 
-[Instructions on how to use your app]
+If you have working API_KEY,your app should build and you should see the application
 
 ## Dependencies
 
-[List of dependencies or libraries used in your project, if any]
+List of dependencies or libraries used in your project, if any
+
+  SDWebImage
 
 ## Contributors
 
-- [Your Name](https://github.com/yourusername)
-
-## License
-
-This project is licensed under the [License Name] License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Acknowledgments
-
-[Optional: Any acknowledgments or credits]
-
+- (https://github.com/cavaevinci/)
