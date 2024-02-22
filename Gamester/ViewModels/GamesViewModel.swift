@@ -95,32 +95,32 @@ extension GamesViewModel {
     internal func fetchGamesWithSearchText(_ searchText: String) {
         guard !isFetchingNextPage else { return }
         isFetchingNextPage = true
+        
         let genresIDsFromLocalStorage = self.userDefaultsService.getSelectedGenres()
         // Extract IDs from Genre objects
         let genreIDs: [Int] = genresIDsFromLocalStorage.map { $0.id }
         // Convert array of IDs to comma-separated string
         let genreIDsString = genreIDs.map { String($0) }.joined(separator: ",")
-        //if let genre = LocalStorageService().getSelectedGenres() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) {
-                self.apiService.fetchData(from: .gamesInGenre(genresIDs: genreIDsString), search: searchText, page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
-                    guard let self = self else { return }
-                    isFetchingNextPage = false
-                    switch result {
-                    case .success(let games):
-                        let newGames = games.results.filter { newGame in
-                            !self.allGames.contains(where: { existingGame in
-                                return existingGame.id == newGame.id
-                            })
-                        }
-                        self.allGames += newGames
-                        self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText) })
-                        self.onGamesUpdated?()
-                    case .failure(let error):
-                        self.onError?("Error fetching game details: \(error.localizedDescription)")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) {
+            self.apiService.fetchData(from: .gamesInGenre(genresIDs: genreIDsString), search: searchText, page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
+                guard let self = self else { return }
+                isFetchingNextPage = false
+                switch result {
+                case .success(let games):
+                    let newGames = games.results.filter { newGame in
+                        !self.allGames.contains(where: { existingGame in
+                            return existingGame.id == newGame.id
+                        })
                     }
+                    self.allGames += newGames
+                    self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText) })
+                    self.onGamesUpdated?()
+                case .failure(let error):
+                    self.onError?("Error fetching game details: \(error.localizedDescription)")
                 }
             }
-        //}
+        }
     }
 }
 

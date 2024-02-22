@@ -36,7 +36,6 @@ class GenresViewModel {
     init(userDefaultsService: LocalStorageServiceProtocol, apiService: APIServiceProtocol) {
         self.apiService = apiService
         self.userDefaultsService = userDefaultsService
-        self.selectedGenres = self.userDefaultsService.getSelectedGenres()
         self.fetchGenresFromAPI()
     }
     
@@ -45,6 +44,7 @@ class GenresViewModel {
             switch result {
             case .success(let genres):
                 self.allGenres = genres.results
+                self.selectedGenres = self.userDefaultsService.getSelectedGenres()
             case .failure(let error):
                 self.onError?("Error fetching game details: \(error.localizedDescription)")
             }

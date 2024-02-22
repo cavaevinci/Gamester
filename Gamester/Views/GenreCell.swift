@@ -17,7 +17,7 @@ class GenreCell: UITableViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.layer.cornerRadius = 8 // Rounded corners for a modern look
+        iv.layer.cornerRadius = 8
         return iv
     }()
     
@@ -25,8 +25,8 @@ class GenreCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .label
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 18, weight: .semibold) // Slightly smaller font size for the name
-        label.numberOfLines = 2 // Allow name to wrap onto multiple lines if needed
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.numberOfLines = 3
         return label
     }()
     
@@ -58,14 +58,14 @@ class GenreCell: UITableViewCell {
         genreName.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            genreImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12), // Add some top padding
-            genreImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16), // Add some leading padding
-            genreImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12), // Add some bottom padding
-            genreImage.widthAnchor.constraint(equalTo: genreImage.heightAnchor), // Ensure image is square
+            genreImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            genreImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            genreImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            genreImage.widthAnchor.constraint(equalTo: genreImage.heightAnchor),
             
-            genreName.leadingAnchor.constraint(equalTo: genreImage.trailingAnchor, constant: 16), // Add some spacing between image and name
-            genreName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16), // Add trailing padding
-            genreName.centerYAnchor.constraint(equalTo: contentView.centerYAnchor) // Center name vertically
+            genreName.leadingAnchor.constraint(equalTo: genreImage.trailingAnchor, constant: 16),
+            genreName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            genreName.centerYAnchor.constraint(equalTo: contentView.centerYAnchor) 
         ])
     }
     

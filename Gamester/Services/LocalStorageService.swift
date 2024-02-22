@@ -22,7 +22,6 @@ class LocalStorageService: LocalStorageServiceProtocol {
     }
     
     func saveSelectedGenres(_ genres: [Genre]) {
-        //userDefaults.set(genres, forKey: selectedGenresKey)
         do {
             let encodedData = try JSONEncoder().encode(genres)
             userDefaults.set(encodedData, forKey: selectedGenresKey)

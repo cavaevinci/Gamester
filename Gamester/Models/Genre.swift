@@ -21,7 +21,7 @@ struct Genre: Codable, Equatable {
     }
     
     static func == (lhs: Genre, rhs: Genre) -> Bool {
-        return lhs.id == rhs.id // Assuming 'id' is a property that uniquely identifies a genre
+        return lhs.id == rhs.id
     }
 }
 
