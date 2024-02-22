@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Genre: Codable {
+struct Genre: Codable, Equatable {
     let id: Int
     let name: String
     let slug: String
@@ -18,6 +18,10 @@ struct Genre: Codable {
         case id, name, slug
         case gamesCount = "games_count"
         case imageBackground = "image_background"
+    }
+    
+    static func == (lhs: Genre, rhs: Genre) -> Bool {
+        return lhs.id == rhs.id // Assuming 'id' is a property that uniquely identifies a genre
     }
 }
 

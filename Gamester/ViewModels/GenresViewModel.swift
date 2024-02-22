@@ -20,6 +20,12 @@ class GenresViewModel {
         }
     }
     
+    var selectedGenres: [Genre] = [] {
+        didSet {
+            self.onGenreUpdated?()
+        }
+    }
+    
     private(set) var filteredGenres: [Genre] = []
     
     // MARK: - Callbacks
@@ -30,10 +36,11 @@ class GenresViewModel {
     init(userDefaultsService: LocalStorageServiceProtocol, apiService: APIServiceProtocol) {
         self.apiService = apiService
         self.userDefaultsService = userDefaultsService
-        self.fetchGenres()
+        self.selectedGenres = self.userDefaultsService.getSelectedGenres()
+        self.fetchGenresFromAPI()
     }
     
-    public func fetchGenres() {
+    public func fetchGenresFromAPI() {
         apiService.fetchData(from: .genres, responseType: GenresResponse.self) { result in
             switch result {
             case .success(let genres):

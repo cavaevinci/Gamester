@@ -24,8 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func makeRootViewController() -> UIViewController {
         let userDefaultsService = LocalStorageService()
         let apiService = APIService()
-        if userDefaultsService.getSelectedGenre() != nil {
-            let vm = GamesViewModel(apiService: apiService)
+        if !userDefaultsService.getSelectedGenres().isEmpty {
+            let vm = GamesViewModel(apiService: apiService, userDefaultsService: userDefaultsService)
             return GamesController(vm)
         } else {
             let vm = GenresViewModel(userDefaultsService: userDefaultsService, apiService: apiService)

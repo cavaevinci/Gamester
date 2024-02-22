@@ -9,7 +9,7 @@ import Foundation
 
 enum APIEndpoint {
     case gameDetails(gameID: Int)
-    case gamesInGenre(genreID: Int)
+    case gamesInGenre(genresIDs: String)
     case genres
     
     var urlString: String {

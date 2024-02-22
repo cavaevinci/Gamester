@@ -32,6 +32,7 @@ class GenresController: UIViewController {
         super.viewDidLoad()
         self.setupSearchController()
         self.setupUI()
+        self.setupNavigationBar()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
@@ -62,6 +63,31 @@ class GenresController: UIViewController {
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         ])
+    }
+    
+    func setupNavigationBar() {
+        let gearIcon = UIImage(systemName: "checkmark")
+        let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(finishedSelectingGenres))
+        navigationItem.rightBarButtonItem = settingsButton
+        
+        if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
+        } else {
+            let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+            navigationItem.leftBarButtonItem = backButton
+        }
+    }
+    
+    @objc func finishedSelectingGenres() {
+        viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
+        
+        if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
+          delegate?.refreshGenres()
+          self.navigationController?.popViewController(animated: true)
+        } else {
+          let vm = GamesViewModel(apiService: self.viewModel.apiService, userDefaultsService: self.viewModel.userDefaultsService)
+          let vc = GamesController(vm)
+          self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     private func setupSearchController() {
@@ -106,7 +132,8 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           let inSearchMode = self.viewModel.inSearchMode(searchController)
           
           let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
-          cell.configure(with: genre)
+          let isSelected = viewModel.selectedGenres.contains(genre)
+          cell.configure(with: genre, isSelected: isSelected)
           return cell
       }
       
@@ -115,22 +142,19 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
       }
       
       func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-          self.tableView.deselectRow(at: indexPath, animated: true)
           
+          tableView.deselectRow(at: indexPath, animated: true)
           let inSearchMode = self.viewModel.inSearchMode(searchController)
-          
           let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
-                    
-          self.viewModel.userDefaultsService.saveSelectedGenre(genre.id)
-    
-          if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
-              delegate?.refreshGenres()
-              self.navigationController?.popViewController(animated: true)
+          
+          let selectedGenre = genre
+          if let index = viewModel.selectedGenres.firstIndex(where: { $0 == selectedGenre }) {
+              viewModel.selectedGenres.remove(at: index)
           } else {
-              let vm = GamesViewModel(apiService: self.viewModel.apiService)
-              let vc = GamesController(vm)
-              self.navigationController?.pushViewController(vc, animated: true)
+              viewModel.selectedGenres.append(selectedGenre)
           }
+          
+          tableView.reloadRows(at: [indexPath], with: .automatic)
       }
 
 }

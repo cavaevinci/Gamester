@@ -20,10 +20,10 @@ class APIService: APIServiceProtocol {
             return
         }
         
-        if case .gamesInGenre(let genreID) = endpoint {
+        if case .gamesInGenre(let genresIDs) = endpoint {
             urlComponents.queryItems = [
                 URLQueryItem(name: "key", value: Constants.API_KEY),
-                URLQueryItem(name: "genres", value: "\(genreID)"),
+                URLQueryItem(name: "genres", value: "\(genresIDs)"),
                 URLQueryItem(name: "search", value: search),
                 URLQueryItem(name: "page", value: "\(page)"),
                 URLQueryItem(name: "pageSize", value: "100"),
@@ -39,7 +39,7 @@ class APIService: APIServiceProtocol {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
         }
-        
+        print(" OVO JE URL KOJI ROKAM ---", url)
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))

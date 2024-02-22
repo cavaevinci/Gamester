@@ -12,6 +12,7 @@ class GamesViewModel {
     
     // MARK: - Variables
     internal let apiService: APIServiceProtocol
+    internal let userDefaultsService: LocalStorageServiceProtocol
     internal var currentPage: Int = 1
     private let throttleInterval: TimeInterval = 0.5
     private var isFetchingNextPage = false
@@ -29,14 +30,29 @@ class GamesViewModel {
     var onError: ((String) -> Void)?
     
     // MARK: - Initializer
-    init(apiService: APIServiceProtocol) {
+    init(apiService: APIServiceProtocol, userDefaultsService: LocalStorageServiceProtocol) {
         self.apiService = apiService
+        self.userDefaultsService = userDefaultsService
         self.fetchGames()
     }
     
     public func fetchGames() {
-        if let genre = LocalStorageService().getSelectedGenre() {
-            apiService.fetchData(from: .gamesInGenre(genreID: genre), responseType: GamesResponse.self) { result in
+        let genresIDsFromLocalStorage = self.userDefaultsService.getSelectedGenres()
+        // Extract IDs from Genre objects
+        let genreIDs: [Int] = genresIDsFromLocalStorage.map { $0.id }
+        // Convert array of IDs to comma-separated string
+        let genreIDsString = genreIDs.map { String($0) }.joined(separator: ",")
+        
+        self.apiService.fetchData(from: .gamesInGenre(genresIDs: genreIDsString), responseType: GamesResponse.self) { result in
+            switch result {
+            case .success(let games):
+                self.allGames = games.results
+            case .failure(let error):
+                self.onError?("Error fetching game details: \(error.localizedDescription)")
+            }
+        }
+        /*if let genre = LocalStorageService().getSelectedGenres() {
+            apiService.fetchData(from: .gamesInGenre(genreID: genre.first!.id), responseType: GamesResponse.self) { result in
                 switch result {
                 case .success(let games):
                     self.allGames = games.results
@@ -44,7 +60,7 @@ class GamesViewModel {
                     self.onError?("Error fetching game details: \(error.localizedDescription)")
                 }
             }
-        }
+        }*/
     }
 }
 
@@ -79,9 +95,14 @@ extension GamesViewModel {
     internal func fetchGamesWithSearchText(_ searchText: String) {
         guard !isFetchingNextPage else { return }
         isFetchingNextPage = true
-        if let genre = LocalStorageService().getSelectedGenre() {
+        let genresIDsFromLocalStorage = self.userDefaultsService.getSelectedGenres()
+        // Extract IDs from Genre objects
+        let genreIDs: [Int] = genresIDsFromLocalStorage.map { $0.id }
+        // Convert array of IDs to comma-separated string
+        let genreIDsString = genreIDs.map { String($0) }.joined(separator: ",")
+        //if let genre = LocalStorageService().getSelectedGenres() {
             DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) {
-                self.apiService.fetchData(from: .gamesInGenre(genreID: genre), search: searchText, page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
+                self.apiService.fetchData(from: .gamesInGenre(genresIDs: genreIDsString), search: searchText, page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
                     guard let self = self else { return }
                     isFetchingNextPage = false
                     switch result {
@@ -99,7 +120,7 @@ extension GamesViewModel {
                     }
                 }
             }
-        }
+        //}
     }
 }
 

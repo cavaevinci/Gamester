@@ -8,24 +8,39 @@
 import Foundation
 
 protocol LocalStorageServiceProtocol {
-    func saveSelectedGenre(_ genre: Int)
-    func getSelectedGenre() -> Int?
+    func saveSelectedGenres(_ genres: [Genre])
+    func getSelectedGenres() -> [Genre]
 }
 
 class LocalStorageService: LocalStorageServiceProtocol {
     
-    private let selectedGenreKey = "selectedGenre"
+    private let selectedGenresKey = "selectedGenre"
     private let userDefaults: UserDefaults
     
     init(userDefaults: UserDefaults = UserDefaults.standard) {
         self.userDefaults = userDefaults
     }
     
-    func saveSelectedGenre(_ genre: Int) {
-        userDefaults.set(genre, forKey: selectedGenreKey)
+    func saveSelectedGenres(_ genres: [Genre]) {
+        //userDefaults.set(genres, forKey: selectedGenresKey)
+        do {
+            let encodedData = try JSONEncoder().encode(genres)
+            userDefaults.set(encodedData, forKey: selectedGenresKey)
+        } catch {
+            print("Error encoding genres: \(error)")
+        }
     }
     
-    func getSelectedGenre() -> Int? {
-        return userDefaults.integer(forKey: selectedGenreKey) != 0 ? userDefaults.integer(forKey: selectedGenreKey) : nil
+    func getSelectedGenres() -> [Genre] {
+        if let savedData = userDefaults.data(forKey: selectedGenresKey) {
+            do {
+                let genres = try JSONDecoder().decode([Genre].self, from: savedData)
+                return genres
+            } catch {
+                print("Error decoding genres: \(error)")
+                return []
+            }
+        }
+        return []
     }
 }

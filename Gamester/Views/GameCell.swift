@@ -24,7 +24,7 @@ class GameCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.font = .systemFont(ofSize: 15, weight: .semibold)
         return label
     }()

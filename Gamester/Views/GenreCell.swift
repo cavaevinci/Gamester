@@ -39,7 +39,12 @@ class GenreCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
      
-    public func configure(with genre: Genre) {
+    public func configure(with genre: Genre, isSelected: Bool) {
+        if isSelected {
+            self.contentView.backgroundColor = .systemBlue
+        } else {
+            self.contentView.backgroundColor = .white
+        }
         self.genre = genre
         self.genreName.text = genre.name
         self.genreImage.sd_setImage(with: URL(string: genre.imageBackground))
