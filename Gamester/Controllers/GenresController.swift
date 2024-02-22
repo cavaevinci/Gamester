@@ -78,15 +78,16 @@ class GenresController: UIViewController {
     }
     
     @objc func finishedSelectingGenres() {
-        viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
-        
-        if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
-          delegate?.refreshGenres()
-          self.navigationController?.popViewController(animated: true)
-        } else {
-          let vm = GamesViewModel(apiService: self.viewModel.apiService, userDefaultsService: self.viewModel.userDefaultsService)
-          let vc = GamesController(vm)
-          self.navigationController?.pushViewController(vc, animated: true)
+        if !viewModel.selectedGenres.isEmpty {
+            viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
+            if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
+              delegate?.refreshGenres()
+              self.navigationController?.popViewController(animated: true)
+            } else {
+              let vm = GamesViewModel(apiService: self.viewModel.apiService, userDefaultsService: self.viewModel.userDefaultsService)
+              let vc = GamesController(vm)
+              self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     
