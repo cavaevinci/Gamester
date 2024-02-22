@@ -73,7 +73,7 @@ class GenresController: UIViewController {
         let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(finishedSelectingGenres))
         navigationItem.rightBarButtonItem = settingsButton
         
-        if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
+        if ((self.navigationController?.previousViewControllerInStack()?.isKind(of: GamesController.self)) != nil) {
         } else {
             let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
             navigationItem.leftBarButtonItem = backButton
@@ -83,7 +83,7 @@ class GenresController: UIViewController {
     @objc func finishedSelectingGenres() {
         if !viewModel.selectedGenres.isEmpty {
             viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
-            if ((self.navigationController?.viewControllerBeforeNavigation()?.isKind(of: GamesController.self)) != nil) {
+            if ((self.navigationController?.previousViewControllerInStack()?.isKind(of: GamesController.self)) != nil) {
               delegate?.refreshGenres()
               self.navigationController?.popViewController(animated: true)
             } else {
@@ -166,5 +166,4 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
           
           tableView.reloadRows(at: [indexPath], with: .automatic)
       }
-
 }

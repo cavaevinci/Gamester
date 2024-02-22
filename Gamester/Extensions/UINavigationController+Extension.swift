@@ -8,7 +8,7 @@
 import UIKit
 
 extension UINavigationController {
-    func viewControllerBeforeNavigation() -> UIViewController? {
+    func previousViewControllerInStack() -> UIViewController? {
         guard let topIndex = viewControllers.firstIndex(of: topViewController!) else {
             return nil
         }
