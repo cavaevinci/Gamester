@@ -125,7 +125,7 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
     
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
             //not good,not bad solution
-            return CGFloat.random(in: 200...300)
+            return CGFloat.random(in: 200...310)
         }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

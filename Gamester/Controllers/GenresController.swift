@@ -88,6 +88,12 @@ class GenresController: UIViewController {
               let vc = GamesController(vm)
               self.navigationController?.pushViewController(vc, animated: true)
             }
+        } else {
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title: "Error", message: "Please select at least 1 game genre", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+            }
         }
     }
     
