@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3F580CB42B867F3200E4FE70 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F580CB32B867F3200E4FE70 /* PinterestLayout.swift */; };
 		3FB4DC062B87BCFE00FD8E1B /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 3FB4DC052B87BCFE00FD8E1B /* SwiftyBeaver */; };
+		3FB4DC082B87C81700FD8E1B /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB4DC072B87C81700FD8E1B /* String+Extension.swift */; };
 		3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */; };
 		3FD643AB2B7D3BF200D2F586 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */; };
 		3FD643AD2B7D3BF200D2F586 /* GenresController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643AC2B7D3BF200D2F586 /* GenresController.swift */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		3F580CB32B867F3200E4FE70 /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
+		3FB4DC072B87C81700FD8E1B /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		3FD643A52B7D3BF200D2F586 /* Gamester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gamester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */,
+				3FB4DC072B87C81700FD8E1B /* String+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F580CB42B867F3200E4FE70 /* PinterestLayout.swift in Sources */,
+				3FB4DC082B87C81700FD8E1B /* String+Extension.swift in Sources */,
 				3FD644052B826D8500D2F586 /* APIServiceProtocol.swift in Sources */,
 				3FD643AD2B7D3BF200D2F586 /* GenresController.swift in Sources */,
 				3FD643EB2B7F877200D2F586 /* GameDetailsViewModel.swift in Sources */,

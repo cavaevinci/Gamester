@@ -51,19 +51,19 @@ class GameDetailsViewModel {
     }
     
     var releasedLabel: String {
-        return self.game?.released ?? "XXX"
+        return "\("Release date : ") \(self.game?.released.formatDate() ?? "N/A")"
     }
     
     var ratingLabel: String {
-        return "\(self.game?.rating ?? 1.0)"
+        return "\("Rating : ") \(self.game?.rating ?? 0) / 5"
     }
     
     var playTimeLabel: String {
-        return "\(self.game?.playTime ?? 1)"
+        return "\("Play time : ") \(self.game?.playTime ?? 1)"
     }
     
     var websiteLabel: String {
-        return self.game?.website ?? ""
+        return "\("Website : ") \(self.game?.website ?? "N/A")"
     }
     
 }
