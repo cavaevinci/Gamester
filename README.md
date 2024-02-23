@@ -6,7 +6,7 @@ This document provides an overview of my Gamester mobile app project.
 
 ## Description
 
-Gamester is a [iOS application where users can fetch games from whatever game genres they prefer,and see details about that game.
+Gamester is a iOS application where users can fetch games from whatever game genres they prefer,and see details about that game.
 
 Used MVVM architecture,with UserDefaults as local storage
 
