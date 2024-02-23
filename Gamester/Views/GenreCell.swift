@@ -41,7 +41,7 @@ class GenreCell: UITableViewCell {
      
     public func configure(with genre: Genre, isSelected: Bool) {
         if isSelected {
-            self.contentView.backgroundColor = .systemBlue
+            self.contentView.backgroundColor = .systemGray
         } else {
             self.contentView.backgroundColor = .black
         }
