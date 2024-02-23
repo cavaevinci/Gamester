@@ -14,6 +14,7 @@ class GameDetailsController: UIViewController {
     
     let viewModel: GameDetailsViewModel
     let log = SwiftyBeaver.self
+    private var isPopupViewVisible: Bool = false
     
     // MARK: - UI Components
         
@@ -86,17 +87,6 @@ class GameDetailsController: UIViewController {
         return label
     }()
     
-    private let descriptionTextView: UITextView = {
-        let textView = UITextView()
-        textView.isEditable = false
-        textView.isScrollEnabled = true
-        textView.textColor = .secondaryLabel
-        textView.textAlignment = .center
-        textView.font = UIFont.systemFont(ofSize: 18)
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        return textView
-    }()
-    
     private let metacriticLabel: UILabel = {
         let label = UILabel()
         label.textColor = .secondaryLabel
@@ -104,6 +94,15 @@ class GameDetailsController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private let descriptionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Description", for: .normal)
+        button.setTitleColor(.blue, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     // MARK: - Lifecycle
@@ -130,7 +129,6 @@ class GameDetailsController: UIViewController {
                self?.topRatingLabel.text = self?.viewModel.topRatingLabel
                self?.publisherLabel.text = self?.viewModel.publisherLabel
                self?.metacriticLabel.text = self?.viewModel.metacriticLabel
-               self?.descriptionTextView.text = self?.viewModel.descriptionLabel
            }
        }
         
@@ -147,8 +145,20 @@ class GameDetailsController: UIViewController {
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: nil, action: nil)
     }
     
+    @objc func descriptionButtonTapped() {
+        let vm = GameDetailsDescriptionViewModel(self.viewModel.descriptionLabel)
+        let popoverContentViewController = GameDetailsDescriptionController(vm)
+        
+        popoverContentViewController.modalPresentationStyle = .popover
+
+        popoverContentViewController.popoverPresentationController?.sourceView = descriptionButton
+        popoverContentViewController.popoverPresentationController?.sourceRect = descriptionButton.bounds
+
+        present(popoverContentViewController, animated: true, completion: nil)
+    }
+
     // MARK: - UI Setup
-    
+        
     private func setupUI() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -159,6 +169,10 @@ class GameDetailsController: UIViewController {
         contentView.addSubview(topRatingLabel)
         contentView.addSubview(publisherLabel)
         contentView.addSubview(metacriticLabel)
+        contentView.addSubview(descriptionButton)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(descriptionButtonTapped))
+        descriptionButton.addGestureRecognizer(tapGesture)
 
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -171,6 +185,7 @@ class GameDetailsController: UIViewController {
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
 
             gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -200,6 +215,10 @@ class GameDetailsController: UIViewController {
             metacriticLabel.topAnchor.constraint(equalTo: publisherLabel.bottomAnchor, constant: 10),
             metacriticLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             metacriticLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            descriptionButton.topAnchor.constraint(equalTo: metacriticLabel.bottomAnchor, constant: 10),
+            descriptionButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            descriptionButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
         ])
     }
