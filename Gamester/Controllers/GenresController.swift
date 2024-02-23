@@ -58,7 +58,7 @@ class GenresController: UIViewController {
     // MARK: UI Setup
     private func setupUI() {
         self.navigationItem.title = "Genres"
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .black
         self.view.addSubview(tableView)
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

@@ -23,7 +23,7 @@ class GenreCell: UITableViewCell {
     
     private var genreName: UILabel = {
         let label = UILabel()
-        label.textColor = .label
+        label.textColor = .white
         label.textAlignment = .left
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.numberOfLines = 3
@@ -43,7 +43,7 @@ class GenreCell: UITableViewCell {
         if isSelected {
             self.contentView.backgroundColor = .systemBlue
         } else {
-            self.contentView.backgroundColor = .white
+            self.contentView.backgroundColor = .black
         }
         self.genre = genre
         self.genreName.text = genre.name

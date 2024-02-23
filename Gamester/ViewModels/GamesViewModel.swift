@@ -38,12 +38,9 @@ class GamesViewModel {
     
     public func fetchGames() {
         let genresIDsFromLocalStorage = self.userDefaultsService.getSelectedGenres()
-        // Extract IDs from Genre objects
-        let genreIDs: [Int] = genresIDsFromLocalStorage.map { $0.id }
-        // Convert array of IDs to comma-separated string
-        let genreIDsString = genreIDs.map { String($0) }.joined(separator: ",")
+        let ids = transformSelectedGenreIDs(genresIDsFromLocalStorage)
         
-        self.apiService.fetchData(from: .gamesInGenre(genresIDs: genreIDsString), responseType: GamesResponse.self) { result in
+        self.apiService.fetchData(from: .gamesInGenre(genresIDs: ids), responseType: GamesResponse.self) { result in
             switch result {
             case .success(let games):
                 self.allGames = games.results
@@ -82,19 +79,21 @@ extension GamesViewModel {
         }
     }
     
+    internal func transformSelectedGenreIDs(_ genres: [Genre]) -> String {
+        let genreIDs: [Int] = genres.map { $0.id }
+        let genreIDsString = genreIDs.map { String($0) }.joined(separator: ",")
+        return genreIDsString
+    }
+    
     internal func fetchGamesWithSearchText(_ searchText: String) {
         guard !isFetchingNextPage else { return }
         isFetchingNextPage = true
         
-        //refactor
         let genresIDsFromLocalStorage = self.userDefaultsService.getSelectedGenres()
-        // Extract IDs from Genre objects
-        let genreIDs: [Int] = genresIDsFromLocalStorage.map { $0.id }
-        // Convert array of IDs to comma-separated string
-        let genreIDsString = genreIDs.map { String($0) }.joined(separator: ",")
+        let ids = transformSelectedGenreIDs(genresIDsFromLocalStorage)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) {
-            self.apiService.fetchData(from: .gamesInGenre(genresIDs: genreIDsString), search: searchText, page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
+            self.apiService.fetchData(from: .gamesInGenre(genresIDs: ids), search: searchText, page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
                 guard let self = self else { return }
                 isFetchingNextPage = false
                 switch result {
