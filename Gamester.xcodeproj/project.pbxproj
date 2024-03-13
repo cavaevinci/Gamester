@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3F580CB42B867F3200E4FE70 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F580CB32B867F3200E4FE70 /* PinterestLayout.swift */; };
+		3F7B5D7A2BA2327100A1CEAE /* GenreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B5D792BA2327100A1CEAE /* GenreTests.swift */; };
+		3F7B5D7C2BA2328200A1CEAE /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B5D7B2BA2328200A1CEAE /* GameTests.swift */; };
+		3F7B5D7E2BA2337C00A1CEAE /* MockGenreResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F7B5D7D2BA2337C00A1CEAE /* MockGenreResponse.json */; };
 		3FB4DC062B87BCFE00FD8E1B /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 3FB4DC052B87BCFE00FD8E1B /* SwiftyBeaver */; };
 		3FB4DC082B87C81700FD8E1B /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB4DC072B87C81700FD8E1B /* String+Extension.swift */; };
 		3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */; };
@@ -66,6 +69,9 @@
 
 /* Begin PBXFileReference section */
 		3F580CB32B867F3200E4FE70 /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
+		3F7B5D792BA2327100A1CEAE /* GenreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTests.swift; sourceTree = "<group>"; };
+		3F7B5D7B2BA2328200A1CEAE /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
+		3F7B5D7D2BA2337C00A1CEAE /* MockGenreResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MockGenreResponse.json; sourceTree = "<group>"; };
 		3FB4DC072B87C81700FD8E1B /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		3FD643A52B7D3BF200D2F586 /* Gamester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gamester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -181,6 +187,9 @@
 			isa = PBXGroup;
 			children = (
 				3FD643BF2B7D3BF700D2F586 /* GamesterTests.swift */,
+				3F7B5D792BA2327100A1CEAE /* GenreTests.swift */,
+				3F7B5D7B2BA2328200A1CEAE /* GameTests.swift */,
+				3F7B5D7D2BA2337C00A1CEAE /* MockGenreResponse.json */,
 			);
 			path = GamesterTests;
 			sourceTree = "<group>";
@@ -408,6 +417,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F7B5D7E2BA2337C00A1CEAE /* MockGenreResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +466,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FD643C02B7D3BF700D2F586 /* GamesterTests.swift in Sources */,
+				3F7B5D7C2BA2328200A1CEAE /* GameTests.swift in Sources */,
+				3F7B5D7A2BA2327100A1CEAE /* GenreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
