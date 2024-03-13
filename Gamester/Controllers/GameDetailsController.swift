@@ -189,8 +189,8 @@ class GameDetailsController: UIViewController {
 
             gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            gameImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            gameImageView.heightAnchor.constraint(equalToConstant: 200),
+            gameImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            gameImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.5),
             
             nameLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor, constant: 20),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
