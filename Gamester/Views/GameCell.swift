@@ -17,6 +17,8 @@ class GameCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -47,8 +49,6 @@ class GameCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(gameImage)
         contentView.addSubview(gameName)
-        gameImage.layer.cornerRadius = 8
-        gameImage.layer.masksToBounds = true
         gameName.translatesAutoresizingMaskIntoConstraints = false
         gameImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
