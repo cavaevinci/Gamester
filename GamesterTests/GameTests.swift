@@ -6,29 +6,70 @@
 //
 
 import XCTest
+@testable import Gamester
 
 final class GameTests: XCTestCase {
+    
+    var sut: Game!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        try super.setUpWithError()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        try super.tearDownWithError()
+        sut = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testGameDecodingSuccess() throws {
+        guard let path = Bundle(for: GameTests.self).path(forResource: "MockGameResponse", ofType: "json") else {
+            XCTFail("MockGameResponse.json file not found")
+            return
+        }
+
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
+            XCTFail("Failed to read data from file")
+            return
+        }
+
+        let decoder = JSONDecoder()
+        do {
+            sut = try decoder.decode(Game.self, from: data)
+            XCTAssertEqual(sut.id, 0)
+            XCTAssertEqual(sut.name, "string")
+            XCTAssertEqual(sut.released, "2024-03-13")
+            XCTAssertEqual(sut.rating, 0)
+        } catch {
+            XCTFail("Failed to decode JSON: \(error)")
+        }
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testGameDecodingFailure() throws {
+        guard let path = Bundle(for: GameTests.self).path(forResource: "ErrorMockGameResponse", ofType: "json") else {
+            XCTFail("ErrorMockGameResponse.json file not found")
+            return
+        }
+
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
+            XCTFail("Failed to read data from file")
+            return
+        }
+
+        let decoder = JSONDecoder()
+        do {
+            _ = try decoder.decode(Game.self, from: data)
+            XCTFail("Expected decoding to fail, but it succeeded.")
+        } catch {
+            guard let decodingError = error as? DecodingError else {
+                XCTFail("Unexpected error type: \(error)")
+                return
+            }
+            switch decodingError {
+            case .keyNotFound(let key, _):
+                XCTAssertEqual(key.stringValue, "name", "Expected missing key 'name'")
+            default:
+                XCTFail("Unexpected decoding error: \(decodingError)")
+            }
         }
     }
 

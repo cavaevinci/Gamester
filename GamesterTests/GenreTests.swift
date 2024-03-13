@@ -71,7 +71,6 @@ final class GenreTests: XCTestCase {
                 XCTFail("Unexpected decoding error: \(decodingError)")
             }
         }
- 
     }
 
 }
