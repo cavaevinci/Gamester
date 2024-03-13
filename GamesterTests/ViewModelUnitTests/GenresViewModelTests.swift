@@ -33,3 +33,7 @@ final class GenresViewModelTests: XCTestCase {
     }
 
 }
+
+
+//napisati test koji poziva api poziv sa mock servisa
+    //i onda testira da li se vraca odgovarajuci genresi,koliko ih ima

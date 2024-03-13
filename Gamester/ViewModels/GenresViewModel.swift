@@ -71,3 +71,4 @@ extension GenresViewModel {
         self.onGenreUpdated?()
     }
 }
+

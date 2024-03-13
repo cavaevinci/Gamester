@@ -18,6 +18,8 @@
 		3F7B5D8D2BA23CE100A1CEAE /* GamesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B5D8C2BA23CE100A1CEAE /* GamesViewModelTests.swift */; };
 		3F7B5D8F2BA23CF700A1CEAE /* GenresViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B5D8E2BA23CF700A1CEAE /* GenresViewModelTests.swift */; };
 		3F7B5D912BA23D1400A1CEAE /* GameDetailsDescriptionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B5D902BA23D1400A1CEAE /* GameDetailsDescriptionViewModelTests.swift */; };
+		3FB4BE382BA2620100C9BB79 /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB4BE372BA2620100C9BB79 /* MockAPIService.swift */; };
+		3FB4BE3A2BA2645500C9BB79 /* MockLocalStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB4BE392BA2645500C9BB79 /* MockLocalStorageService.swift */; };
 		3FB4DC062B87BCFE00FD8E1B /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 3FB4DC052B87BCFE00FD8E1B /* SwiftyBeaver */; };
 		3FB4DC082B87C81700FD8E1B /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB4DC072B87C81700FD8E1B /* String+Extension.swift */; };
 		3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */; };
@@ -85,6 +87,8 @@
 		3F7B5D8C2BA23CE100A1CEAE /* GamesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesViewModelTests.swift; sourceTree = "<group>"; };
 		3F7B5D8E2BA23CF700A1CEAE /* GenresViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresViewModelTests.swift; sourceTree = "<group>"; };
 		3F7B5D902BA23D1400A1CEAE /* GameDetailsDescriptionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailsDescriptionViewModelTests.swift; sourceTree = "<group>"; };
+		3FB4BE372BA2620100C9BB79 /* MockAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
+		3FB4BE392BA2645500C9BB79 /* MockLocalStorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLocalStorageService.swift; sourceTree = "<group>"; };
 		3FB4DC072B87C81700FD8E1B /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		3FD643A52B7D3BF200D2F586 /* Gamester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gamester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -339,6 +343,8 @@
 		3FD644062B83960700D2F586 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3FB4BE392BA2645500C9BB79 /* MockLocalStorageService.swift */,
+				3FB4BE372BA2620100C9BB79 /* MockAPIService.swift */,
 				3FD643FD2B8185D900D2F586 /* LocalStorageService.swift */,
 				3FD643F82B7FC7D400D2F586 /* APIService.swift */,
 			);
@@ -508,6 +514,7 @@
 				3FD643E32B7D656C00D2F586 /* Game.swift in Sources */,
 				3FD643F32B7FA9D500D2F586 /* GenresViewModel.swift in Sources */,
 				3FD643E52B7F6E8500D2F586 /* GenreCell.swift in Sources */,
+				3FB4BE382BA2620100C9BB79 /* MockAPIService.swift in Sources */,
 				3FD643F52B7FB64400D2F586 /* GamesViewModel.swift in Sources */,
 				3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */,
 				3FD643AB2B7D3BF200D2F586 /* SceneDelegate.swift in Sources */,
@@ -515,6 +522,7 @@
 				3FD643E92B7F7E8400D2F586 /* GameDetailsController.swift in Sources */,
 				3FE36D342B883CE500A804DB /* GameDetailsDescriptionViewModel.swift in Sources */,
 				3FD643FE2B8185D900D2F586 /* LocalStorageService.swift in Sources */,
+				3FB4BE3A2BA2645500C9BB79 /* MockLocalStorageService.swift in Sources */,
 				3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */,
 				3FD644212B852D0900D2F586 /* ErrorResponse.swift in Sources */,
 				3FD643DF2B7D60A400D2F586 /* Constants.swift in Sources */,
