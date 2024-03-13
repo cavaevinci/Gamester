@@ -43,6 +43,35 @@ final class GenreTests: XCTestCase {
             XCTFail("Failed to decode JSON: \(error)")
         }
     }
+    
+    func testGenreDecodingFailure() {
+        guard let path = Bundle(for: GenreTests.self).path(forResource: "ErrorMockGenreResponse", ofType: "json") else {
+            XCTFail("ErrorMockGenreResponse.json file not found")
+            return
+        }
 
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
+            XCTFail("Failed to read data from file")
+            return
+        }
+
+        let decoder = JSONDecoder()
+        do {
+            _ = try decoder.decode(Genre.self, from: data)
+            XCTFail("Expected decoding to fail, but it succeeded.")
+        } catch {
+            guard let decodingError = error as? DecodingError else {
+                XCTFail("Unexpected error type: \(error)")
+                return
+            }
+            switch decodingError {
+            case .keyNotFound(let key, _):
+                XCTAssertEqual(key.stringValue, "games_count", "Expected missing key 'games_count'")
+            default:
+                XCTFail("Unexpected decoding error: \(decodingError)")
+            }
+        }
+ 
+    }
 
 }
