@@ -14,7 +14,7 @@ class GamesViewModel {
     internal let apiService: APIServiceProtocol
     internal let userDefaultsService: LocalStorageServiceProtocol
     internal var currentPage: Int = 1
-    private let throttleInterval: TimeInterval = 0.5
+    private let throttleInterval: TimeInterval = 0.1
     private var isFetchingNextPage = false
 
     private(set) var allGames: [Game] = [] {
