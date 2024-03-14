@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 import SwiftyBeaver
 
-class GamesController: UIViewController, GenresControllerDelegate, PinterestLayoutDelegate {
+class GamesController: UIViewController, GenresControllerDelegate, CreativeLayoutDelegate {
     
     // MARK: Variables
     private let viewModel: GamesViewModel
@@ -18,7 +18,7 @@ class GamesController: UIViewController, GenresControllerDelegate, PinterestLayo
     
     // MARK: UI Components
     private var collectionView: UICollectionView = {
-       let layout = PinterestLayout()
+       let layout = CreativeLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout:  layout)
         collectionView.backgroundColor = .systemBackground
         collectionView.register(GameCell.self, forCellWithReuseIdentifier: GameCell.identifier)
@@ -43,7 +43,7 @@ class GamesController: UIViewController, GenresControllerDelegate, PinterestLayo
         
        self.collectionView.delegate = self
        self.collectionView.dataSource = self
-       if let layout = collectionView.collectionViewLayout as? PinterestLayout {
+       if let layout = collectionView.collectionViewLayout as? CreativeLayout {
           layout.delegate = self
        }
     }
