@@ -38,6 +38,7 @@ class GamesController: UIViewController, GenresControllerDelegate, CreativeLayou
         self.viewModel.onGamesUpdated = { [weak self] in
            DispatchQueue.main.async {
                self?.collectionView.reloadData()
+               self?.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
            }
        }
         
