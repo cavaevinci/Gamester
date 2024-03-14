@@ -14,6 +14,7 @@ class GamesController: UIViewController, GenresControllerDelegate, PinterestLayo
     // MARK: Variables
     private let viewModel: GamesViewModel
     let log = SwiftyBeaver.self
+    var debounceTimer: Timer?
     
     // MARK: UI Components
     private var collectionView: UICollectionView = {
@@ -155,11 +156,18 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        if offsetY > contentHeight - scrollView.frame.size.height {
-            viewModel.currentPage += 1
-            viewModel.fetchGamesWithSearchText("")
+        debounceTimer?.invalidate() // Invalidate the previous timer
+        
+        debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] _ in
+            guard let self = self else { return }
+            
+            let offsetY = scrollView.contentOffset.y
+            let contentHeight = scrollView.contentSize.height
+            
+            if offsetY > contentHeight - scrollView.frame.size.height {
+                self.viewModel.currentPage += 1
+                self.viewModel.fetchGamesWithSearchText("")
+            }
         }
     }
     
