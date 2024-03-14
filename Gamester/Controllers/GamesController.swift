@@ -60,7 +60,7 @@ class GamesController: UIViewController, GenresControllerDelegate, PinterestLayo
     // MARK: UI Setup
     private func setupUI() {
         self.navigationItem.title = "Games"
-        self.view.backgroundColor = .systemBlue
+        self.view.backgroundColor = .systemIndigo
         self.view.addSubview(collectionView)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
