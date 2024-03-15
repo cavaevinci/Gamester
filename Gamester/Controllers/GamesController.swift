@@ -116,8 +116,6 @@ extension GamesController: UISearchResultsUpdating, UISearchControllerDelegate, 
         self.viewModel.updateSearchController(searchBarText: searchController.searchBar.text)
     }
     
-    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-    }
 }
 
 // MARK: - CollectionVIew Functions
