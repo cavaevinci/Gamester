@@ -74,8 +74,8 @@ extension GamesViewModel {
         
         if self.filteredGames.isEmpty {
             //reset current page so search request works poperly
-            currentPage = 1
-            fetchGamesWithSearchText(searchText)
+            self.currentPage = 1
+            self.fetchGamesWithSearchText(searchText)
         } else {
             self.onGamesUpdated?()
         }
