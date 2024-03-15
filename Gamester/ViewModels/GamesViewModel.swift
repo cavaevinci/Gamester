@@ -73,6 +73,8 @@ extension GamesViewModel {
         self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText) })
         
         if self.filteredGames.isEmpty {
+            //reset current page so search request works poperly
+            currentPage = 1
             fetchGamesWithSearchText(searchText)
         } else {
             self.onGamesUpdated?()
@@ -85,7 +87,7 @@ extension GamesViewModel {
         return genreIDsString
     }
     
-    internal func fetchGamesWithSearchText(_ searchText: String) {
+    internal func fetchGamesWithSearchText(_ searchText: String? = nil) {
         guard !isFetchingNextPage else { return }
         isFetchingNextPage = true
         
@@ -93,7 +95,7 @@ extension GamesViewModel {
         let ids = transformSelectedGenreIDs(genresIDsFromLocalStorage)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) {
-            self.apiService.fetchData(from: .gamesInGenre(genresIDs: ids), search: searchText, page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
+            self.apiService.fetchData(from: .gamesInGenre(genresIDs: ids), search: searchText ?? "", page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
                 guard let self = self else { return }
                 isFetchingNextPage = false
                 switch result {
@@ -104,7 +106,7 @@ extension GamesViewModel {
                         })
                     }
                     self.allGames += newGames
-                    self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText) })
+                    self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText ?? "") })
                     self.onGamesUpdated?()
                 case .failure(let error):
                     self.onError?("Error fetching game details: \(error.localizedDescription)")

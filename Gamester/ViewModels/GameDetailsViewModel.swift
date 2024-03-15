@@ -51,7 +51,7 @@ class GameDetailsViewModel {
     }
     
     var releasedLabel: String {
-        return "\("Release date : ") \(self.game?.released.formatDate() ?? "N/A")"
+        return "\("Release date : ") \(self.game?.released?.formatDate() ?? "N/A")"
     }
     
     var ratingLabel: String {

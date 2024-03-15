@@ -43,7 +43,7 @@ class GameCell: UICollectionViewCell {
     public func configure(with game: Game) {
         self.game = game
         self.gameName.text = game.name
-        self.gameImage.sd_setImage(with: URL(string: game.imageBackground ))
+        self.gameImage.sd_setImage(with: URL(string: game.imageBackground ?? "" ))
     }
     
     private func setupUI() {

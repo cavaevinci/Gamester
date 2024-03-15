@@ -10,8 +10,8 @@ import Foundation
 struct Game: Codable {
     let id: Int
     let name: String
-    let released: String
-    let imageBackground: String
+    let released: String?
+    let imageBackground: String?
     let rating: Double
     let website: String?
     
