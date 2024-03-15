@@ -128,9 +128,8 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-            //not good,not bad solution
-            return CGFloat.random(in: 220...310)
-        }
+        return 200
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
  
@@ -156,7 +155,7 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        debounceTimer?.invalidate() // Invalidate the previous timer
+        debounceTimer?.invalidate()
         
         debounceTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] _ in
             guard let self = self else { return }

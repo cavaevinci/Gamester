@@ -20,7 +20,7 @@ class CreativeLayout: UICollectionViewLayout {
 
         cache.removeAll()
 
-        let columnWidth = contentWidth / 2 // Two columns
+        let columnWidth = contentWidth / 3 // Three columns
 
         var xOffset: CGFloat = 0
         var yOffset: CGFloat = 0
@@ -31,10 +31,9 @@ class CreativeLayout: UICollectionViewLayout {
 
             let photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 180
 
-            // Alternate between columns for irregular layout
-            xOffset = item % 2 == 0 ? 0 : columnWidth
-            yOffset = cache.isEmpty ? 0 : yOffset + photoHeight // Stack items vertically
-
+            xOffset = CGFloat(item % 3) * columnWidth
+            yOffset = CGFloat(item / 3) * photoHeight // Adjust yOffset based on the row index
+            
             let frame = CGRect(x: xOffset, y: yOffset, width: columnWidth, height: photoHeight)
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = frame
