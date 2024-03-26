@@ -11,7 +11,6 @@ import SDWebImage
 class GenreCell: UITableViewCell {
     
     static let identifier = "GenreCell"
-    private(set) var genre: Genre!
     
     private var genreImage: UIImageView = {
         let iv = UIImageView()
@@ -45,7 +44,6 @@ class GenreCell: UITableViewCell {
         } else {
             self.contentView.backgroundColor = .black
         }
-        self.genre = genre
         self.genreName.text = genre.name
         self.genreImage.sd_setImage(with: URL(string: genre.imageBackground))
     }

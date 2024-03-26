@@ -148,7 +148,7 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
         
         let game = inSearchMode ? self.viewModel.filteredGames[indexPath.row] : self.viewModel.allGames[indexPath.row]
         let vm = GameDetailsViewModel(game.id, apiService: self.viewModel.apiService)
-        let vc = GameDetailsController(vm)
+        let vc = GameDetailsController(viewModel: vm)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

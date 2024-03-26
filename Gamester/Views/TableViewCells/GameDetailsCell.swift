@@ -1,87 +1,94 @@
-// GameDetailsCell.swift
-// Gamester
-//
-// Created by Nino on 26.03.2024..
-//
+// GameDetailsCell.swift
 
 import UIKit
 import SDWebImage
 
 class GameDetailsCell: UITableViewCell {
-
-  static let identifier = "GameDetailsCell"
-  private(set) var game: Game!
-
-  private var stackView: UIStackView = {
-    let stackView = UIStackView()
-    stackView.axis = .vertical
-    stackView.spacing = 4  // Adjust spacing as needed
-    stackView.distribution = .fillProportionally
-    return stackView
-  }()
-
-  private var gameImage: UIImageView = {
-    let iv = UIImageView()
-    iv.contentMode = .scaleAspectFill
-    iv.clipsToBounds = true
-    iv.layer.cornerRadius = 8
-    return iv
-  }()
-
-  private var gameName: UILabel = {
-    let label = UILabel()
-    label.textColor = .black
-    label.textAlignment = .left
-    label.font = .systemFont(ofSize: 18, weight: .semibold)
-    label.numberOfLines = 3
-    return label
-  }()
-
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
-    self.setupUI()
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
-  public func configure(with game: Game) {
-    self.game = game
-    self.gameName.text = game.name
-    self.gameImage.sd_setImage(with: URL(string: game.imageBackground ?? ""))
-  }
-
-  private func setupUI() {
-    contentView.backgroundColor = .white
-
-    stackView.addArrangedSubview(gameImage)
-    stackView.addArrangedSubview(gameName)
-
-    contentView.addSubview(stackView)
-
-    stackView.translatesAutoresizingMaskIntoConstraints = false
     
-    let imageHeightConstraint = gameImage.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.5)
-    imageHeightConstraint.priority = .defaultHigh
+    static let identifier = "GameDetailsCell"
     
-    NSLayoutConstraint.activate([
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    private let gameImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
+        return imageView
+    }()
+    
+    private let gameName: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.numberOfLines = 3
+        return label
+    }()
+    
+    private var gameDescription: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(with game: Game) {
+        gameName.text = game.name
+        if let imageURL = URL(string: game.imageBackground ?? "") {
+            gameImage.sd_setImage(with: imageURL)
+        }
+        self.gameDescription.text = game.description
+    }
+    
+    private func setupUI() {
+        stackView.addArrangedSubview(gameImage)
+        stackView.addArrangedSubview(gameName)
+        stackView.addArrangedSubview(gameDescription)
 
-        imageHeightConstraint,
+        contentView.addSubview(stackView)
 
-        gameName.heightAnchor.constraint(lessThanOrEqualTo: contentView.heightAnchor, multiplier: 0.5)
-    ])
-  }
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
 
-  // MARK: PrepareForReuse
-  override func prepareForReuse() {
-    super.prepareForReuse()
-    self.gameName.text = nil
-    self.gameImage.image = nil
-  }
+            gameImage.topAnchor.constraint(equalTo: stackView.topAnchor),
+            gameImage.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            gameImage.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            gameImage.heightAnchor.constraint(equalToConstant: 250),
 
+            gameName.topAnchor.constraint(equalTo: gameImage.bottomAnchor, constant: 8),
+            gameName.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            gameName.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+
+            gameDescription.topAnchor.constraint(equalTo: gameName.bottomAnchor, constant: 8),
+            gameDescription.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            gameDescription.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            gameDescription.bottomAnchor.constraint(lessThanOrEqualTo: stackView.bottomAnchor)
+        ])
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        gameName.text = nil
+        gameImage.image = nil
+    }
 }
