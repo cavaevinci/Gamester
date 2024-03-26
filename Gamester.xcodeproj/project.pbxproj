@@ -29,7 +29,6 @@
 		3FD643B52B7D3BF600D2F586 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FD643B32B7D3BF600D2F586 /* LaunchScreen.storyboard */; };
 		3FD643CA2B7D3BF700D2F586 /* GamesterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643C92B7D3BF700D2F586 /* GamesterUITests.swift */; };
 		3FD643CC2B7D3BF700D2F586 /* GamesterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643CB2B7D3BF700D2F586 /* GamesterUITestsLaunchTests.swift */; };
-		3FD643DF2B7D60A400D2F586 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643DE2B7D60A400D2F586 /* Constants.swift */; };
 		3FD643E12B7D654D00D2F586 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643E02B7D654D00D2F586 /* Genre.swift */; };
 		3FD643E32B7D656C00D2F586 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643E22B7D656C00D2F586 /* Game.swift */; };
 		3FD643E52B7F6E8500D2F586 /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD643E42B7F6E8500D2F586 /* GenreCell.swift */; };
@@ -45,7 +44,6 @@
 		3FD644012B8250EA00D2F586 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */; };
 		3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644022B826D5200D2F586 /* APIEndpoint.swift */; };
 		3FD644052B826D8500D2F586 /* APIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */; };
-		3FD6440A2B83B1F200D2F586 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FD644092B83B1F200D2F586 /* Keys.plist */; };
 		3FD644212B852D0900D2F586 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD644202B852D0900D2F586 /* ErrorResponse.swift */; };
 		3FE36D322B883BA900A804DB /* GameDetailsDescriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE36D312B883BA900A804DB /* GameDetailsDescriptionController.swift */; };
 		3FE36D342B883CE500A804DB /* GameDetailsDescriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE36D332B883CE500A804DB /* GameDetailsDescriptionViewModel.swift */; };
@@ -101,7 +99,6 @@
 		3FD643C52B7D3BF700D2F586 /* GamesterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamesterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FD643C92B7D3BF700D2F586 /* GamesterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesterUITests.swift; sourceTree = "<group>"; };
 		3FD643CB2B7D3BF700D2F586 /* GamesterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesterUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		3FD643DE2B7D60A400D2F586 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3FD643E02B7D654D00D2F586 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		3FD643E22B7D656C00D2F586 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		3FD643E42B7F6E8500D2F586 /* GenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCell.swift; sourceTree = "<group>"; };
@@ -116,7 +113,6 @@
 		3FD644002B8250E900D2F586 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		3FD644022B826D5200D2F586 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		3FD644042B826D8500D2F586 /* APIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceProtocol.swift; sourceTree = "<group>"; };
-		3FD644092B83B1F200D2F586 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		3FD644202B852D0900D2F586 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		3FE36D312B883BA900A804DB /* GameDetailsDescriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailsDescriptionController.swift; sourceTree = "<group>"; };
 		3FE36D332B883CE500A804DB /* GameDetailsDescriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailsDescriptionViewModel.swift; sourceTree = "<group>"; };
@@ -321,12 +317,10 @@
 			children = (
 				3FE62C6E2BA1ED6D0052B8DD /* GoogleService-Info.plist */,
 				3FD643B62B7D3BF600D2F586 /* Info.plist */,
-				3FD644092B83B1F200D2F586 /* Keys.plist */,
 				3FD643B32B7D3BF600D2F586 /* LaunchScreen.storyboard */,
 				3FD643B12B7D3BF600D2F586 /* Assets.xcassets */,
 				3FD643A82B7D3BF200D2F586 /* AppDelegate.swift */,
 				3FD643AA2B7D3BF200D2F586 /* SceneDelegate.swift */,
-				3FD643DE2B7D60A400D2F586 /* Constants.swift */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -473,7 +467,6 @@
 				3FD643B52B7D3BF600D2F586 /* LaunchScreen.storyboard in Resources */,
 				3FE62C6F2BA1ED6D0052B8DD /* GoogleService-Info.plist in Resources */,
 				3FD643B22B7D3BF600D2F586 /* Assets.xcassets in Resources */,
-				3FD6440A2B83B1F200D2F586 /* Keys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,7 +518,6 @@
 				3FB4BE3A2BA2645500C9BB79 /* MockLocalStorageService.swift in Sources */,
 				3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */,
 				3FD644212B852D0900D2F586 /* ErrorResponse.swift in Sources */,
-				3FD643DF2B7D60A400D2F586 /* Constants.swift in Sources */,
 				3FD643E12B7D654D00D2F586 /* Genre.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

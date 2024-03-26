@@ -26,7 +26,7 @@ class APIService: APIServiceProtocol {
         
         if case .gamesInGenre(let genresIDs) = endpoint {
             urlComponents.queryItems = [
-                URLQueryItem(name: "key", value: Constants.API_KEY),
+                URLQueryItem(name: "key", value: ProcessInfo.processInfo.environment["API_KEY"]),
                 URLQueryItem(name: "genres", value: "\(genresIDs)"),
                 URLQueryItem(name: "search", value: search),
                 URLQueryItem(name: "page", value: "\(page)"),
@@ -35,7 +35,7 @@ class APIService: APIServiceProtocol {
             ]
         } else {
             urlComponents.queryItems = [
-                URLQueryItem(name: "key", value: Constants.API_KEY)
+                URLQueryItem(name: "key", value: ProcessInfo.processInfo.environment["API_KEY"])
             ]
         }
         
@@ -101,12 +101,12 @@ class APIService: APIServiceProtocol {
            
            if case .gamesInGenre(let genreID) = endpoint {
                urlComponents.queryItems = [
-                   URLQueryItem(name: "key", value: Constants.API_KEY),
+                   URLQueryItem(name: "key", value: ProcessInfo.processInfo.environment["API_KEY"]),
                    URLQueryItem(name: "genres", value: "\(genreID)")
                ]
            } else {
                urlComponents.queryItems = [
-                   URLQueryItem(name: "key", value: Constants.API_KEY)
+                   URLQueryItem(name: "key", value: ProcessInfo.processInfo.environment["API_KEY"])
                ]
            }
            
