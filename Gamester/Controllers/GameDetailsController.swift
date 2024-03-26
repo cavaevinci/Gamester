@@ -5,112 +5,27 @@
 //  Created by Nino on 16.02.2024..
 //
 import UIKit
-import SDWebImage
 import SwiftyBeaver
 
 class GameDetailsController: UIViewController {
     
     // MARK: - Properties
-    
     let viewModel: GameDetailsViewModel
     let log = SwiftyBeaver.self
-    private var isPopupViewVisible: Bool = false
-    
-    // MARK: - UI Components
-        
-    private let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
-    private let contentView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let gameImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.image = UIImage(systemName: "photo")
-        imageView.tintColor = .systemGray2
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let releasedLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .secondaryLabel
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let ratingLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .secondaryLabel
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let topRatingLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .secondaryLabel
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    private let publisherLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .secondaryLabel
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let metacriticLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .secondaryLabel
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private let descriptionButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Description", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
     
     // MARK: - Lifecycle
-    
     init(_ viewModel: GameDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
+    
+    // MARK: UI Components
+    private var tableView: UITableView = {
+        let tv = UITableView()
+        tv.backgroundColor = .systemBackground
+        tv.register(GameDetailsCell.self, forCellReuseIdentifier: GameDetailsCell.identifier)
+        return tv
+    }()
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -120,107 +35,53 @@ class GameDetailsController: UIViewController {
         super.viewDidLoad()
         log.debug("\(type(of: self)): viewDidLoad() called")
         setupUI()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        self.tableView.estimatedRowHeight = 1000
+        self.tableView.rowHeight = UITableView.automaticDimension
+        
         self.viewModel.onDetailsUpdated = { [weak self] in
            DispatchQueue.main.async {
-               self?.nameLabel.text = self?.viewModel.nameLabel
-               self?.releasedLabel.text = self?.viewModel.releasedLabel
-               self?.ratingLabel.text = self?.viewModel.ratingLabel
-               self?.gameImageView.sd_setImage(with: URL(string: self?.viewModel.image ?? "" ))
-               self?.topRatingLabel.text = self?.viewModel.topRatingLabel
-               self?.publisherLabel.text = self?.viewModel.publisherLabel
-               self?.metacriticLabel.text = self?.viewModel.metacriticLabel
+               self?.tableView.reloadData()
            }
        }
-        
-        self.viewModel.onError = { [weak self] errorMessage in
-            DispatchQueue.main.async {
-                let alertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self?.present(alertController, animated: true, completion: nil)
-            }
-        }
-        
-        self.view.backgroundColor = .systemBackground
-        self.navigationItem.title = self.viewModel.game?.name ?? ""
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: nil, action: nil)
     }
     
-    @objc func descriptionButtonTapped() {
-        let vm = GameDetailsDescriptionViewModel(self.viewModel.descriptionLabel)
-        let popoverContentViewController = GameDetailsDescriptionController(vm)
-        
-        popoverContentViewController.modalPresentationStyle = .popover
-
-        popoverContentViewController.popoverPresentationController?.sourceView = descriptionButton
-        popoverContentViewController.popoverPresentationController?.sourceRect = descriptionButton.bounds
-
-        present(popoverContentViewController, animated: true, completion: nil)
-    }
-
     // MARK: - UI Setup
-        
     private func setupUI() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubview(gameImageView)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(releasedLabel)
-        contentView.addSubview(ratingLabel)
-        contentView.addSubview(topRatingLabel)
-        contentView.addSubview(publisherLabel)
-        contentView.addSubview(metacriticLabel)
-        contentView.addSubview(descriptionButton)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(descriptionButtonTapped))
-        descriptionButton.addGestureRecognizer(tapGesture)
-
+        self.view.addSubview(tableView)
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-
-            gameImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            gameImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            gameImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            gameImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.5),
-            
-            nameLabel.topAnchor.constraint(equalTo: gameImageView.bottomAnchor, constant: 20),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
-            releasedLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-            releasedLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            releasedLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
-            ratingLabel.topAnchor.constraint(equalTo: releasedLabel.bottomAnchor, constant: 10),
-            ratingLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            ratingLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                
-            topRatingLabel.topAnchor.constraint(equalTo: ratingLabel.bottomAnchor, constant: 10),
-            topRatingLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            topRatingLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
-            publisherLabel.topAnchor.constraint(equalTo: topRatingLabel.bottomAnchor, constant: 10),
-            publisherLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            publisherLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
-            metacriticLabel.topAnchor.constraint(equalTo: publisherLabel.bottomAnchor, constant: 10),
-            metacriticLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            metacriticLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
-            descriptionButton.topAnchor.constraint(equalTo: metacriticLabel.bottomAnchor, constant: 10),
-            descriptionButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            descriptionButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            
+            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
         ])
     }
 
+}
+
+// MARK: TableView Functions
+extension GameDetailsController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: GameDetailsCell.identifier, for: indexPath) as? GameDetailsCell else {
+          fatalError("Unable to dequeue GameDetailsCell in GameDetailsController")
+      }
+            
+      if let game = viewModel.game {
+          cell.configure(with: game)
+      }
+      return cell
+  }
+  
+  /*func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+      return 130
+  }*/
+  
 }

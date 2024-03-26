@@ -122,9 +122,6 @@ extension GenresController: UISearchResultsUpdating, UISearchControllerDelegate,
         self.viewModel.updateSearchController(searchBarText: searchController.searchBar.text)
     }
     
-    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
-        
-    }
 }
 
 // MARK: TableView Functions
