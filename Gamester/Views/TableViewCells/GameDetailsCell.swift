@@ -57,8 +57,9 @@ class GameDetailsCell: UITableViewCell {
     
     private let websiteLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .darkGray
+        label.textColor = .blue
         label.font = .systemFont(ofSize: 14)
+        label.isUserInteractionEnabled = true
         label.numberOfLines = 1
         return label
     }()
@@ -105,10 +106,20 @@ class GameDetailsCell: UITableViewCell {
         gameDescription.text = game.description
         releaseDateLabel.text = "Release Date: \(game.released ?? "")"
         ratingLabel.text = "Rating: \(game.rating)"
-        websiteLabel.text = "Website: \(game.website ?? "")"
+        websiteLabel.text = "\(game.website ?? "")"
         topRatingLabel.text = "Top Rating: \(game.topRating)"
         publisherLabel.text = "Publisher: \(game.publishers?.first?.name ?? "")"
         metacriticRatingLabel.text = "Metacritic Rating: \(game.metacritic ?? 1)"
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleWebsiteTap(_:)))
+        websiteLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func handleWebsiteTap(_ sender: UITapGestureRecognizer) {
+        if let websiteURLString = websiteLabel.text,
+           let encodedURLString = websiteURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+           let websiteURL = URL(string: encodedURLString) {
+            UIApplication.shared.open(websiteURL)
+        }
     }
     
     private func setupUI() {
