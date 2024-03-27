@@ -14,7 +14,6 @@ class GameDetailsController: UIViewController {
         let tableView = UITableView()
         tableView.backgroundColor = .systemBackground
         tableView.register(GameDetailsCell.self, forCellReuseIdentifier: GameDetailsCell.identifier)
-
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
         return tableView
