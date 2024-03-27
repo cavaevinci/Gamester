@@ -10,7 +10,7 @@ import UIKit
 class GameDetailsViewModel {
     
     // MARK: Variables
-    internal let apiService: APIServiceProtocol
+    private let apiService: APIServiceProtocol
     let gameID: Int
     
     private(set) var game: Game? {

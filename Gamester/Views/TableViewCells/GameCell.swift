@@ -11,9 +11,8 @@ import SDWebImage
 class GameCell: UICollectionViewCell {
     
     static let identifier = "GameCell"
-    private(set) var game: Game!
     
-    internal var gameImage: UIImageView = {
+    private var gameImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -22,7 +21,7 @@ class GameCell: UICollectionViewCell {
         return imageView
     }()
     
-    internal var gameName: UILabel = {
+    private var gameName: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
@@ -41,7 +40,6 @@ class GameCell: UICollectionViewCell {
     }
     
     public func configure(with game: Game) {
-        self.game = game
         self.gameName.text = game.name
         self.gameImage.sd_setImage(with: URL(string: game.imageBackground ?? "" ))
     }

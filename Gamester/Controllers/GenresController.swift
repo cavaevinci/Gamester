@@ -41,7 +41,8 @@ class GenresController: UIViewController {
         
         self.viewModel.onGenreUpdated = { [weak self] in
            DispatchQueue.main.async {
-               self?.tableView.reloadData()
+               guard let self = self else { return }
+               self.tableView.reloadData()
            }
        }
     }
@@ -124,44 +125,44 @@ extension GenresController: UISearchResultsUpdating, UISearchControllerDelegate,
     
 }
 
-// MARK: TableView Functions
+// MARK: - TableView DataSource and Delegate
 extension GenresController: UITableViewDelegate, UITableViewDataSource {
     
-      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-          let inSearchMode = self.viewModel.inSearchMode(searchController)
-          return inSearchMode ? self.viewModel.filteredGenres.count : self.viewModel.allGenres.count
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      let inSearchMode = self.viewModel.inSearchMode(searchController)
+      return inSearchMode ? self.viewModel.filteredGenres.count : self.viewModel.allGenres.count
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: GenreCell.identifier, for: indexPath) as? GenreCell else {
+          fatalError("Unable to dequeue GenreCell in GenresController")
       }
       
-      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-          guard let cell = tableView.dequeueReusableCell(withIdentifier: GenreCell.identifier, for: indexPath) as? GenreCell else {
-              fatalError("Unable to dequeue GenreCell in GenresController")
-          }
-          
-          let inSearchMode = self.viewModel.inSearchMode(searchController)
-          
-          let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
-          let isSelected = viewModel.selectedGenres.contains(genre)
-          cell.configure(with: genre, isSelected: isSelected)
-          return cell
+      let inSearchMode = self.viewModel.inSearchMode(searchController)
+      
+      let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
+      let isSelected = viewModel.selectedGenres.contains(genre)
+      cell.configure(with: genre, isSelected: isSelected)
+      return cell
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+      return 130
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      
+      tableView.deselectRow(at: indexPath, animated: true)
+      let inSearchMode = self.viewModel.inSearchMode(searchController)
+      let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
+      
+      let selectedGenre = genre
+      if let index = viewModel.selectedGenres.firstIndex(where: { $0 == selectedGenre }) {
+          viewModel.selectedGenres.remove(at: index)
+      } else {
+          viewModel.selectedGenres.append(selectedGenre)
       }
       
-      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-          return 130
-      }
-      
-      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-          
-          tableView.deselectRow(at: indexPath, animated: true)
-          let inSearchMode = self.viewModel.inSearchMode(searchController)
-          let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
-          
-          let selectedGenre = genre
-          if let index = viewModel.selectedGenres.firstIndex(where: { $0 == selectedGenre }) {
-              viewModel.selectedGenres.remove(at: index)
-          } else {
-              viewModel.selectedGenres.append(selectedGenre)
-          }
-          
-          tableView.reloadRows(at: [indexPath], with: .automatic)
-      }
+      tableView.reloadRows(at: [indexPath], with: .automatic)
+  }
 }

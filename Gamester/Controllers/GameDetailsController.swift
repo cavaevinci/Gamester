@@ -5,23 +5,35 @@ import SwiftyBeaver
 
 class GameDetailsController: UIViewController {
     
-    // MARK: - Properties
-    
+    // MARK: - Variables
     let viewModel: GameDetailsViewModel
     let log = SwiftyBeaver.self
     
-    private lazy var tableView: UITableView = {
+    // MARK: UI Components
+    private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemBackground
         tableView.register(GameDetailsCell.self, forCellReuseIdentifier: GameDetailsCell.identifier)
-        tableView.dataSource = self
-        tableView.delegate = self
+
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
     
     // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
+        setupUI()
+        
+        self.viewModel.onDetailsUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     init(viewModel: GameDetailsViewModel) {
         self.viewModel = viewModel
@@ -32,14 +44,7 @@ class GameDetailsController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-        bindViewModel()
-    }
-    
     // MARK: - UI Setup
-    
     private func setupUI() {
         tableView.separatorStyle = .none
         view.addSubview(tableView)
@@ -52,19 +57,9 @@ class GameDetailsController: UIViewController {
         ])
     }
     
-    // MARK: - ViewModel Binding
-    
-    private func bindViewModel() {
-        viewModel.onDetailsUpdated = { [weak self] in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
-    }
 }
 
 // MARK: - TableView DataSource and Delegate
-
 extension GameDetailsController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,7 +68,7 @@ extension GameDetailsController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GameDetailsCell.identifier, for: indexPath) as? GameDetailsCell else {
-            fatalError("Unable to dequeue GameDetailsCell")
+            fatalError("Unable to dequeue GameDetailsCell in GameDetailsController")
         }
         if let game = viewModel.game {
             cell.configure(with: game)

@@ -90,5 +90,6 @@ class GameDetailsCell: UITableViewCell {
         super.prepareForReuse()
         gameName.text = nil
         gameImage.image = nil
+        gameDescription.text = nil
     }
 }

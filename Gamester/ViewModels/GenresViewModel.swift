@@ -5,7 +5,6 @@
 //  Created by Nino on 16.02.2024..
 //
 
-import Foundation
 import UIKit
 
 class GenresViewModel {

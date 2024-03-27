@@ -81,6 +81,7 @@ class GamesController: UIViewController, GenresControllerDelegate, CreativeLayou
         navigationItem.leftBarButtonItem = backButton
     }
     
+    // MARK: Handlers
     func refreshGenres() {
         viewModel.fetchGames()
     }
@@ -118,7 +119,7 @@ extension GamesController: UISearchResultsUpdating, UISearchControllerDelegate, 
     
 }
 
-// MARK: - CollectionVIew Functions
+// MARK: - CollectionView DataSource and Delegate
 extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let inSearchMode = self.viewModel.inSearchMode(searchController)
@@ -163,7 +164,7 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
             
             if offsetY > contentHeight - scrollView.frame.size.height {
                 self.viewModel.currentPage += 1
-                self.viewModel.fetchGamesWithSearchText("")
+                self.viewModel.fetchGamesWithSearchText()
             }
         }
     }

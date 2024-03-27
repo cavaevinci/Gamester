@@ -81,7 +81,7 @@ extension GamesViewModel {
         }
     }
     
-    internal func transformSelectedGenreIDs(_ genres: [Genre]) -> String {
+    private func transformSelectedGenreIDs(_ genres: [Genre]) -> String {
         let genreIDs: [Int] = genres.map { $0.id }
         let genreIDsString = genreIDs.map { String($0) }.joined(separator: ",")
         return genreIDsString
