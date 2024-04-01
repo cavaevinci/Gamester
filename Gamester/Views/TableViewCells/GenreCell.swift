@@ -42,7 +42,7 @@ class GenreCell: UITableViewCell {
         if isSelected {
             self.contentView.backgroundColor = .systemGray
         } else {
-            self.contentView.backgroundColor = .black
+            self.contentView.backgroundColor = UIColor(hex: "#101118")
         }
         self.genreName.text = genre.name
         self.genreImage.sd_setImage(with: URL(string: genre.imageBackground))

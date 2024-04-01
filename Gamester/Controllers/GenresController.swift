@@ -22,7 +22,7 @@ class GenresController: UIViewController {
     // MARK: UI Components
     private var tableView: UITableView = {
         let tv = UITableView()
-        tv.backgroundColor = .systemBackground
+        tv.backgroundColor = UIColor(hex: "#101118")
         tv.register(GenreCell.self, forCellReuseIdentifier: GenreCell.identifier)
         return tv
     }()
@@ -59,7 +59,6 @@ class GenresController: UIViewController {
     // MARK: UI Setup
     private func setupUI() {
         self.navigationItem.title = "Genres"
-        self.view.backgroundColor = .black
         self.view.addSubview(tableView)
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
