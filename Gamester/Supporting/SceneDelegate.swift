@@ -29,6 +29,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.makeKeyAndVisible()
     }
     
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        if let navigationController = window?.rootViewController as? UINavigationController {
+            if let gamesController = navigationController.viewControllers.first as? GamesController {
+                gamesController.viewModel.fetchGames()
+            } else if let genresController = navigationController.viewControllers.first as? GenresController {
+                genresController.viewModel.fetchGenresFromAPI()
+            }
+        }
+    }
+    
     private func makeRootViewController() -> UIViewController {
         let userDefaultsService = LocalStorageService()
         let apiService = APIService()

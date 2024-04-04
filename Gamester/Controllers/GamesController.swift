@@ -12,7 +12,7 @@ import SwiftyBeaver
 class GamesController: UIViewController, GenresControllerDelegate, CreativeLayoutDelegate {
     
     // MARK: Variables
-    private let viewModel: GamesViewModel
+    internal let viewModel: GamesViewModel
     let log = SwiftyBeaver.self
     var debounceTimer: Timer?
     

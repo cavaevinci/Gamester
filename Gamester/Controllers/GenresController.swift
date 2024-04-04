@@ -15,7 +15,7 @@ protocol GenresControllerDelegate {
 class GenresController: UIViewController {
     
     // MARK: Variables
-    private let viewModel: GenresViewModel
+    internal let viewModel: GenresViewModel
     var delegate: GenresControllerDelegate?
     let log = SwiftyBeaver.self
     
