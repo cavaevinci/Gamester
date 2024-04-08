@@ -5,6 +5,11 @@
 //  Created by Nino on 14.02.2024..
 //
 
+/*
+ TODO
+    -refactor to SwiftUI tag-like collection view for better UI/UX
+ */
+
 import UIKit
 import SwiftyBeaver
 
