@@ -23,6 +23,7 @@ class AppCoordinator: Coordinator {
     }
     
     func start() {
+        print("START")
         log.debug("\(type(of: self)): Coordinator Start")
     }
 }
