@@ -1,13 +1,11 @@
 // GameDetailsController.swift
 
 import UIKit
-import SwiftyBeaver
 
 class GameDetailsController: UIViewController {
     
     // MARK: - Variables
     let viewModel: GameDetailsViewModel
-    let log = SwiftyBeaver.self
     
     // MARK: UI Components
     private var tableView: UITableView = {

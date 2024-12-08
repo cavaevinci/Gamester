@@ -6,17 +6,13 @@
 //
 
 import UIKit
-import SwiftyBeaver
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    let log = SwiftyBeaver.self
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
-        self.setupSwiftyBeaver()
-        
+                
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
@@ -51,11 +47,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    private func setupSwiftyBeaver() {
-        let console = ConsoleDestination()
-        console.format = "$DHH:mm:ss$d $L $M"
-        log.addDestination(console)
-        log.info("SwiftyBeaver logging configured")
-    }
 }
 

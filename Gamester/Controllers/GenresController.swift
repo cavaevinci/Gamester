@@ -11,7 +11,6 @@
  */
 
 import UIKit
-import SwiftyBeaver
 
 protocol GenresControllerDelegate {
     func refreshGenres()
@@ -22,7 +21,6 @@ class GenresController: UIViewController {
     // MARK: Variables
     internal let viewModel: GenresViewModel
     var delegate: GenresControllerDelegate?
-    let log = SwiftyBeaver.self
     
     // MARK: UI Components
     private var tableView: UITableView = {
@@ -37,7 +35,6 @@ class GenresController: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        log.debug("\(type(of: self)): viewDidLoad() called")
         self.setupSearchController()
         self.setupUI()
         self.setupNavigationBar()

@@ -7,13 +7,11 @@
 
 import UIKit
 import SDWebImage
-import SwiftyBeaver
 
 class GamesController: UIViewController, GenresControllerDelegate, CreativeLayoutDelegate {
     
     // MARK: Variables
     internal let viewModel: GamesViewModel
-    let log = SwiftyBeaver.self
     var debounceTimer: Timer?
     
     // MARK: UI Components
@@ -30,7 +28,6 @@ class GamesController: UIViewController, GenresControllerDelegate, CreativeLayou
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        log.debug("\(type(of: self)): viewDidLoad() called")
         self.setupSearchController()
         self.setupUI()
         self.setupNavigationBar()
