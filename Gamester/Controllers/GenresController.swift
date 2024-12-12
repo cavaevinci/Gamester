@@ -88,7 +88,7 @@ class GenresController: UIViewController {
     }
     
     private func handleGenreSelection() {
-        viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
+        _ = viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
         if ((self.navigationController?.previousViewControllerInStack()?.isKind(of: GamesController.self)) != nil) {
           delegate?.refreshGenres()
           self.navigationController?.popViewController(animated: true)

@@ -44,12 +44,21 @@ class GenresViewModel {
             switch result {
             case .success(let genres):
                 self.allGenres = genres.results
-                self.selectedGenres = self.userDefaultsService.getSelectedGenres()
+                
+                // Handle the result from `getSelectedGenres`
+                switch self.userDefaultsService.getSelectedGenres() {
+                case .success(let savedGenres):
+                    self.selectedGenres = savedGenres
+                case .failure:
+                    self.selectedGenres = [] // Default to an empty array if there's an error
+                }
+                
             case .failure(let error):
                 self.onError?("Error fetching game details: \(error.localizedDescription)")
             }
         }
     }
+
 }
 
 // MARK: - Search
