@@ -16,7 +16,7 @@ enum APIEndpoint {
         switch self {
         case .gameDetails(let gameID):
             return "https://api.rawg.io/api/games/\(gameID)"
-        case .gamesInGenre(_):
+        case .gamesInGenre:
             return "https://api.rawg.io/api/games"
         case .genres:
             return "https://api.rawg.io/api/genres"

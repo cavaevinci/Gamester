@@ -9,140 +9,109 @@ import Foundation
 class APIService: APIServiceProtocol {
     
     private let session: URLSession
-        
-    init(session: URLSession = URLSession.shared) {
+    private let apiKey: String
+    
+    // Dependency Injection for session and API key
+    init(session: URLSession = URLSession.shared, apiKey: String = ProcessInfo.processInfo.environment["API_KEY"] ?? "") {
         self.session = session
+        self.apiKey = apiKey
     }
     
     func fetchData<T>(from endpoint: APIEndpoint, search: String, page: Int, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
-        guard var urlComponents = URLComponents(string: endpoint.urlString) else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
+        performRequest(endpoint: endpoint, search: search, page: page, responseType: responseType, completion: completion)
+    }
+    
+    func fetchData<T>(from endpoint: APIEndpoint, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
+        performRequest(endpoint: endpoint, search: "", page: 1, responseType: responseType, completion: completion)
+    }
+    
+    // Generic function to perform the API request
+    private func performRequest<T>(endpoint: APIEndpoint, search: String, page: Int, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
+        
+        guard let url = buildURL(for: endpoint, search: search, page: page) else {
+            completion(.failure(APIError.invalidURL))
             return
         }
         
-        if case .gamesInGenre(let genresIDs) = endpoint {
-            urlComponents.queryItems = [
-                URLQueryItem(name: "key", value: ProcessInfo.processInfo.environment["API_KEY"]),
-                URLQueryItem(name: "genres", value: "\(genresIDs)"),
-                URLQueryItem(name: "search", value: search),
-                URLQueryItem(name: "page", value: "\(page)"),
-                URLQueryItem(name: "pageSize", value: "100"),
-                URLQueryItem(name: "search_exact", value: "1")
-            ]
-        } else {
-            urlComponents.queryItems = [
-                URLQueryItem(name: "key", value: ProcessInfo.processInfo.environment["API_KEY"])
-            ]
-        }
-        
-        guard let url = urlComponents.url else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-            return
-        }
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        session.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            guard let httpResponse = response as? HTTPURLResponse else {
-                completion(.failure(NSError(domain: "Invalid response", code: 0, userInfo: nil)))
-                return
-            }
             
-            guard (200..<300).contains(httpResponse.statusCode) else {
-                if httpResponse.statusCode == 401 {
-                    if let data = data {
-                        do {
-                            let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
-                            completion(.failure(NSError(domain: errorResponse.error, code: 401, userInfo: nil)))
-                        } catch {
-                            completion(.failure(error))
-                        }
-                    } else {
-                        completion(.failure(NSError(domain: "Unauthorized", code: 401, userInfo: nil)))
-                    }
-                } else {
-                    completion(.failure(NSError(domain: "HTTP Error", code: httpResponse.statusCode, userInfo: nil)))
-                }
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
-                return
-            }
-            
-            do {
-                let decodedResponse = try JSONDecoder().decode(T.self, from: data)
-                completion(.success(decodedResponse))
-            } catch {
-                completion(.failure(error))
-            }
+            self.handleResponse(data: data, response: response, responseType: responseType, completion: completion)
         }.resume()
     }
     
-    func fetchData<T>(from endpoint: APIEndpoint, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
-        guard var urlComponents = URLComponents(string: endpoint.urlString) else {
-               completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-               return
-           }
-           
-           if case .gamesInGenre(let genreID) = endpoint {
-               urlComponents.queryItems = [
-                   URLQueryItem(name: "key", value: ProcessInfo.processInfo.environment["API_KEY"]),
-                   URLQueryItem(name: "genres", value: "\(genreID)")
-               ]
-           } else {
-               urlComponents.queryItems = [
-                   URLQueryItem(name: "key", value: ProcessInfo.processInfo.environment["API_KEY"])
-               ]
-           }
-           
-           guard let url = urlComponents.url else {
-               completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-               return
-           }
-           
-           URLSession.shared.dataTask(with: url) { (data, response, error) in
-               if let error = error {
-                   completion(.failure(error))
-                   return
-               }
-               guard let httpResponse = response as? HTTPURLResponse else {
-                   completion(.failure(NSError(domain: "Invalid response", code: 0, userInfo: nil)))
-                   return
-               }
-               
-               guard (200..<300).contains(httpResponse.statusCode) else {
-                   if httpResponse.statusCode == 401 {
-                       if let data = data {
-                           do {
-                               let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
-                               completion(.failure(NSError(domain: errorResponse.error, code: 401, userInfo: nil)))
-                           } catch {
-                               completion(.failure(error))
-                           }
-                       } else {
-                           completion(.failure(NSError(domain: "Unauthorized", code: 401, userInfo: nil)))
-                       }
-                   } else {
-                       completion(.failure(NSError(domain: "HTTP Error", code: httpResponse.statusCode, userInfo: nil)))
-                   }
-                   return
-               }
-               
-               guard let data = data else {
-                   completion(.failure(NSError(domain: "No data received", code: 1, userInfo: nil)))
-                   return
-               }
-               
-               do {
-                   let decodedResponse = try JSONDecoder().decode(T.self, from: data)
-                   completion(.success(decodedResponse))
-               } catch {
-                   completion(.failure(error))
-               }
-           }.resume()
+    // Construct URL with query parameters
+    private func buildURL(for endpoint: APIEndpoint, search: String, page: Int) -> URL? {
+        guard var urlComponents = URLComponents(string: endpoint.urlString) else { return nil }
+        
+        var queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "key", value: apiKey)
+        ]
+        
+        switch endpoint {
+        case .gamesInGenre(let genresIDs):
+            queryItems.append(URLQueryItem(name: "genres", value: genresIDs))
+        default:
+            break
+        }
+        
+        if !search.isEmpty {
+            queryItems.append(URLQueryItem(name: "search", value: search))
+        }
+        
+        queryItems.append(URLQueryItem(name: "page", value: "\(page)"))
+        queryItems.append(URLQueryItem(name: "pageSize", value: "100"))
+        queryItems.append(URLQueryItem(name: "search_exact", value: "1"))
+        
+        urlComponents.queryItems = queryItems
+        return urlComponents.url
     }
-
+    
+    // Handle the HTTP response, including error handling and decoding
+    private func handleResponse<T>(data: Data?, response: URLResponse?, responseType: T.Type, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
+        guard let httpResponse = response as? HTTPURLResponse else {
+            completion(.failure(APIError.invalidResponse))
+            return
+        }
+        
+        guard (200..<300).contains(httpResponse.statusCode) else {
+            handleHTTPError(data: data, statusCode: httpResponse.statusCode, completion: completion)
+            return
+        }
+        
+        guard let data = data else {
+            completion(.failure(APIError.noDataReceived))
+            return
+        }
+        
+        do {
+            let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+            completion(.success(decodedResponse))
+        } catch {
+            completion(.failure(error))
+        }
+    }
+    
+    // Handle specific HTTP errors
+    private func handleHTTPError<T>(data: Data?, statusCode: Int, completion: @escaping (Result<T, Error>) -> Void) where T : Decodable {
+        if statusCode == 401 {
+            if let data = data {
+                do {
+                    let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
+                    completion(.failure(APIError.unauthorized(errorResponse.error)))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else {
+                completion(.failure(APIError.unauthorized("Unauthorized access")))
+            }
+        } else {
+            completion(.failure(APIError.httpError(statusCode)))
+        }
+    }
 }
+
+
