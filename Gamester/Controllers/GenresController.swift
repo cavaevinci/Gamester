@@ -5,12 +5,8 @@
 //  Created by Nino on 14.02.2024..
 //
 
-/*
- TODO
-    -refactor to SwiftUI tag-like collection view for better UI/UX
- */
-
 import UIKit
+import SnapKit
 
 protocol GenresControllerDelegate {
     func refreshGenres()
@@ -23,32 +19,17 @@ class GenresController: UIViewController {
     var delegate: GenresControllerDelegate?
     
     // MARK: UI Components
-    private var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tv = UITableView()
+        tv.delegate = self
+        tv.dataSource = self
         tv.backgroundColor = UIColor(hex: "#101118")
         tv.register(GenreCell.self, forCellReuseIdentifier: GenreCell.identifier)
         return tv
     }()
     
-    private let searchController = UISearchController(searchResultsController: nil)
+    private lazy var searchController = UISearchController(searchResultsController: nil)
 
-    // MARK: Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupSearchController()
-        self.setupUI()
-        self.setupNavigationBar()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        
-        self.viewModel.onGenreUpdated = { [weak self] in
-           DispatchQueue.main.async {
-               guard let self = self else { return }
-               self.tableView.reloadData()
-           }
-       }
-    }
-    
     init(_ viewModel: GenresViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -57,49 +38,72 @@ class GenresController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupSearchController()
+        self.setupUI()
+        self.setupNavigationBar()
+        
+        self.viewModel.onGenreUpdated = { [weak self] in
+           DispatchQueue.main.async {
+               guard let self = self else { return }
+               self.tableView.reloadData()
+           }
+       }
+    }
         
     // MARK: UI Setup
     private func setupUI() {
         self.navigationItem.title = "Genres"
         self.view.addSubview(tableView)
-        self.tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        ])
+        self.setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     func setupNavigationBar() {
         let gearIcon = UIImage(systemName: "checkmark")
-        let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(finishedSelectingGenres))
+        let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(confirmSelectedGenres))
         navigationItem.rightBarButtonItem = settingsButton
         
-        if ((self.navigationController?.previousViewControllerInStack()?.isKind(of: GamesController.self)) != nil) {
-        } else {
+        // If initial run of app,dont add back button,so user must select genre to continue
+        if !(self.navigationController?.previousViewControllerInStack()?.isKind(of: GamesController.self) ?? false) {
             let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
             navigationItem.leftBarButtonItem = backButton
         }
     }
     
-    @objc func finishedSelectingGenres() {
+    @objc func confirmSelectedGenres() {
         if !viewModel.selectedGenres.isEmpty {
-            viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
-            if ((self.navigationController?.previousViewControllerInStack()?.isKind(of: GamesController.self)) != nil) {
-              delegate?.refreshGenres()
-              self.navigationController?.popViewController(animated: true)
-            } else {
-              let vm = GamesViewModel(apiService: self.viewModel.apiService, userDefaultsService: self.viewModel.userDefaultsService)
-              let vc = GamesController(vm)
-              self.navigationController?.pushViewController(vc, animated: true)
-            }
+            self.handleGenreSelection()
         } else {
-            DispatchQueue.main.async {
-                let alertController = UIAlertController(title: "Error", message: "Please select at least 1 game genre", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alertController, animated: true, completion: nil)
-            }
+            self.showWarning()
+        }
+    }
+    
+    private func handleGenreSelection() {
+        viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
+        if ((self.navigationController?.previousViewControllerInStack()?.isKind(of: GamesController.self)) != nil) {
+          delegate?.refreshGenres()
+          self.navigationController?.popViewController(animated: true)
+        } else {
+          let vm = GamesViewModel(apiService: self.viewModel.apiService, userDefaultsService: self.viewModel.userDefaultsService)
+          let vc = GamesController(vm)
+          self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    private func showWarning() {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Error", message: "Please select at least 1 game genre", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -119,11 +123,9 @@ class GenresController: UIViewController {
 
 // MARK: - Search Controller Functions
 extension GenresController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate  {
-    
     func updateSearchResults(for searchController: UISearchController) {
         self.viewModel.updateSearchController(searchBarText: searchController.searchBar.text)
     }
-    
 }
 
 // MARK: - TableView DataSource and Delegate
@@ -148,7 +150,7 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 130
+      return self.viewModel.cellHeight
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

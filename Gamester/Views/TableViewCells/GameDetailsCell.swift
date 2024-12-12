@@ -1,20 +1,21 @@
 // GameDetailsCell.swift
 
 import UIKit
+import SnapKit
 import SDWebImage
 
 class GameDetailsCell: UITableViewCell {
     
     static let identifier = "GameDetailsCell"
     
-    private let stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 8
         return stackView
     }()
     
-    private let gameImage: UIImageView = {
+    private lazy var gameImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -22,7 +23,7 @@ class GameDetailsCell: UITableViewCell {
         return imageView
     }()
     
-    private let gameName: UILabel = {
+    private lazy var gameName: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 18, weight: .semibold)
@@ -30,7 +31,7 @@ class GameDetailsCell: UITableViewCell {
         return label
     }()
     
-    private var gameDescription: UILabel = {
+    private lazy var gameDescription: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.textAlignment = .left
@@ -39,7 +40,7 @@ class GameDetailsCell: UITableViewCell {
         return label
     }()
     
-    private let releaseDateLabel: UILabel = {
+    private lazy var releaseDateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 14)
@@ -47,7 +48,7 @@ class GameDetailsCell: UITableViewCell {
         return label
     }()
     
-    private let ratingLabel: UILabel = {
+    private lazy var ratingLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 14)
@@ -55,7 +56,7 @@ class GameDetailsCell: UITableViewCell {
         return label
     }()
     
-    private let websiteLabel: UILabel = {
+    private lazy var websiteLabel: UILabel = {
         let label = UILabel()
         label.textColor = .blue
         label.font = .systemFont(ofSize: 14)
@@ -64,7 +65,7 @@ class GameDetailsCell: UITableViewCell {
         return label
     }()
     
-    private let topRatingLabel: UILabel = {
+    private lazy var topRatingLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 14)
@@ -72,7 +73,7 @@ class GameDetailsCell: UITableViewCell {
         return label
     }()
     
-    private let publisherLabel: UILabel = {
+    private lazy var publisherLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 14)
@@ -80,7 +81,7 @@ class GameDetailsCell: UITableViewCell {
         return label
     }()
     
-    private let metacriticRatingLabel: UILabel = {
+    private lazy var metacriticRatingLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 14)
@@ -132,54 +133,55 @@ class GameDetailsCell: UITableViewCell {
         stackView.addArrangedSubview(topRatingLabel)
         stackView.addArrangedSubview(publisherLabel)
         stackView.addArrangedSubview(metacriticRatingLabel)
-
         contentView.addSubview(stackView)
-
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-
-            gameImage.topAnchor.constraint(equalTo: stackView.topAnchor),
-            gameImage.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            gameImage.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            gameImage.heightAnchor.constraint(equalToConstant: 420),
-
-            gameName.topAnchor.constraint(equalTo: gameImage.bottomAnchor, constant: 8),
-            gameName.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            gameName.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-
-            gameDescription.topAnchor.constraint(equalTo: gameName.bottomAnchor, constant: 8),
-            gameDescription.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            gameDescription.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            
-            releaseDateLabel.topAnchor.constraint(equalTo: gameDescription.bottomAnchor, constant: 8),
-            releaseDateLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            releaseDateLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            
-            ratingLabel.topAnchor.constraint(equalTo: releaseDateLabel.bottomAnchor, constant: 8),
-            ratingLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            ratingLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            
-            websiteLabel.topAnchor.constraint(equalTo: ratingLabel.bottomAnchor, constant: 8),
-            websiteLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            websiteLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            
-            topRatingLabel.topAnchor.constraint(equalTo: websiteLabel.bottomAnchor, constant: 8),
-            topRatingLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            topRatingLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            
-            publisherLabel.topAnchor.constraint(equalTo: topRatingLabel.bottomAnchor, constant: 8),
-            publisherLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            publisherLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            
-            metacriticRatingLabel.topAnchor.constraint(equalTo: publisherLabel.bottomAnchor, constant: 8),
-            metacriticRatingLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            metacriticRatingLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            metacriticRatingLabel.bottomAnchor.constraint(lessThanOrEqualTo: stackView.bottomAnchor)
-        ])
+        self.setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        stackView.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().offset(12)
+            make.trailing.bottom.equalToSuperview().offset(-12)
+        }
+        
+        gameImage.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(420)
+        }
+        
+        gameName.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(gameImage.snp.bottom).offset(8)
+        }
+        
+        gameDescription.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(gameName.snp.bottom).offset(8)
+        }
+        
+        releaseDateLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(gameDescription.snp.bottom).offset(8)
+        }
+        
+        websiteLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(releaseDateLabel.snp.bottom).offset(8)
+        }
+        
+        topRatingLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(websiteLabel.snp.bottom).offset(8)
+        }
+        
+        publisherLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(topRatingLabel.snp.bottom).offset(8)
+        }
+        
+        metacriticRatingLabel.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(publisherLabel.snp.bottom).offset(8)
+        }
     }
     
     override func prepareForReuse() {

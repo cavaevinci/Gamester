@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EACF51E2D0B1C4B00C4D961 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1EACF51D2D0B1C4B00C4D961 /* SnapKit */; };
 		3F4F85512BBB001A001188A1 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4F85502BBB001A001188A1 /* UIColor+Extension.swift */; };
 		3F580CB42B867F3200E4FE70 /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F580CB32B867F3200E4FE70 /* PinterestLayout.swift */; };
 		3F7B5D7A2BA2327100A1CEAE /* GenreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B5D792BA2327100A1CEAE /* GenreTests.swift */; };
@@ -116,6 +117,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FD643FC2B80CDFF00D2F586 /* SDWebImage in Frameworks */,
+				1EACF51E2D0B1C4B00C4D961 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +364,7 @@
 			name = Gamester;
 			packageProductDependencies = (
 				3FD643FB2B80CDFF00D2F586 /* SDWebImage */,
+				1EACF51D2D0B1C4B00C4D961 /* SnapKit */,
 			);
 			productName = Gamester;
 			productReference = 3FD643A52B7D3BF200D2F586 /* Gamester.app */;
@@ -437,6 +440,7 @@
 			mainGroup = 3FD6439C2B7D3BF200D2F586;
 			packageReferences = (
 				3FD643FA2B80CD3D00D2F586 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				1EACF51C2D0B1C4B00C4D961 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 3FD643A62B7D3BF200D2F586 /* Products */;
 			projectDirPath = "";
@@ -859,6 +863,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1EACF51C2D0B1C4B00C4D961 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 		3FD643FA2B80CD3D00D2F586 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -870,6 +882,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1EACF51D2D0B1C4B00C4D961 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1EACF51C2D0B1C4B00C4D961 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		3FD643FB2B80CDFF00D2F586 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3FD643FA2B80CD3D00D2F586 /* XCRemoteSwiftPackageReference "SDWebImage" */;

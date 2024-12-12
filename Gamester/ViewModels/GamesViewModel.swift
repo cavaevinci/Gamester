@@ -24,6 +24,7 @@ class GamesViewModel {
     }
     
     private(set) var filteredGames: [Game] = []
+    let cellHeight: CGFloat = 220.0
     
     // MARK: - Callbacks
     var onGamesUpdated: (()->Void)?

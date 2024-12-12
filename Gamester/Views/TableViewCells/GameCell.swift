@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import SnapKit
 import SDWebImage
 
 class GameCell: UICollectionViewCell {
     
     static let identifier = "GameCell"
     
-    private var gameImage: UIImageView = {
+    private lazy var gameImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -21,7 +22,7 @@ class GameCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var gameName: UILabel = {
+    private lazy var gameName: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
@@ -47,19 +48,20 @@ class GameCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(gameImage)
         contentView.addSubview(gameName)
-        gameName.translatesAutoresizingMaskIntoConstraints = false
-        gameImage.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            gameImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            gameImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            gameImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            gameImage.heightAnchor.constraint(equalTo: gameImage.widthAnchor),
-            
-            gameName.topAnchor.constraint(equalTo: gameImage.bottomAnchor, constant: 4),
-            gameName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            gameName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            gameName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
+        self.setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        gameImage.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(gameImage.snp.width)
+        }
+        
+        gameName.snp.makeConstraints { make in
+            make.top.equalTo(gameImage.snp.bottom).offset(4)
+            make.leading.trailing.equalToSuperview().inset(8)
+            make.bottom.equalToSuperview()
+        }
     }
     
     override func prepareForReuse() {

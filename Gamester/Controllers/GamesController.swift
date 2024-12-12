@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 import SDWebImage
 
 class GamesController: UIViewController, GenresControllerDelegate, CreativeLayoutDelegate {
@@ -15,15 +16,17 @@ class GamesController: UIViewController, GenresControllerDelegate, CreativeLayou
     var debounceTimer: Timer?
     
     // MARK: UI Components
-    private var collectionView: UICollectionView = {
-       let layout = CreativeLayout()
+    private lazy var collectionView: UICollectionView = {
+        let layout = CreativeLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout:  layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
         collectionView.backgroundColor = .systemBackground
         collectionView.register(GameCell.self, forCellWithReuseIdentifier: GameCell.identifier)
         return collectionView
     }()
     
-    private let searchController = UISearchController(searchResultsController: nil)
+    private lazy var searchController = UISearchController(searchResultsController: nil)
     
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -37,9 +40,7 @@ class GamesController: UIViewController, GenresControllerDelegate, CreativeLayou
                self?.collectionView.reloadData()
            }
        }
-        
-       self.collectionView.delegate = self
-       self.collectionView.dataSource = self
+       
        if let layout = collectionView.collectionViewLayout as? CreativeLayout {
           layout.delegate = self
        }
@@ -59,13 +60,13 @@ class GamesController: UIViewController, GenresControllerDelegate, CreativeLayou
         self.navigationItem.title = "Games"
         self.view.backgroundColor = .systemIndigo
         self.view.addSubview(collectionView)
-        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            self.collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        ])
+        self.setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     func setupNavigationBar() {
@@ -109,11 +110,9 @@ class GamesController: UIViewController, GenresControllerDelegate, CreativeLayou
 
 // MARK: - Search Controller Functions
 extension GamesController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate  {
-    
     func updateSearchResults(for searchController: UISearchController) {
         self.viewModel.updateSearchController(searchBarText: searchController.searchBar.text)
     }
-    
 }
 
 // MARK: - CollectionView DataSource and Delegate
@@ -124,7 +123,7 @@ extension GamesController: UICollectionViewDelegate, UICollectionViewDataSource 
     }
     
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 220
+        return self.viewModel.cellHeight
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

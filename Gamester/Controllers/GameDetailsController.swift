@@ -1,6 +1,7 @@
 // GameDetailsController.swift
 
 import UIKit
+import SnapKit
 
 class GameDetailsController: UIViewController {
     
@@ -8,10 +9,13 @@ class GameDetailsController: UIViewController {
     let viewModel: GameDetailsViewModel
     
     // MARK: UI Components
-    private var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemBackground
         tableView.register(GameDetailsCell.self, forCellReuseIdentifier: GameDetailsCell.identifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
         return tableView
@@ -20,9 +24,7 @@ class GameDetailsController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        setupUI()
+        self.setupUI()
         
         self.viewModel.onDetailsUpdated = { [weak self] in
             DispatchQueue.main.async {
@@ -43,15 +45,14 @@ class GameDetailsController: UIViewController {
     
     // MARK: - UI Setup
     private func setupUI() {
-        tableView.separatorStyle = .none
         view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+        self.setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
 }

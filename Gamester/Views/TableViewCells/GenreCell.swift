@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import SnapKit
 import SDWebImage
 
 class GenreCell: UITableViewCell {
     
     static let identifier = "GenreCell"
     
-    private var genreImage: UIImageView = {
+    private lazy var genreImage: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
@@ -20,7 +21,7 @@ class GenreCell: UITableViewCell {
         return iv
     }()
     
-    private var genreName: UILabel = {
+    private lazy var genreName: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .left
@@ -51,20 +52,22 @@ class GenreCell: UITableViewCell {
     private func setupUI() {
         contentView.addSubview(genreImage)
         contentView.addSubview(genreName)
+        self.setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        genreImage.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(12)
+            make.leading.equalToSuperview().offset(16)
+            make.bottom.equalToSuperview().offset(-12)
+            make.width.equalTo(genreImage.snp.height)
+        }
         
-        genreImage.translatesAutoresizingMaskIntoConstraints = false
-        genreName.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            genreImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            genreImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            genreImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            genreImage.widthAnchor.constraint(equalTo: genreImage.heightAnchor),
-            
-            genreName.leadingAnchor.constraint(equalTo: genreImage.trailingAnchor, constant: 16),
-            genreName.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            genreName.centerYAnchor.constraint(equalTo: contentView.centerYAnchor) 
-        ])
+        genreName.snp.makeConstraints { make in
+            make.leading.equalTo(genreImage.snp.trailing).offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.centerY.equalToSuperview()
+        }
     }
     
     // MARK: PrepareForReuse

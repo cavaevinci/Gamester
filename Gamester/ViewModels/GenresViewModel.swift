@@ -12,7 +12,7 @@ class GenresViewModel {
     // MARK: - Variables
     internal let apiService: APIServiceProtocol
     internal let userDefaultsService: LocalStorageServiceProtocol
-    
+        
     private(set) var allGenres: [Genre] = [] {
         didSet {
             self.onGenreUpdated?()
@@ -26,6 +26,7 @@ class GenresViewModel {
     }
     
     private(set) var filteredGenres: [Genre] = []
+    let cellHeight: CGFloat = 130.0
     
     // MARK: - Callbacks
     var onGenreUpdated: (()->Void)?
