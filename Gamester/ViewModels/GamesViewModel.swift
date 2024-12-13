@@ -38,9 +38,19 @@ class GamesViewModel {
     }
     
     public func fetchGames() {
-        let genresIDsFromLocalStorage = self.userDefaultsService.getSelectedGenres()
+        // Handle the result from `getSelectedGenres`
+        let genresIDsFromLocalStorage: [Genre]
+        switch self.userDefaultsService.getSelectedGenres() {
+        case .success(let genres):
+            genresIDsFromLocalStorage = genres
+        case .failure:
+            genresIDsFromLocalStorage = [] // Default to an empty array if there's an error
+        }
+        
+        // Transform the genre IDs
         let ids = transformSelectedGenreIDs(genresIDsFromLocalStorage)
         
+        // Fetch games based on the IDs
         self.apiService.fetchData(from: .gamesInGenre(genresIDs: ids), responseType: GamesResponse.self) { result in
             switch result {
             case .success(let games):
@@ -50,6 +60,7 @@ class GamesViewModel {
             }
         }
     }
+
 }
 
 // MARK: - Search
@@ -92,13 +103,21 @@ extension GamesViewModel {
         guard !isFetchingNextPage else { return }
         isFetchingNextPage = true
         
-        let genresIDsFromLocalStorage = self.userDefaultsService.getSelectedGenres()
+        // Handle the result from `getSelectedGenres`
+        let genresIDsFromLocalStorage: [Genre]
+        switch self.userDefaultsService.getSelectedGenres() {
+        case .success(let genres):
+            genresIDsFromLocalStorage = genres
+        case .failure:
+            genresIDsFromLocalStorage = [] // Default to an empty array if there's an error
+        }
+        
         let ids = transformSelectedGenreIDs(genresIDsFromLocalStorage)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) {
             self.apiService.fetchData(from: .gamesInGenre(genresIDs: ids), search: searchText ?? "", page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
                 guard let self = self else { return }
-                isFetchingNextPage = false
+                self.isFetchingNextPage = false
                 switch result {
                 case .success(let games):
                     let newGames = games.results.filter { newGame in
@@ -107,7 +126,7 @@ extension GamesViewModel {
                         })
                     }
                     self.allGames += newGames
-                    self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText ?? "") })
+                    self.filteredGames = self.allGames.filter({ $0.name.lowercased().contains(searchText?.lowercased() ?? "") })
                     self.onGamesUpdated?()
                 case .failure(let error):
                     self.onError?("Error fetching game details: \(error.localizedDescription)")
@@ -115,5 +134,6 @@ extension GamesViewModel {
             }
         }
     }
+
 }
 
