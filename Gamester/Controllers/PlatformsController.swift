@@ -1,22 +1,21 @@
 //
-//  GenresController.swift
+//  PlatformsController.swift
 //  Gamester
 //
-//  Created by Nino on 14.02.2024..
+//  Created by Erik Đurkan on 13.12.2024..
 //
 
 import UIKit
 import SnapKit
 
-protocol GenresControllerDelegate {
-    func refreshGenres()
+protocol PlatformsControllerDelegate {
+    func refreshPlatforms()
 }
 
-class GenresController: UIViewController {
+class PlatformsController: UIViewController {
     
-    // MARK: Variables
-    internal let viewModel: GenresViewModel
-    var delegate: GenresControllerDelegate?
+    internal let viewModel: PlatformsViewModel
+    var delegate: PlatformsControllerDelegate?
     
     // MARK: UI Components
     private lazy var tableView: UITableView = {
@@ -29,8 +28,8 @@ class GenresController: UIViewController {
     }()
     
     private lazy var searchController = UISearchController(searchResultsController: nil)
-
-    init(_ viewModel: GenresViewModel) {
+    
+    init(_ viewModel: PlatformsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -42,21 +41,21 @@ class GenresController: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .red
         self.setupSearchController()
         self.setupUI()
         self.setupNavigationBar()
         
-        self.viewModel.onGenreUpdated = { [weak self] in
-           DispatchQueue.main.async {
-               guard let self = self else { return }
-               self.tableView.reloadData()
-           }
-       }
-    }
+        self.viewModel.onPlatformsUpdated = { [weak self] in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.tableView.reloadData()
+            }
+        }
         
-    // MARK: UI Setup
+    }
     private func setupUI() {
-        self.navigationItem.title = "Genres"
+        self.navigationItem.title = "Platforms"
         self.view.addSubview(tableView)
         self.setupConstraints()
     }
@@ -66,10 +65,9 @@ class GenresController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-    
     func setupNavigationBar() {
         let gearIcon = UIImage(systemName: "checkmark")
-        let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(confirmSelectedGenres))
+        let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(confirmSelectedPlatforms))
         navigationItem.rightBarButtonItem = settingsButton
         
         // If initial run of app,dont add back button,so user must select genre to continue
@@ -79,41 +77,36 @@ class GenresController: UIViewController {
         }
     }
     
-    @objc func confirmSelectedGenres() {
-        if !viewModel.selectedGenres.isEmpty {
-            self.handleGenreSelection()
+    @objc func confirmSelectedPlatforms() {
+        if !viewModel.selectedPlatforms.isEmpty {
+            self.handlePlatformSelection()
         } else {
             self.showWarning()
         }
     }
-    
-    private func handleGenreSelection() {
-            // Save the selected platforms to user defaults
-            _ = viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
-            
-            // Check if there are any selected platforms
-            if !viewModel.selectedGenres.isEmpty {
-                // If this is the first view (PlatformsController), navigate to the GenresController
-                let vm = GamesViewModel(apiService: self.viewModel.apiService, userDefaultsService: self.viewModel.userDefaultsService)
-                let vc = GamesController(vm)
-                self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                // If no platforms are selected, show a warning
-                self.showWarning()
-            }
+    private func handlePlatformSelection() {
+        // Save the selected platforms to user defaults
+        _ = viewModel.userDefaultsService.saveSelectedPlatforms(viewModel.selectedPlatforms)
+        
+        // Check if there are any selected platforms
+        if !viewModel.selectedPlatforms.isEmpty {
+            // If this is the first view (PlatformsController), navigate to the GenresController
+            let vm = GenresViewModel(userDefaultsService: self.viewModel.userDefaultsService, apiService: self.viewModel.apiService)
+            let vc = GenresController(vm)
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            // If no platforms are selected, show a warning
+            self.showWarning()
         }
+    }
 
-
-
-    
     private func showWarning() {
         DispatchQueue.main.async {
-            let alertController = UIAlertController(title: "Error", message: "Please select at least 1 game genre", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Error", message: "Please select at least 1 platform", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alertController, animated: true, completion: nil)
         }
     }
-    
     private func setupSearchController() {
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
@@ -126,21 +119,20 @@ class GenresController: UIViewController {
         searchController.delegate = self
         searchController.searchBar.delegate = self
     }
+    
 }
-
 // MARK: - Search Controller Functions
-extension GenresController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate  {
+extension PlatformsController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate  {
     func updateSearchResults(for searchController: UISearchController) {
         self.viewModel.updateSearchController(searchBarText: searchController.searchBar.text)
     }
 }
-
 // MARK: - TableView DataSource and Delegate
-extension GenresController: UITableViewDelegate, UITableViewDataSource {
+extension PlatformsController: UITableViewDelegate, UITableViewDataSource {
     
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       let inSearchMode = self.viewModel.inSearchMode(searchController)
-      return inSearchMode ? self.viewModel.filteredGenres.count : self.viewModel.allGenres.count
+      return inSearchMode ? self.viewModel.filteredPlatforms.count : self.viewModel.allPlatforms.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -150,9 +142,9 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
       
       let inSearchMode = self.viewModel.inSearchMode(searchController)
       
-      let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
-      let isSelected = viewModel.selectedGenres.contains(genre)
-      cell.configure(with: genre, isSelected: isSelected)
+      let genre = inSearchMode ? self.viewModel.filteredPlatforms[indexPath.row] : self.viewModel.allPlatforms[indexPath.row]
+      let isSelected = viewModel.selectedPlatforms.contains(genre)
+      cell.configurePlatform(with: genre, isSelected: isSelected)
       return cell
   }
   
@@ -164,13 +156,13 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
       
       tableView.deselectRow(at: indexPath, animated: true)
       let inSearchMode = self.viewModel.inSearchMode(searchController)
-      let genre = inSearchMode ? self.viewModel.filteredGenres[indexPath.row] : self.viewModel.allGenres[indexPath.row]
+      let genre = inSearchMode ? self.viewModel.filteredPlatforms[indexPath.row] : self.viewModel.allPlatforms[indexPath.row]
       
       let selectedGenre = genre
-      if let index = viewModel.selectedGenres.firstIndex(where: { $0 == selectedGenre }) {
-          viewModel.selectedGenres.remove(at: index)
+      if let index = viewModel.selectedPlatforms.firstIndex(where: { $0 == selectedGenre }) {
+          viewModel.selectedPlatforms.remove(at: index)
       } else {
-          viewModel.selectedGenres.append(selectedGenre)
+          viewModel.selectedPlatforms.append(selectedGenre)
       }
       
       tableView.reloadRows(at: [indexPath], with: .automatic)

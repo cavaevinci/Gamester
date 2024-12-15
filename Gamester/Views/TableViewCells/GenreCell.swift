@@ -48,6 +48,15 @@ class GenreCell: UITableViewCell {
         self.genreName.text = genre.name
         self.genreImage.sd_setImage(with: URL(string: genre.imageBackground))
     }
+    public func configurePlatform(with platform: Platform, isSelected: Bool) {
+        if isSelected {
+            self.contentView.backgroundColor = .systemGray
+        } else {
+            self.contentView.backgroundColor = UIColor(hex: "#101118")
+        }
+        self.genreName.text = platform.name
+        self.genreImage.sd_setImage(with: URL(string: platform.imageBackground))
+    }
     
     private func setupUI() {
         contentView.addSubview(genreImage)

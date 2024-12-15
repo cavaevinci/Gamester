@@ -12,6 +12,10 @@ protocol LocalStorageServiceProtocol {
     func saveSelectedGenres(_ genres: [Genre]) -> Result<Void, LocalStorageError>
     func getSelectedGenres() -> Result<[Genre], LocalStorageError>
     func removeSelectedGenres() -> Result<Void, LocalStorageError>
+    
+    func saveSelectedPlatforms(_ platforms: [Platform]) -> Result<Void, LocalStorageError>
+        func getSelectedPlatforms() -> Result<[Platform], LocalStorageError>
+        func removeSelectedPlatforms() -> Result<Void, LocalStorageError>
 }
 
 // Enum for error handling
@@ -27,6 +31,9 @@ class LocalStorageService: LocalStorageServiceProtocol {
     
     // Constants to avoid hardcoding keys
     private let selectedGenresKey = "selectedGenre"
+    
+    private let selectedPlatformsKey = "selectedPlatforms"
+
     
     // Dependency injection of UserDefaults for better testability
     private let userDefaults: UserDefaults
@@ -66,4 +73,36 @@ class LocalStorageService: LocalStorageServiceProtocol {
         userDefaults.removeObject(forKey: selectedGenresKey)
         return .success(())
     }
+    
+    
+    // Save platforms
+       func saveSelectedPlatforms(_ platforms: [Platform]) -> Result<Void, LocalStorageError> {
+           do {
+               let encodedData = try JSONEncoder().encode(platforms)
+               userDefaults.set(encodedData, forKey: selectedPlatformsKey)
+               return .success(())
+           } catch {
+               return .failure(.encodingError)
+           }
+       }
+
+       // Get saved platforms
+       func getSelectedPlatforms() -> Result<[Platform], LocalStorageError> {
+           guard let savedData = userDefaults.data(forKey: selectedPlatformsKey) else {
+               return .failure(.dataNotFound)
+           }
+
+           do {
+               let platforms = try JSONDecoder().decode([Platform].self, from: savedData)
+               return .success(platforms)
+           } catch {
+               return .failure(.decodingError)
+           }
+       }
+
+       // Remove saved platforms
+       func removeSelectedPlatforms() -> Result<Void, LocalStorageError> {
+           userDefaults.removeObject(forKey: selectedPlatformsKey)
+           return .success(())
+       }
 }
