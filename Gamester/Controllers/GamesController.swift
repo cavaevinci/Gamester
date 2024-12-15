@@ -85,13 +85,10 @@ class GamesController: UIViewController, GenresControllerDelegate, CreativeLayou
     }
         
     @objc func settingsButtonTapped() {
-        let userDefaultsService = LocalStorageService()
-        let apiService = APIService()
-        let vm = GenresViewModel(userDefaultsService: userDefaultsService, apiService: apiService)
-        let vc = GenresController(vm)
-        vc.delegate = self
-        self.navigationController?.pushViewController(vc, animated: true)
+        let settingsVC = SettingsController()
+        self.navigationController?.pushViewController(settingsVC, animated: true)
     }
+
     
     private func setupSearchController() {
         self.searchController.searchResultsUpdater = self

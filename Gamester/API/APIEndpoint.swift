@@ -11,6 +11,7 @@ enum APIEndpoint {
     case gameDetails(gameID: Int)
     case gamesInGenre(genresIDs: String)
     case genres
+    case platforms
     
     var urlString: String {
         switch self {
@@ -20,6 +21,8 @@ enum APIEndpoint {
             return "https://api.rawg.io/api/games"
         case .genres:
             return "https://api.rawg.io/api/genres"
+        case .platforms:
+            return "https://api.rawg.io/api/platforms"
         }
     }
 }

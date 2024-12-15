@@ -44,8 +44,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let vm = GamesViewModel(apiService: apiService, userDefaultsService: userDefaultsService)
             return GamesController(vm)
         case .success, .failure:
-            let vm = GenresViewModel(userDefaultsService: userDefaultsService, apiService: apiService)
-            return GenresController(vm)
+            let vm = PlatformsViewModel(userDefaultsService: userDefaultsService, apiService: apiService)
+            return PlatformsController(vm)
         }
     }
     
