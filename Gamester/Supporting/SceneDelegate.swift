@@ -39,13 +39,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let userDefaultsService = LocalStorageService()
         let apiService = APIService()
         
-        switch userDefaultsService.getSelectedGenres() {
-        case .success(let genres) where !genres.isEmpty:
-            let vm = GamesViewModel(apiService: apiService, userDefaultsService: userDefaultsService)
-            return GamesController(vm)
-        case .success, .failure:
+        if userDefaultsService.isFirstRun() {
             let vm = PlatformsViewModel(userDefaultsService: userDefaultsService, apiService: apiService)
             return PlatformsController(vm)
+        } else {
+            let vm = GamesViewModel(apiService: apiService, userDefaultsService: userDefaultsService)
+            return GamesController(vm)
         }
     }
     

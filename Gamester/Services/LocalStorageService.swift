@@ -1,21 +1,11 @@
-//
-//  LocalStorageService.swift
-//  Gamester
-//
-//  Created by Nino on 18.02.2024..
-//
-
 import Foundation
 
 // Protocol for local storage service
 protocol LocalStorageServiceProtocol {
-    func saveSelectedGenres(_ genres: [Genre]) -> Result<Void, LocalStorageError>
-    func getSelectedGenres() -> Result<[Genre], LocalStorageError>
-    func removeSelectedGenres() -> Result<Void, LocalStorageError>
-    
-    func saveSelectedPlatforms(_ platforms: [Platform]) -> Result<Void, LocalStorageError>
-        func getSelectedPlatforms() -> Result<[Platform], LocalStorageError>
-        func removeSelectedPlatforms() -> Result<Void, LocalStorageError>
+    func save<T: Codable>(_ value: T, forKey key: LocalStorageKey) -> Result<Void, LocalStorageError>
+    func get<T: Codable>(forKey key: LocalStorageKey) -> Result<T, LocalStorageError>
+    func remove(forKey key: LocalStorageKey) -> Result<Void, LocalStorageError>
+    func isFirstRun() -> Bool
 }
 
 // Enum for error handling
@@ -26,14 +16,14 @@ enum LocalStorageError: Error, Equatable {
     case unknownError
 }
 
+// Enum for predefined keys to ensure type safety
+enum LocalStorageKey: String {
+    case selectedGenres
+    case selectedPlatforms
+}
+
 // LocalStorageService implementation
 class LocalStorageService: LocalStorageServiceProtocol {
-    
-    // Constants to avoid hardcoding keys
-    private let selectedGenresKey = "selectedGenre"
-    
-    private let selectedPlatformsKey = "selectedPlatforms"
-
     
     // Dependency injection of UserDefaults for better testability
     private let userDefaults: UserDefaults
@@ -43,66 +33,52 @@ class LocalStorageService: LocalStorageServiceProtocol {
         self.userDefaults = userDefaults
     }
     
-    // Save genres with improved error handling
-    func saveSelectedGenres(_ genres: [Genre]) -> Result<Void, LocalStorageError> {
+    func isFirstRun() -> Bool {
+        // Check if genres or platforms are missing from local storage
+        let genresResult: Result<[Genre], LocalStorageError> = get(forKey: .selectedGenres)
+        let platformsResult: Result<[Platform], LocalStorageError> = get(forKey: .selectedPlatforms)
+        
+        switch (genresResult, platformsResult) {
+        case (.failure(.dataNotFound), _), (_, .failure(.dataNotFound)):
+            // If either genres or platforms data is missing, it's the first run
+            return true
+        case (.success(let genres), .success(let platforms)) where genres.isEmpty || platforms.isEmpty:
+            // If either genres or platforms are empty, it's the first run
+            return true
+        default:
+            // Otherwise, not the first run
+            return false
+        }
+    }
+    
+    // Save a value to UserDefaults
+    func save<T: Codable>(_ value: T, forKey key: LocalStorageKey) -> Result<Void, LocalStorageError> {
         do {
-            let encodedData = try JSONEncoder().encode(genres)
-            userDefaults.set(encodedData, forKey: selectedGenresKey)
+            let encodedData = try JSONEncoder().encode(value)
+            userDefaults.set(encodedData, forKey: key.rawValue)
             return .success(())
         } catch {
             return .failure(.encodingError)
         }
     }
     
-    // Get saved genres with improved error handling
-    func getSelectedGenres() -> Result<[Genre], LocalStorageError> {
-        guard let savedData = userDefaults.data(forKey: selectedGenresKey) else {
+    // Retrieve a value from UserDefaults
+    func get<T: Codable>(forKey key: LocalStorageKey) -> Result<T, LocalStorageError> {
+        guard let savedData = userDefaults.data(forKey: key.rawValue) else {
             return .failure(.dataNotFound)
         }
         
         do {
-            let genres = try JSONDecoder().decode([Genre].self, from: savedData)
-            return .success(genres)
+            let decodedValue = try JSONDecoder().decode(T.self, from: savedData)
+            return .success(decodedValue)
         } catch {
             return .failure(.decodingError)
         }
     }
     
-    // Remove saved genres
-    func removeSelectedGenres() -> Result<Void, LocalStorageError> {
-        userDefaults.removeObject(forKey: selectedGenresKey)
+    // Remove a value from UserDefaults
+    func remove(forKey key: LocalStorageKey) -> Result<Void, LocalStorageError> {
+        userDefaults.removeObject(forKey: key.rawValue)
         return .success(())
     }
-    
-    
-    // Save platforms
-       func saveSelectedPlatforms(_ platforms: [Platform]) -> Result<Void, LocalStorageError> {
-           do {
-               let encodedData = try JSONEncoder().encode(platforms)
-               userDefaults.set(encodedData, forKey: selectedPlatformsKey)
-               return .success(())
-           } catch {
-               return .failure(.encodingError)
-           }
-       }
-
-       // Get saved platforms
-       func getSelectedPlatforms() -> Result<[Platform], LocalStorageError> {
-           guard let savedData = userDefaults.data(forKey: selectedPlatformsKey) else {
-               return .failure(.dataNotFound)
-           }
-
-           do {
-               let platforms = try JSONDecoder().decode([Platform].self, from: savedData)
-               return .success(platforms)
-           } catch {
-               return .failure(.decodingError)
-           }
-       }
-
-       // Remove saved platforms
-       func removeSelectedPlatforms() -> Result<Void, LocalStorageError> {
-           userDefaults.removeObject(forKey: selectedPlatformsKey)
-           return .success(())
-       }
 }

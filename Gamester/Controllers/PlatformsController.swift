@@ -86,7 +86,14 @@ class PlatformsController: UIViewController {
     }
     private func handlePlatformSelection() {
         // Save the selected platforms to user defaults
-        _ = viewModel.userDefaultsService.saveSelectedPlatforms(viewModel.selectedPlatforms)
+
+        let saveResult = viewModel.userDefaultsService.save(viewModel.selectedPlatforms, forKey: .selectedPlatforms)
+        switch saveResult {
+        case .success:
+            print("Platforms saved successfully!")
+        case .failure(let error):
+            print("Failed to save platforms: \(error)")
+        }
         
         // Check if there are any selected platforms
         if !viewModel.selectedPlatforms.isEmpty {

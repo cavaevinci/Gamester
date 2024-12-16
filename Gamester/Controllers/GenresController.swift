@@ -88,23 +88,26 @@ class GenresController: UIViewController {
     }
     
     private func handleGenreSelection() {
-            // Save the selected platforms to user defaults
-            _ = viewModel.userDefaultsService.saveSelectedGenres(viewModel.selectedGenres)
-            
-            // Check if there are any selected platforms
-            if !viewModel.selectedGenres.isEmpty {
-                // If this is the first view (PlatformsController), navigate to the GenresController
-                let vm = GamesViewModel(apiService: self.viewModel.apiService, userDefaultsService: self.viewModel.userDefaultsService)
-                let vc = GamesController(vm)
-                self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                // If no platforms are selected, show a warning
-                self.showWarning()
-            }
+        // Save the selected platforms to user defaults
+        let saveResult = viewModel.userDefaultsService.save(viewModel.selectedGenres, forKey: .selectedGenres)
+        switch saveResult {
+        case .success:
+            print("Genres saved successfully!")
+        case .failure(let error):
+            print("Failed to save genres: \(error)")
         }
-
-
-
+        
+        // Check if there are any selected platforms
+        if !viewModel.selectedGenres.isEmpty {
+            // If this is the first view (PlatformsController), navigate to the GenresController
+            let vm = GamesViewModel(apiService: self.viewModel.apiService, userDefaultsService: self.viewModel.userDefaultsService)
+            let vc = GamesController(vm)
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            // If no platforms are selected, show a warning
+            self.showWarning()
+        }
+    }
     
     private func showWarning() {
         DispatchQueue.main.async {

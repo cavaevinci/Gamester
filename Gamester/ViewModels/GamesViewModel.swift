@@ -40,11 +40,15 @@ class GamesViewModel {
     public func fetchGames() {
         // Handle the result from `getSelectedGenres`
         let genresIDsFromLocalStorage: [Genre]
-        switch self.userDefaultsService.getSelectedGenres() {
+
+        let getResult: Result<[Genre], LocalStorageError> = self.userDefaultsService.get(forKey: .selectedGenres)
+        switch getResult {
         case .success(let genres):
+            print("Retrieved genres: \(genres)")
             genresIDsFromLocalStorage = genres
-        case .failure:
-            genresIDsFromLocalStorage = [] // Default to an empty array if there's an error
+        case .failure(let error):
+            print("Failed to retrieve genres: \(error)")
+            genresIDsFromLocalStorage = []
         }
         
         // Transform the genre IDs
@@ -105,11 +109,15 @@ extension GamesViewModel {
         
         // Handle the result from `getSelectedGenres`
         let genresIDsFromLocalStorage: [Genre]
-        switch self.userDefaultsService.getSelectedGenres() {
+        
+        let getResult: Result<[Genre], LocalStorageError> = self.userDefaultsService.get(forKey: .selectedGenres)
+        switch getResult {
         case .success(let genres):
+            print("Retrieved genres: \(genres)")
             genresIDsFromLocalStorage = genres
-        case .failure:
-            genresIDsFromLocalStorage = [] // Default to an empty array if there's an error
+        case .failure(let error):
+            print("Failed to retrieve genres: \(error)")
+            genresIDsFromLocalStorage = []
         }
         
         let ids = transformSelectedGenreIDs(genresIDsFromLocalStorage)

@@ -45,12 +45,14 @@ class GenresViewModel {
             case .success(let genres):
                 self.allGenres = genres.results
                 
-                // Handle the result from `getSelectedGenres`
-                switch self.userDefaultsService.getSelectedGenres() {
-                case .success(let savedGenres):
-                    self.selectedGenres = savedGenres
-                case .failure:
-                    self.selectedGenres = [] // Default to an empty array if there's an error
+                let getResult: Result<[Genre], LocalStorageError> = self.userDefaultsService.get(forKey: .selectedGenres)
+                switch getResult {
+                case .success(let genres):
+                    print("Retrieved genres: \(genres)")
+                    self.selectedGenres = genres
+                case .failure(let error):
+                    print("Failed to retrieve genres: \(error)")
+                    self.selectedGenres = []
                 }
                 
             case .failure(let error):

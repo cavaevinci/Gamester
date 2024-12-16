@@ -83,6 +83,7 @@ class SettingsController: UIViewController {
     
     
     @objc func saveSettings() {
+        /*
         // Example: Saving genres and platforms to UserDefaults
         let selectedGenres = genresViewController?.selectedGenres ?? []
         let selectedPlatforms = platformsViewController?.selectedPlatforms ?? []
@@ -90,6 +91,7 @@ class SettingsController: UIViewController {
         // Save the selections to UserDefaults or another data storage
         UserDefaults.standard.set(selectedGenres, forKey: "selectedGenres")
         UserDefaults.standard.set(selectedPlatforms, forKey: "selectedPlatforms")
+         */
     }
 
 }
