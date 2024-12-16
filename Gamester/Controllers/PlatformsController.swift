@@ -41,7 +41,6 @@ class PlatformsController: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .red
         self.setupSearchController()
         self.setupUI()
         self.setupNavigationBar()
@@ -55,7 +54,6 @@ class PlatformsController: UIViewController {
         
     }
     private func setupUI() {
-        self.navigationItem.title = "Platforms"
         self.view.addSubview(tableView)
         self.setupConstraints()
     }
@@ -66,6 +64,7 @@ class PlatformsController: UIViewController {
         }
     }
     func setupNavigationBar() {
+        self.navigationItem.title = "Platforms"
         let gearIcon = UIImage(systemName: "checkmark")
         let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(confirmSelectedPlatforms))
         navigationItem.rightBarButtonItem = settingsButton
@@ -79,41 +78,22 @@ class PlatformsController: UIViewController {
     
     @objc func confirmSelectedPlatforms() {
         if !viewModel.selectedPlatforms.isEmpty {
-            self.handlePlatformSelection()
-        } else {
-            self.showWarning()
-        }
-    }
-    private func handlePlatformSelection() {
-        // Save the selected platforms to user defaults
-
-        let saveResult = viewModel.userDefaultsService.save(viewModel.selectedPlatforms, forKey: .selectedPlatforms)
-        switch saveResult {
-        case .success:
-            print("Platforms saved successfully!")
-        case .failure(let error):
-            print("Failed to save platforms: \(error)")
-        }
-        
-        // Check if there are any selected platforms
-        if !viewModel.selectedPlatforms.isEmpty {
-            // If this is the first view (PlatformsController), navigate to the GenresController
+            let saveResult = viewModel.userDefaultsService.save(viewModel.selectedPlatforms, forKey: .selectedPlatforms)
+            switch saveResult {
+            case .success:
+                print("Platforms saved successfully!")
+            case .failure(let error):
+                print("Failed to save platforms: \(error)")
+            }
+            
             let vm = GenresViewModel(userDefaultsService: self.viewModel.userDefaultsService, apiService: self.viewModel.apiService)
             let vc = GenresController(vm)
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            // If no platforms are selected, show a warning
             self.showWarning()
         }
     }
 
-    private func showWarning() {
-        DispatchQueue.main.async {
-            let alertController = UIAlertController(title: "Error", message: "Please select at least 1 platform", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
-        }
-    }
     private func setupSearchController() {
         self.searchController.searchResultsUpdater = self
         self.searchController.obscuresBackgroundDuringPresentation = false
@@ -125,6 +105,14 @@ class PlatformsController: UIViewController {
         
         searchController.delegate = self
         searchController.searchBar.delegate = self
+    }
+    
+    private func showWarning() {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Error", message: "Please select at least 1 platform", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
 }

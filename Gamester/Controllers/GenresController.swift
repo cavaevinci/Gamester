@@ -56,7 +56,6 @@ class GenresController: UIViewController {
         
     // MARK: UI Setup
     private func setupUI() {
-        self.navigationItem.title = "Genres"
         self.view.addSubview(tableView)
         self.setupConstraints()
     }
@@ -68,6 +67,7 @@ class GenresController: UIViewController {
     }
     
     func setupNavigationBar() {
+        self.navigationItem.title = "Genres"
         let gearIcon = UIImage(systemName: "checkmark")
         let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(confirmSelectedGenres))
         navigationItem.rightBarButtonItem = settingsButton
@@ -81,39 +81,19 @@ class GenresController: UIViewController {
     
     @objc func confirmSelectedGenres() {
         if !viewModel.selectedGenres.isEmpty {
-            self.handleGenreSelection()
-        } else {
-            self.showWarning()
-        }
-    }
-    
-    private func handleGenreSelection() {
-        // Save the selected platforms to user defaults
-        let saveResult = viewModel.userDefaultsService.save(viewModel.selectedGenres, forKey: .selectedGenres)
-        switch saveResult {
-        case .success:
-            print("Genres saved successfully!")
-        case .failure(let error):
-            print("Failed to save genres: \(error)")
-        }
-        
-        // Check if there are any selected platforms
-        if !viewModel.selectedGenres.isEmpty {
-            // If this is the first view (PlatformsController), navigate to the GenresController
+            let saveResult = viewModel.userDefaultsService.save(viewModel.selectedGenres, forKey: .selectedGenres)
+            switch saveResult {
+            case .success:
+                print("Genres saved successfully!")
+            case .failure(let error):
+                print("Failed to save genres: \(error)")
+            }
+            
             let vm = GamesViewModel(apiService: self.viewModel.apiService, userDefaultsService: self.viewModel.userDefaultsService)
             let vc = GamesController(vm)
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            // If no platforms are selected, show a warning
             self.showWarning()
-        }
-    }
-    
-    private func showWarning() {
-        DispatchQueue.main.async {
-            let alertController = UIAlertController(title: "Error", message: "Please select at least 1 game genre", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -129,6 +109,15 @@ class GenresController: UIViewController {
         searchController.delegate = self
         searchController.searchBar.delegate = self
     }
+    
+    private func showWarning() {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Error", message: "Please select at least 1 genre", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
 }
 
 // MARK: - Search Controller Functions
