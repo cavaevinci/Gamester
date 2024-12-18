@@ -53,6 +53,7 @@ class PlatformsController: UIViewController {
         }
         
     }
+    
     private func setupUI() {
         self.view.addSubview(tableView)
         self.setupConstraints()
@@ -63,17 +64,24 @@ class PlatformsController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+    
     func setupNavigationBar() {
         self.navigationItem.title = "Platforms"
         let gearIcon = UIImage(systemName: "checkmark")
         let settingsButton = UIBarButtonItem(image: gearIcon, style: .plain, target: self, action: #selector(confirmSelectedPlatforms))
         navigationItem.rightBarButtonItem = settingsButton
         
-        // If initial run of app,dont add back button,so user must select genre to continue
-        if !(self.navigationController?.previousViewControllerInStack()?.isKind(of: GamesController.self) ?? false) {
-            let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        // Check if the previous view controller is SettingsViewController
+        if let previousVC = navigationController?.viewControllers.dropLast().last as? SettingsController {
+            // Add a custom back button if the previous view controller is SettingsViewController
+            let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonTapped))
             navigationItem.leftBarButtonItem = backButton
         }
+    }
+    
+    @objc func backButtonTapped() {
+        // Go back to the previous view controller
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func confirmSelectedPlatforms() {

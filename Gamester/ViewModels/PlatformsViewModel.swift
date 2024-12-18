@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class PlatformsViewModel {
     // MARK: - Variables
     internal let apiService: APIServiceProtocol
@@ -26,6 +25,8 @@ class PlatformsViewModel {
     }
     
     private(set) var filteredPlatforms: [Platform] = []
+    
+    
     let cellHeight: CGFloat = 130.0
     
     // MARK: - Callbacks

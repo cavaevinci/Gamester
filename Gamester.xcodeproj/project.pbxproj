@@ -11,6 +11,8 @@
 		03F30EF82D0CAE8500904AC1 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F30EF72D0CAE8000904AC1 /* Platform.swift */; };
 		03F30EFA2D0CAF8100904AC1 /* PlatformsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F30EF92D0CAF7700904AC1 /* PlatformsViewModel.swift */; };
 		03F30EFC2D0CAFA900904AC1 /* PlatformsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F30EFB2D0CAF9D00904AC1 /* PlatformsController.swift */; };
+		1E68DD742D10D1AC00C02FCE /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E68DD732D10D1A900C02FCE /* SettingsViewModel.swift */; };
+		1E68DD762D10D5B100C02FCE /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E68DD752D10D5AF00C02FCE /* SettingsCell.swift */; };
 		1EACF51E2D0B1C4B00C4D961 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1EACF51D2D0B1C4B00C4D961 /* SnapKit */; };
 		1EACF5212D0B35EE00C4D961 /* LocalStorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EACF5202D0B35E800C4D961 /* LocalStorageServiceTests.swift */; };
 		1EACF5272D0B3A8900C4D961 /* MockUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EACF5262D0B3A8500C4D961 /* MockUserDefaults.swift */; };
@@ -65,6 +67,8 @@
 		03F30EF72D0CAE8000904AC1 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		03F30EF92D0CAF7700904AC1 /* PlatformsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsViewModel.swift; sourceTree = "<group>"; };
 		03F30EFB2D0CAF9D00904AC1 /* PlatformsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsController.swift; sourceTree = "<group>"; };
+		1E68DD732D10D1A900C02FCE /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		1E68DD752D10D5AF00C02FCE /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		1EACF5202D0B35E800C4D961 /* LocalStorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageServiceTests.swift; sourceTree = "<group>"; };
 		1EACF5262D0B3A8500C4D961 /* MockUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserDefaults.swift; sourceTree = "<group>"; };
 		3F4F85502BBB001A001188A1 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 		3F92C4AC2BB338F700E860C5 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				1E68DD752D10D5AF00C02FCE /* SettingsCell.swift */,
 				3FD643F62B7FBA9800D2F586 /* GameCell.swift */,
 				3FD643E42B7F6E8500D2F586 /* GenreCell.swift */,
 				3F92C4AD2BB34E1100E860C5 /* GameDetailsCell.swift */,
@@ -245,6 +250,7 @@
 		3FD643DB2B7D574B00D2F586 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				1E68DD732D10D1A900C02FCE /* SettingsViewModel.swift */,
 				03F30EF92D0CAF7700904AC1 /* PlatformsViewModel.swift */,
 				3FD643EA2B7F877200D2F586 /* GameDetailsViewModel.swift */,
 				3FD643F22B7FA9D500D2F586 /* GenresViewModel.swift */,
@@ -448,6 +454,7 @@
 				3FD643F32B7FA9D500D2F586 /* GenresViewModel.swift in Sources */,
 				3FD643E52B7F6E8500D2F586 /* GenreCell.swift in Sources */,
 				3F92C4AE2BB34E1100E860C5 /* GameDetailsCell.swift in Sources */,
+				1E68DD762D10D5B100C02FCE /* SettingsCell.swift in Sources */,
 				030F57E22D0EE6EA00A19488 /* SettingsController.swift in Sources */,
 				3FD643F52B7FB64400D2F586 /* GamesViewModel.swift in Sources */,
 				3FD643A92B7D3BF200D2F586 /* AppDelegate.swift in Sources */,
@@ -460,6 +467,7 @@
 				3FD644032B826D5200D2F586 /* APIEndpoint.swift in Sources */,
 				3FD644212B852D0900D2F586 /* APIError.swift in Sources */,
 				3FD643E12B7D654D00D2F586 /* Genre.swift in Sources */,
+				1E68DD742D10D1AC00C02FCE /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

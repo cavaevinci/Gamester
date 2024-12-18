@@ -85,10 +85,10 @@ class GamesController: UIViewController, GenresControllerDelegate, CreativeLayou
     }
         
     @objc func settingsButtonTapped() {
-        let settingsVC = SettingsController()
-        self.navigationController?.pushViewController(settingsVC, animated: true)
+        let vm = SettingsViewModel()
+        let vc = SettingsController(vm)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
-
     
     private func setupSearchController() {
         self.searchController.searchResultsUpdater = self

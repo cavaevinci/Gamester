@@ -40,9 +40,10 @@ class GamesViewModel {
     public func fetchGames() {
         // Handle the result from `getSelectedGenres`
         let genresIDsFromLocalStorage: [Genre]
+        let platformsIDsFromLocalStorage: [Platform]
 
-        let getResult: Result<[Genre], LocalStorageError> = self.userDefaultsService.get(forKey: .selectedGenres)
-        switch getResult {
+        let getGenreResult: Result<[Genre], LocalStorageError> = self.userDefaultsService.get(forKey: .selectedGenres)
+        switch getGenreResult {
         case .success(let genres):
             print("Retrieved genres: \(genres)")
             genresIDsFromLocalStorage = genres
@@ -51,11 +52,22 @@ class GamesViewModel {
             genresIDsFromLocalStorage = []
         }
         
-        // Transform the genre IDs
-        let ids = transformSelectedGenreIDs(genresIDsFromLocalStorage)
+        let getPlatformsResult: Result<[Platform], LocalStorageError> = self.userDefaultsService.get(forKey: .selectedPlatforms)
+        switch getPlatformsResult {
+        case .success(let platforms):
+            print("Retrieved platforms: \(platforms)")
+            platformsIDsFromLocalStorage = platforms
+        case .failure(let error):
+            print("Failed to retrieve platforms: \(error)")
+            platformsIDsFromLocalStorage = []
+        }
+        
+        // Transform the genre/platform IDs
+        let genreIDs = transformSelectedGenreIDs(genresIDsFromLocalStorage)
+        let platformIDs = transformSelectedPlatformIDs(platformsIDsFromLocalStorage)
         
         // Fetch games based on the IDs
-        self.apiService.fetchData(from: .gamesInGenre(genresIDs: ids), responseType: GamesResponse.self) { result in
+        self.apiService.fetchData(from: .gamesInGenreForPlatform(genresIDs: genreIDs, platformsIDs: platformIDs), responseType: GamesResponse.self) { result in
             switch result {
             case .success(let games):
                 self.allGames = games.results
@@ -103,15 +115,22 @@ extension GamesViewModel {
         return genreIDsString
     }
     
+    private func transformSelectedPlatformIDs(_ genres: [Platform]) -> String {
+        let genreIDs: [Int] = genres.map { $0.id }
+        let genreIDsString = genreIDs.map { String($0) }.joined(separator: ",")
+        return genreIDsString
+    }
+    
     internal func fetchGamesWithSearchText(_ searchText: String? = nil) {
         guard !isFetchingNextPage else { return }
         isFetchingNextPage = true
         
         // Handle the result from `getSelectedGenres`
         let genresIDsFromLocalStorage: [Genre]
-        
-        let getResult: Result<[Genre], LocalStorageError> = self.userDefaultsService.get(forKey: .selectedGenres)
-        switch getResult {
+        let platformsIDsFromLocalStorage: [Platform]
+
+        let getGenreResult: Result<[Genre], LocalStorageError> = self.userDefaultsService.get(forKey: .selectedGenres)
+        switch getGenreResult {
         case .success(let genres):
             print("Retrieved genres: \(genres)")
             genresIDsFromLocalStorage = genres
@@ -120,10 +139,22 @@ extension GamesViewModel {
             genresIDsFromLocalStorage = []
         }
         
-        let ids = transformSelectedGenreIDs(genresIDsFromLocalStorage)
+        let getPlatformsResult: Result<[Platform], LocalStorageError> = self.userDefaultsService.get(forKey: .selectedPlatforms)
+        switch getPlatformsResult {
+        case .success(let platforms):
+            print("Retrieved platforms: \(platforms)")
+            platformsIDsFromLocalStorage = platforms
+        case .failure(let error):
+            print("Failed to retrieve platforms: \(error)")
+            platformsIDsFromLocalStorage = []
+        }
+        
+        // Transform the genre/platform IDs
+        let genreIDs = transformSelectedGenreIDs(genresIDsFromLocalStorage)
+        let platformIDs = transformSelectedPlatformIDs(platformsIDsFromLocalStorage)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + throttleInterval) {
-            self.apiService.fetchData(from: .gamesInGenre(genresIDs: ids), search: searchText ?? "", page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
+            self.apiService.fetchData(from: .gamesInGenreForPlatform(genresIDs: genreIDs, platformsIDs: platformIDs), search: searchText ?? "", page: self.currentPage, responseType: GamesResponse.self) { [weak self] result in
                 guard let self = self else { return }
                 self.isFetchingNextPage = false
                 switch result {
