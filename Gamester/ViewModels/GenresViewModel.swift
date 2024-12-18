@@ -82,4 +82,3 @@ extension GenresViewModel {
         self.onGenreUpdated?()
     }
 }
-

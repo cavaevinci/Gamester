@@ -9,7 +9,7 @@ import Foundation
 
 enum APIEndpoint {
     case gameDetails(gameID: Int)
-    case gamesInGenre(genresIDs: String)
+    case gamesInGenreForPlatform(genresIDs: String, platformsIDs: String)
     case genres
     case platforms
     
@@ -17,7 +17,7 @@ enum APIEndpoint {
         switch self {
         case .gameDetails(let gameID):
             return "https://api.rawg.io/api/games/\(gameID)"
-        case .gamesInGenre:
+        case .gamesInGenreForPlatform:
             return "https://api.rawg.io/api/games"
         case .genres:
             return "https://api.rawg.io/api/genres"

@@ -55,8 +55,9 @@ class APIService: APIServiceProtocol {
         ]
         
         switch endpoint {
-        case .gamesInGenre(let genresIDs):
+        case .gamesInGenreForPlatform(let genresIDs, let platformsIDs):
             queryItems.append(URLQueryItem(name: "genres", value: genresIDs))
+            queryItems.append(URLQueryItem(name: "platforms", value: platformsIDs))
         default:
             break
         }
@@ -116,5 +117,4 @@ class APIService: APIServiceProtocol {
         }
     }
 }
-
 
